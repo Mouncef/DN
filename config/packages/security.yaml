@@ -1,4 +1,11 @@
 security:
+
+    role_hierarchy:
+        ROLE_CLIENT:          ROLE_USER
+        ROLE_MANAGER:         ROLE_CLIENT
+        ROLE_ADMIN:           ROLE_MANAGER
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         in_memory:
@@ -6,24 +13,37 @@ security:
                 users:
                     ryan:
                         password: $2y$12$SEAkLLM6kqcVfSgb2DeRAOLmJGXPOIdQ9w5ehepUA/zDNUJMon84O
-                        roles:  'ROLE_USER'
-                    admin:
+                        roles:  'ROLE_CLIENT'
+                    manager:
                         password: $2y$12$kE8tYwacEVZlSTtd4PyrmuPC7B21J1YXGP8BMtYJWxLcMvEylIeri
-                        roles:  'ROLE_ADMIN'
+                        roles:  'ROLE_MANAGER'
+        our_db_provider:
+            entity:
+                class:  App\Entity\User
+                # property: username
+                # if you're using multiple entity managers
+                # manager_name: customer
 
     encoders:
 #        Symfony\Component\Security\Core\User\User: plaintext
         Symfony\Component\Security\Core\User\User:
             algorithm: bcrypt
             cost: 12
+        App\Entity\User:
+            algorithm: bcrypt
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            pattern:  ^/
             anonymous: ~
-            http_basic: ~
+            provider: our_db_provider
+            form_login:
+                login_path:  login
+                check_path:  login
+                csrf_token_generator: security.csrf.token_manager
             logout:
                 path:     /logout
                 target:   /
@@ -36,4 +56,5 @@ security:
             # form_login: ~
             # https://symfony.com/doc/current/security/form_login_setup.html
     access_control:
-        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: ROLE_MANAGER }
