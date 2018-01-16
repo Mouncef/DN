@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Create New Account</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.username) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.plainPassword.first) }}
+        {{ form_row(form.plainPassword.second) }}
+        {{ form_row(form.termsAccepted) }}
+
+        <button type="submit" class="btn btn-primary">
+            <i class="fa fa-plus" aria-hidden="true"></i> Register
+        </button>
+    {{ form_end(form) }}
+{% endblock %}
