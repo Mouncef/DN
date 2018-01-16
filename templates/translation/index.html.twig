@@ -1,0 +1,14 @@
+{% trans %}Hello %name%{% endtrans %}
+
+{% transchoice count %}
+{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples
+{% endtranschoice %}
+
+
+{% trans with {'%name%': 'Toto'} from 'app' %}Hello %name%{% endtrans %}
+
+{% trans with {'%name%': 'Fafa'} from 'app' into 'fr' %}Hello %name%{% endtrans %}
+
+{% transchoice count with {'%name%': 'Mouncef'} from 'app' %}
+{0} %name%, there are no apples|{1} %name%, there is one apple|]1,Inf[ %name%, there are %count% apples
+{% endtranschoice %}
