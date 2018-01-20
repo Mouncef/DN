@@ -156,7 +156,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="icon icon-clear"></span></button>
                 <h4 class="modal-title text-center text-uppercase">Login form</h4>
             </div>
-            <form>
+            <form action="{{ path('login') }}" method="post">
                 <div class="modal-body">
                     <!--modal-add-login-->
                     <div class="modal-login">
@@ -165,7 +165,7 @@
                                             <span class="input-group-addon">
                                             <span class="icon icon-person_outline"></span>
                                             </span>
-                                <input type="text" id="LoginFormName" class="form-control" placeholder="Name:">
+                                <input type="text" id="username" name="_username" class="form-control" placeholder="Username or email" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -173,30 +173,32 @@
                                             <span class="input-group-addon">
                                             <span class="icon icon-lock_outline"></span>
                                             </span>
-                                <input type="password" id="LoginFormPass" class="form-control" placeholder="Password:">
+                                <input type="password" id="password" name="_password" class="form-control" placeholder="Password:">
                             </div>
                         </div>
                         <div class="checkbox-group">
-                            <input type="checkbox" id="checkBox2">
-                            <label for="checkBox2">
+                            <input type="checkbox" id="remember_me" name="_remember_me">
+                            <label for="remember_me">
                                 <span class="check"></span>
                                 <span class="box"></span>
                                 Remember me
                             </label>
                         </div>
-                        <button type="button" class="btn btn-full">SIGN IN</button>
-                        <button type="button" class="btn btn-full">CREATE AN ACCOUNT</button>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+                        <input type="hidden" name="_target_path" value="/" />
+                        <button type="submit" class="btn btn-full">SIGN IN</button>
+                        <a href="{{ path('register') }}" class="btn btn-full">CREATE AN ACCOUNT</a>
                         <div class="text-center"></div>
-                        <div class="social-icon-fill">
-                            <div>Or sign in with social</div>
-                            <ul>
-                                <li><a class="icon bg-facebook fa fa-facebook" href="http://www.facebook.com/"></a></li>
-                                <li><a class="bg-twitter fa fa-twitter" href="http://www.twitter.com/"></a></li>
-                                <li><a class="bg-google-plus fa fa-google-plus" href="http://www.google.com/"></a></li>
-                            </ul>
-                        </div>
+                        {#<div class="social-icon-fill">#}
+                            {#<div>Or sign in with social</div>#}
+                            {#<ul>#}
+                                {#<li><a class="icon bg-facebook fa fa-facebook" href="http://www.facebook.com/"></a></li>#}
+                                {#<li><a class="bg-twitter fa fa-twitter" href="http://www.twitter.com/"></a></li>#}
+                                {#<li><a class="bg-google-plus fa fa-google-plus" href="http://www.google.com/"></a></li>#}
+                            {#</ul>#}
+                        {#</div>#}
                         <ul class="link-functional">
-                            <li><a href="#">Forgot your username?</a></li>
+                            {#<li><a href="#">Forgot your username?</a></li>#}
                             <li><a href="#">Forgot your password?</a></li>
                         </ul>
                     </div>

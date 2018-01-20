@@ -14,7 +14,7 @@ class AdminController extends Controller
     {
         $user = $this->getUser();
         // replace this line with your own code!
-        return $this->render('@Maker/demoPage.html.twig', [
+        return $this->render('backend/index.html.twig', [
             'path'  => str_replace($this->getParameter('kernel.project_dir').'/', '', __FILE__),
             'user'  =>  $user
         ]);

@@ -18,26 +18,43 @@
                             <ul>
                                 <li class="active"><a href="">Home</a></li>
                                 <li><a href="">Delivery</a></li>
-                                <li><a href="">Blog</a></li>
-                                <li><a href="">Contacts</a></li>
+                                {#<li><a href="">Blog</a></li>#}
+                                <li><a href="">Contact</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="pull-right">
+            <div class="pull-right" style="font-size: 1em ;">
                 <!-- account -->
                 <div class="account dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown"><span class="icon icon-person "></span></a>
-                    <div class="dropdown-label hidden-sm hidden-xs">My Account</div>
-                    <ul class="dropdown-menu">
-                        <li><a href=""><span class="icon icon-person"></span>My Account</a></li>
-                        <li><a href=""><span class="icon icon-favorite_border"></span>My Wishlist</a></li>
-                        <li><a href=""><span class="fa fa-balance-scale"></span>Compare</a></li>
-                        <li><a href=""><span class="icon icon-check"></span>Checkout</a></li>
-                        <li><a href="#" data-toggle="modal" data-target="#modalLoginForm"><span class="icon icon-lock_outline"></span>Log In</a></li>
-                        <li><a href=""><span class="icon icon-person_add"></span>Create an account</a></li>
-                    </ul>
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <span class="icon icon-person"></span>
+                        {% else %}
+                            <i class="fa fa-user-plus fa-lg" aria-hidden="true" style="color: #000;bottom: 2px;position: relative;"></i>
+                        {% endif %}
+                    </a>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <div class="dropdown-label hidden-sm hidden-xs">My Account</div>
+                        <ul class="dropdown-menu">
+                            <li><a href=""><span class="icon icon-person"></span>My Account</a></li>
+                            {#<li><a href=""><span class="icon icon-favorite_border"></span>My Wishlist</a></li>#}
+                            {#<li><a href=""><span class="fa fa-balance-scale"></span>Compare</a></li>#}
+                            <li><a href=""><span class="icon icon-check"></span>Checkout</a></li>
+                            {% if is_granted('ROLE_MANAGER') %}
+                                <li><a href="{{ path('admin') }}"><span class="icon icon-settings"></span>Administration</a></li>
+                            {% endif %}
+                            <li><a href="{{ path('logout') }}" ><span class="icon icon-power_settings_new"></span>Log Out</a></li>
+                        </ul>
+                    {% else %}
+                        <div class="dropdown-label hidden-sm hidden-xs">New Account</div>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" data-toggle="modal" data-target="#modalLoginForm"><span class="icon icon-lock_outline"></span>Log In</a></li>
+                            <li><a href="{{ path('register') }}"><span class="icon icon-person_add"></span>Create an account</a></li>
+                        </ul>
+                    {% endif %}
+
                 </div>
                 <!-- /account -->
                 <!-- cart -->
@@ -91,9 +108,9 @@
                 <!-- mini-menu -->
                 <div class="mini-menu">
                     <ul>
-                        <li class="active"><a href="">Home</a></li>
+                        <li class="active"><a href="{{ path('homepage') }}">Home</a></li>
                         <li><a href="">Delivery</a></li>
-                        <li><a href="">Blog</a></li>
+                        {#<li><a href="">Blog</a></li>#}
                         <li><a href="">Contacts</a></li>
                     </ul>
                 </div>
@@ -103,10 +120,10 @@
                 <!-- box-info -->
                 <div class="box-info">
                     <div class="telephone">
-                        <span class="icon icon-call"></span>+300-9876-2345
+                        <span class="icon icon-call"></span>+000-0000-0000
                     </div>
                     <div class="time">
-                        7 Days a week from 9:00 am to 7:00 pm
+                        7 Days a week from 0:00 am to 0:00 pm
                     </div>
                 </div>
                 <!-- /box-info -->
@@ -120,9 +137,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li class="active" data-top-value="En"><a href="#">En</a></li>
-                            <li data-top-value="Ge"><a href="#">Ge</a></li>
-                            <li data-top-value="Es"><a href="#">Es</a></li>
-                            <li data-top-value="Ru"><a href="#">Rus</a></li>
+                            {#<li data-top-value="Ge"><a href="#">Ge</a></li>#}
                         </ul>
                     </div>
                 </div>
@@ -136,9 +151,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="active" data-top-value="GBP"><a href="#">GBP - British Pound Sterling</a></li>
-                            <li data-top-value="EUR"><a href="#">EUR - Euro</a></li>
-                            <li data-top-value="USD"><a href="#">USD - US Dollar</a></li>
+                            <li class="active" data-top-value="KDH"><a href="#">KDH - Kweit Currency</a></li>
                         </ul>
                     </div>
                 </div>
@@ -154,20 +167,40 @@
                     </div>
                     <!-- /logo -->
                 </div>
-                <div class="pull-right">
+                <div class="pull-right" style="font-size: 1em ;">
                     <!-- account -->
-                    <div class="account dropdown">
+
+                    <div class="account dropdown" style="padding: 3.5% 0 0 0;">
                         <a class="dropdown-toggle" data-toggle="dropdown">
-                            <span class="icon icon-person "></span>
-                            <span class="dropdown-label hidden-sm hidden-xs">My Account</span>
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                <span class="icon icon-person "></span>
+                                <span class="dropdown-label hidden-sm hidden-xs" style="font-size: 18px; font-weight: 500;">My Account</span>
+                            {% else %}
+                                <div style="margin-top: 4%">
+                                    <i class="fa fa-user-plus fa-lg" aria-hidden="true" style="color: #000;"></i>
+                                    <span class="dropdown-label hidden-sm hidden-xs" style="font-size: 18px; font-weight: 500;">New Account</span>
+                                </div>
+
+                            {% endif %}
+
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href=""><span class="icon icon-person"></span>My Account</a></li>
-                            <li><a href=""><span class="icon icon-favorite_border"></span>My Wishlist</a></li>
-                            <li><a href=""><span class="fa fa-balance-scale"></span>Compare</a></li>
-                            <li><a href=""><span class="icon icon-check"></span>Checkout</a></li>
-                            <li><a href="#" data-toggle="modal" data-target="#modalLoginForm"><span class="icon icon-lock_outline"></span>Log In</a></li>
-                            <li><a href=""><span class="icon icon-person_add"></span>Create an account</a></li>
+                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                <li><a href=""><span class="icon icon-person"></span>My Account</a></li>
+                                {#<li><a href=""><span class="icon icon-favorite_border"></span>My Wishlist</a></li>#}
+                                {#<li><a href=""><span class="fa fa-balance-scale"></span>Compare</a></li>#}
+                                <li><a href=""><span class="icon icon-check"></span>Checkout</a></li>
+                                {% if is_granted('ROLE_MANAGER') %}
+                                    <li><a href="{{ path('admin') }}"><span class="icon icon-settings"></span>Administration</a></li>
+                                {% endif %}
+                                <li><a href="{{ path('logout') }}" ><span class="icon icon-power_settings_new"></span>Log Out</a></li>
+
+
+                            {% else %}
+                                <li><a href="#" data-toggle="modal" data-target="#modalLoginForm"><span class="icon icon-lock_outline"></span>Log In</a></li>
+                                <li><a href="{{ path('register') }}"><span class="icon icon-person_add"></span>Create an account</a></li>
+                            {% endif %}
+
                         </ul>
                     </div>
                     <!-- /account -->

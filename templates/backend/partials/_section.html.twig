@@ -1,0 +1,14 @@
+<section>
+    {% block leftPanel %}
+        {% include 'backend/partials/_leftPanel.html.twig' %}
+    {% endblock %}
+
+    {% block mainPanel %}
+        {% include 'backend/partials/_mainPanel.html.twig' with {'path': path, 'user': user } %}
+    {% endblock %}
+
+    {% block rightPanel %}
+        {% include 'backend/partials/_rightPanel.html.twig' %}
+    {% endblock %}
+
+</section>

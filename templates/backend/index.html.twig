@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="{{ asset('assets/backend/images/favicon.png') }}" type="image/png">
+
+    <title>LouDiGlamOr - {% block title %}Administration{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link href="{{ asset('assets/backend/css/style.default.css') }}" rel="stylesheet">
+    {% endblock %}
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="{{ asset('assets/backend/js/html5shiv.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/respond.min.js') }}"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+{% block loader %}
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
+    </div>
+{% endblock %}
+
+{% block section %}
+    {% include 'backend/partials/_section.html.twig' with {'path': path, 'user': user } %}
+{% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('assets/backend/js/jquery-1.11.1.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery-migrate-1.2.1.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery-ui-1.10.3.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/modernizr.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.sparkline.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/toggles.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/retina.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.cookies.js') }}"></script>
+
+    <script src="{{ asset('assets/backend/js/flot/jquery.flot.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/flot/jquery.flot.resize.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/flot/jquery.flot.spline.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/morris.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/raphael-2.1.0.min.js') }}"></script>
+
+    <script src="{{ asset('assets/backend/js/custom.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/dashboard.js') }}"></script>
+{% endblock %}
+
+</body>
+</html>
