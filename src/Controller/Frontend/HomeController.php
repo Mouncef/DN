@@ -11,7 +11,7 @@ class HomeController extends Controller
      * @Route("/", name="homepage")
      */
     public function index(){
-        return $this->render('Default/front.html.twig');
+        return $this->render('frontend/index.html.twig');
     }
 
 }

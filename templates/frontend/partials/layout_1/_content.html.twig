@@ -1,0 +1,38 @@
+<!-- Content -->
+<div id="pageContent">
+    {% block slider %}
+        {% include 'frontend/partials/layout_1/_slider.html.twig' %}
+    {% endblock %}
+
+    {% block promo %}
+        {% include 'frontend/partials/layout_1/_promo.html.twig' %}
+    {% endblock %}
+
+    {% block collections %}
+        {% include 'frontend/partials/layout_1/_collections.html.twig' %}
+    {% endblock %}
+
+    <div class="container hidden-mobile">
+        <hr>
+    </div>
+
+    {% block features %}
+        {% include 'frontend/partials/layout_1/_features.html.twig' %}
+    {% endblock %}
+
+    <div class="container hidden-mobile">
+        <hr>
+    </div>
+
+    {% block brands %}
+        {% include 'frontend/partials/layout_1/_brands.html.twig' %}
+    {% endblock %}
+
+    {% block banner %}
+        {% include 'frontend/partials/layout_1/_banner.html.twig' %}
+    {% endblock %}
+
+    {% block news %}
+        {% include 'frontend/partials/layout_1/_news.html.twig' %}
+    {% endblock %}
+</div>

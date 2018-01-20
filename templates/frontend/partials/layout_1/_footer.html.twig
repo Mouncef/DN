@@ -1,0 +1,29 @@
+<footer>
+
+    {% block subscribe %}
+        {% include 'frontend/partials/layout_1/_subscribe.html.twig' %}
+    {% endblock %}
+
+    {% block footerMiddle %}
+        <div class="footer-content-col">
+
+            {% block services %}
+                {% include 'frontend/partials/layout_1/_services.html.twig' %}
+            {% endblock %}
+
+            {% block links %}
+                {% include 'frontend/partials/layout_1/_links.html.twig' %}
+            {% endblock %}
+
+        </div>
+    {% endblock %}
+
+    {% block footerBottom %}
+        {% include 'frontend/partials/layout_1/_footerBottom.html.twig' %}
+    {% endblock %}
+
+    <a href="#" class="back-to-top">
+        <span class="icon icon-keyboard_arrow_up"></span>
+        <span class="text">BACK TO TOP</span>
+    </a>
+</footer>
