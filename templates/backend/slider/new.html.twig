@@ -1,0 +1,17 @@
+<h1>Adding a new Slide</h1>
+
+{% for label, messages in app.flashes(['warning', 'error', 'success', 'info', 'notice']) %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+{{ form_start(form) }}
+
+    {{ form_row(form) }}
+
+    <input type="submit" value="Valider" />
+
+{{ form_end(form) }}
