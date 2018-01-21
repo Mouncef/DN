@@ -13,7 +13,21 @@ use Symfony\Component\HttpFoundation\Response;
 class SliderController extends Controller
 {
     /**
-     * @Route("/slider/new", name="slider_new")
+     * @Route("/admin/slider", name="slider_list")
+     */
+    public function listAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $sliders = $em->getRepository(Slider::class)->findAll();
+
+        return $this->render('backend/slider/list.html.twig', [
+            'sliders'   => $sliders
+        ]);
+    }
+
+    /**
+     * @Route("/admin/slider/new", name="slider_new")
      */
     public function index(Request $request, FileUploader $fileUploader)
     {

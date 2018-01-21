@@ -30,7 +30,35 @@
 {% endblock %}
 
 {% block section %}
-    {% include 'backend/partials/_section.html.twig' with {'path': path, 'user': user } %}
+
+    <section>
+        {% block leftPanel %}
+            {% include 'backend/partials/_leftPanel.html.twig' %}
+        {% endblock %}
+
+        {% block mainPanel %}
+            <div class="mainpanel">
+
+                {% block headerBar %}
+                    {% include 'backend/partials/_headerBar.html.twig' %}
+                {% endblock %}
+
+                {% block pageHeader %}
+                    {% include 'backend/partials/_pageHeader.html.twig' %}
+                {% endblock %}
+
+                {% block contentPanel %}
+                    {% include 'backend/partials/_contentPanel.html.twig' %}
+                {% endblock %}
+
+            </div><!-- mainpanel -->
+        {% endblock %}
+
+        {% block rightPanel %}
+            {% include 'backend/partials/_rightPanel.html.twig' %}
+        {% endblock %}
+    </section>
+
 {% endblock %}
 
 {% block javascript %}

@@ -1,0 +1,153 @@
+{% extends 'backend/index.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset('assets/backend/css/style.default.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/backend/css/jquery.datatables.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block pageHeader %}
+    <div class="pageheader">
+        <h2><i class="fa fa-home"></i> Sliders <span>management & list...</span></h2>
+        <div class="breadcrumb-wrapper">
+            <span class="label">Add a new slide here : </span>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-plus-square"></i></a></li>
+                <li class="active">List Sliders</li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}
+
+{% block contentPanel %}
+    <div class="contentpanel">
+
+        <div class="row">
+
+            <div class="col-sm-12">
+
+                {% if sliders %}
+                    <div class="panel panel-default">
+                        {#<div class="panel-heading">
+                            <div class="panel-btns">
+                                <a href="" class="panel-close">×</a>
+                                <a href="" class="minimize">−</a>
+                            </div><!-- panel-btns -->
+                            <h3 class="panel-title">Data Tables</h3>
+                            <p>DataTables is a plug-in for the jQuery Javascript library. It is a highly flexible tool, based upon the foundations of progressive enhancement, which will add advanced interaction controls to any HTML table.</p>
+                        </div>#}
+                        <div class="panel-body">
+                            {#<h5 class="subtitle mb5">Alternative Pagination</h5>
+                            <p>The example below shows the full_numbers type of pagination, where 'first', 'previous', 'next' and 'last' buttons are presented, as well as the five pages around the current page.</p>
+                            <br>#}
+                            <div class="table-responsive">
+                                <table class="table table-hidaction table-hover" id="table2">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Slide Name</th>
+                                        <th>Caption n°1</th>
+                                        <th>Caption n°2</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for slide in sliders %}
+                                        <tr class="{% if loop.index is odd %}odd gradeX{% else %}even gradeC{% endif %}">
+                                            <td class="center">{{ slide.sliderId }}</td>
+                                            <td class="center">{{ slide.slideName }}</td>
+                                            <td class="center">{{ slide.caption1 }}</td>
+                                            <td class="center">{{ slide.caption2 }}</td>
+                                            {#<td class="table-action">
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn-success dropdown-toggle" data-toggle="dropdown">
+                                                        <span class="fa fa-cogs"></span> Actions
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a href="#">Action</a></li>
+                                                        <li><a href="#">Another action</a></li>
+                                                        <li><a href="#">Something else here</a></li>
+                                                        <li class="divider"></li>
+                                                        <li><a href="#">Separated link</a></li>
+                                                    </ul>
+                                                </div>
+                                            </td>#}
+                                            <td class="table-action-hide">
+                                                <a href="" style="opacity: 1;"><i class="fa fa-pencil"></i></a>
+                                                <a href="" class="delete-row" style="opacity: 1;"><i class="fa fa-trash-o"></i></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div><!-- table-responsive -->
+
+                        </div><!-- panel-body -->
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <strong>Info : </strong>
+                        There is no slide in your database ! you can add a new slide by pressing the plus button in the top.
+                    </div>
+                {% endif %}
+
+
+            </div><!-- col-sm-12 -->
+
+        </div><!-- row -->
+
+    </div><!-- contentpanel -->
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('assets/backend/js/jquery-1.11.1.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery-migrate-1.2.1.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/modernizr.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.sparkline.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/toggles.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/retina.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.cookies.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/custom.js') }}"></script>
+
+    <script>
+        jQuery(document).ready(function() {
+
+            "use strict";
+
+            jQuery('#table2').dataTable({
+                "sPaginationType": "full_numbers"
+            });
+
+            // Select2
+            jQuery('select').select2({
+                minimumResultsForSearch: -1
+            });
+
+            jQuery('select').removeClass('form-control');
+
+            // Delete row in a table
+            jQuery('.delete-row').click(function(){
+                var c = confirm("Continue delete?");
+                if(c)
+                    jQuery(this).closest('tr').fadeOut(function(){
+                        jQuery(this).remove();
+                    });
+
+                return false;
+            });
+
+            // Show aciton upon row hover
+            jQuery('.table-hidaction tbody tr').hover(function(){
+                jQuery(this).find('.table-action-hide a').animate({opacity: 1});
+            },function(){
+                jQuery(this).find('.table-action-hide a').animate({opacity: 0});
+            });
+
+
+        });
+    </script>
+{% endblock %}

@@ -1,11 +1,11 @@
 <div class="mainpanel">
 
     {% block headerBar %}
-        {% include 'backend/partials/_headerBar.html.twig' with {'user': user }  %}
+        {% include 'backend/partials/_headerBar.html.twig' %}
     {% endblock %}
 
     {% block pageHeader %}
-        {% include 'backend/partials/_pageHeader.html.twig' with {'path': path} %}
+        {% include 'backend/partials/_pageHeader.html.twig' %}
     {% endblock %}
 
     {% block contentPanel %}
