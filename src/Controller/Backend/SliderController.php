@@ -49,7 +49,7 @@ class SliderController extends Controller
 
             $this->addFlash('success','Slide Importé avec succés !');
 
-            return $this->redirect($this->generateUrl('slider_new'));
+            return $this->redirectToRoute('slider_list');
         }
 
         return $this->render('backend/slider/new.html.twig', array(

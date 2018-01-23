@@ -3,6 +3,11 @@
 {% block stylesheets %}
     <link href="{{ asset('assets/backend/css/style.default.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/backend/css/jquery.datatables.css') }}" rel="stylesheet">
+    <style>
+        #table2 tbody tr {
+            cursor: pointer;
+        }
+    </style>
 {% endblock %}
 
 {% block pageHeader %}
@@ -11,7 +16,7 @@
         <div class="breadcrumb-wrapper">
             <span class="label">Add a new slide here : </span>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-plus-square"></i></a></li>
+                <li><a href="{{ path('slider_new') }}"><i class="fa fa-plus-square"></i></a></li>
                 <li class="active">List Sliders</li>
             </ol>
         </div>
