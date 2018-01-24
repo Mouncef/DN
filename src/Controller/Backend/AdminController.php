@@ -5,10 +5,15 @@ namespace App\Controller\Backend;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+/**
+ * Class AdminController
+ * @package App\Controller\Backend
+ * @Route("/admin")
+ */
 class AdminController extends Controller
 {
     /**
-     * @Route("/admin", name="admin")
+     * @Route("", name="admin")
      */
     public function index()
     {

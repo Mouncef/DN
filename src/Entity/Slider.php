@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="tbl_slider")
+ * @ORM\Table(name="dn_tbl_slider")
  * @ORM\Entity(repositoryClass="App\Repository\SliderRepository")
  */
 class Slider
@@ -35,6 +35,25 @@ class Slider
      */
     private $caption2;
 
+    /**
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
+    /**
+     * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
+     */
+    private $deletedAt;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime('now');
+    }
 
     public function getSliderId()
     {
@@ -53,39 +72,58 @@ class Slider
         $this->slideName = $slideName;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getCaption1()
     {
         return $this->caption1;
     }
 
-    /**
-     * @param mixed $caption1
-     */
+
     public function setCaption1($caption1)
     {
         $this->caption1 = $caption1;
     }
 
-    /**
-     * @return mixed
-     */
+
     public function getCaption2()
     {
         return $this->caption2;
     }
 
-    /**
-     * @param mixed $caption2
-     */
     public function setCaption2($caption2)
     {
         $this->caption2 = $caption2;
     }
 
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
 
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    }
 
     // add your own fields
 }

@@ -1,0 +1,196 @@
+{% extends 'backend/index.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset('assets/backend/css/style.default.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/backend/css/bootstrap-timepicker.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/backend/css/jquery.tagsinput.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/backend/css/colorpicker.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/backend/css/dropzone.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block pageHeader %}
+    <div class="pageheader">
+        <h2><i class="fa fa-home"></i> Sliders <span>Editing ...</span></h2>
+        <div class="breadcrumb-wrapper">
+            <span class="label">Add a new slide here : </span>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-plus-square"></i></a></li>
+                <li class="active">New Slide</li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}
+
+{% block contentPanel %}
+    <style>
+        #slider_caption1 ,#slider_caption2 {
+            min-height: 63px;
+        }
+    </style>
+    <div class="contentpanel">
+
+        <div class="row">
+
+            <div class="col-sm-12">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-btns">
+                            <a href="" class="panel-close">×</a>
+                            <a href="" class="minimize">−</a>
+                        </div>
+                        <h4 class="panel-title">Edit {{ slide.slideName }}</h4>
+                        <p>
+                            {#{% for label, messages in app.flashes(['warning', 'error', 'success', 'info', 'notice']) %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ label }}">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}#}
+                        </p>
+                    </div>
+
+                    {{ form_start(form, { 'attr' : { 'class': 'form' } }) }}
+                    <div class="panel-body">
+
+                        <div class="row row-pad-5">
+                            <div class="col-lg-6">
+                                <div class="thumbnail">
+                                    <img src="{{ asset('uploads/Slides/images/'~slide.slideName) }}" class="img-responsive"/>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <label class="btn btn-success-alt btn-block">
+                                    Upload a Picture Here !
+                                    {{ form_widget(form.slideName, { 'attr': {'': ''} }) }} {##}
+                                </label>
+                            </div>
+                            <div class="col-lg-12">
+                                {{ form_widget(form.caption1, { 'attr': {'class': 'form-control', 'placeholder':'Caption n°1'} }) }}
+                            </div>
+                            <div class="col-lg-12">
+                                {{ form_widget(form.caption2, { 'attr': {'class': 'form-control', 'placeholder':'Caption n°2'} }) }}
+                            </div>
+                            {#<textarea class="form-control" rows="5" placeholder="Message"></textarea>#}
+                        </div>
+                    </div><!-- panel-body -->
+                    <div class="panel-footer">
+                        <a type="button" href="{{ path('slider_list') }}" class="btn btn-warning">
+                            <i class="fa fa-chevron-circle-left fa-lg" aria-hidden="true"></i>
+                            Back to list
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                            Save your slide
+                        </button>
+                    </div>
+                    {{ form_end(form) }}
+
+                </div>
+            </div><!-- col-sm-12 -->
+
+        </div><!-- row -->
+
+    </div><!-- contentpanel -->
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('assets/backend/js/jquery-1.11.1.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery-migrate-1.2.1.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery-ui-1.10.3.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/modernizr.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.sparkline.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/toggles.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/retina.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.cookies.js') }}"></script>
+
+    <script src="{{ asset('assets/backend/js/jquery.autogrow-textarea.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/bootstrap-timepicker.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.maskedinput.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.tagsinput.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.mousewheel.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/dropzone.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/colorpicker.js') }}"></script>
+
+    <script src="{{ asset('assets/backend/js/custom.js') }}"></script>
+
+    <script>
+        jQuery(document).ready(function(){
+
+
+            "use strict";
+
+            //dropzone
+            {#{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}#}
+            {#jQuery('#slider_slideName').dropzone({ url: "{{ currentPath }}" });#}
+            {#var myDropzone = new Dropzone("div#slider_slideName", { url: "{{ currentPath }}"});#}
+
+            // Tags Input
+            jQuery('#tags').tagsInput({width:'auto'});
+
+            // Select2
+            jQuery(".select2").select2({
+                width: '100%'
+            });
+
+            // Textarea Autogrow
+            jQuery('#autoResizeTA').autogrow();
+
+            // Color Picker
+            if(jQuery('#colorpicker').length > 0) {
+                jQuery('#colorSelector').ColorPicker({
+                    onShow: function (colpkr) {
+                        jQuery(colpkr).fadeIn(500);
+                        return false;
+                    },
+                    onHide: function (colpkr) {
+                        jQuery(colpkr).fadeOut(500);
+                        return false;
+                    },
+                    onChange: function (hsb, hex, rgb) {
+                        jQuery('#colorSelector span').css('backgroundColor', '#' + hex);
+                        jQuery('#colorpicker').val('#'+hex);
+                    }
+                });
+            }
+
+            // Color Picker Flat Mode
+            jQuery('#colorpickerholder').ColorPicker({
+                flat: true,
+                onChange: function (hsb, hex, rgb) {
+                    jQuery('#colorpicker3').val('#'+hex);
+                }
+            });
+
+            // Date Picker
+            jQuery('#datepicker').datepicker();
+
+            jQuery('#datepicker-inline').datepicker();
+
+            jQuery('#datepicker-multiple').datepicker({
+                numberOfMonths: 3,
+                showButtonPanel: true
+            });
+
+            // Spinner
+            var spinner = jQuery('#spinner').spinner();
+            spinner.spinner('value', 0);
+
+            // Input Masks
+            jQuery("#date").mask("99/99/9999");
+            jQuery("#phone").mask("(999) 999-9999");
+            jQuery("#ssn").mask("999-99-9999");
+
+            // Time Picker
+            jQuery('#timepicker').timepicker({defaultTIme: false});
+            jQuery('#timepicker2').timepicker({showMeridian: false});
+            jQuery('#timepicker3').timepicker({minuteStep: 15});
+
+
+        });
+    </script>
+{% endblock %}

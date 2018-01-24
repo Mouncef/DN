@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Slider;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,6 +19,18 @@ class SliderType extends AbstractType
             ])
             ->add('caption1')
             ->add('caption2')
+        ;
+        $builder->get('slideName')
+            ->addModelTransformer(new CallbackTransformer(
+                function ($slideNameAsFile) {
+                    // transform the array to a string
+                    return '/uploads/Slides/images/'.$slideNameAsFile;
+                },
+                function ($slideNaemAsString) {
+                    // transform the string back to an array
+                    return $slideNaemAsString;
+                }
+            ))
         ;
     }
 
