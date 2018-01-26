@@ -1,10 +1,11 @@
 <div class="container-fluid offset-0">
     <div class="row">
+        {% if sliders %}
         <div class="slider-revolution revolution-default">
             <div class="tp-banner-container">
                 <div class="tp-banner revolution">
                     <ul>
-                        <li data-thumb="{{ asset('assets/frontend/images/slides/04/slide-1.jpg') }}" data-transition="fade" data-slotamount="1" data-masterspeed="1000" data-saveperformance="off"  data-title="Slide">
+                        {#<li data-thumb="{{ asset('uploads/slides/images/slides/04/slide-1.jpg') }}" data-transition="fade" data-slotamount="1" data-masterspeed="1000" data-saveperformance="off"  data-title="Slide">
                             <img src="{{ asset('assets/frontend/images/slides/04/slide-1.jpg') }}"  alt="slide1"  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" >
                             <div class="tp-caption tp-resizeme  lfb stb text-center"
                                  data-x="center"
@@ -39,66 +40,89 @@
                                 <div class="tp-caption1-wd-2">Your Online<br>Business</div>
                                 <div class="tp-caption1-wd-3"><a href="" class="btn btn-lg btn-red" data-text="Shop now!">SHOP NOW!</a></div>
                             </div>
-                        </li>
-                        <li data-thumb="{{ asset('assets/frontend/images/slides/video/video_img.jpg') }}" data-transition="fade" data-slotamount="1" data-masterspeed="1000" data-saveperformance="off"  data-title="Slide">
-                            <!-- LAYER NR. 1 -->
-                            <div class="tp-caption tp-fade fadeout fullscreenvideo"
-                                 data-x="0"
-                                 data-y="0"
-                                 data-speed="600"
-                                 data-start="0"
-                                 data-easing="Power4.easeOut"
-                                 data-endspeed="1500"
-                                 data-endeasing="Power4.easeIn"
-                                 data-autoplay="true"
-                                 data-autoplayonlyfirsttime="false"
-                                 data-nextslideatend="true"
-                                 data-forceCover="1"
-                                 data-dottedoverlay="twoxtwo"
-                                 data-aspectratio="16:9"
-                                 data-forcerewind="on"
-                                 style="z-index: 2">
-                                <video class="video-js vjs-default-skin" preload="none"
-                                       poster='{{ asset('assets/frontend/images/slides/video/video_img.jpg') }}' data-setup="{}">
-                                    <source src='{{ asset('assets/frontend/images/slides/video/video.mp4') }}' type='video/mp4' />
-                                </video>
-                            </div>
-                            <div class="tp-caption  tp-fade"
-                                 data-x="right"
-                                 data-y="bottom"
-                                 data-voffset="-60"
-                                 data-hoffset="-90"
-                                 data-speed="600"
-                                 data-start="900"
-                                 data-easing="Power4.easeOut"
-                                 data-endeasing="Power4.easeIn"
-                                 data-responsive_offset="off"
-                                 style="z-index: 7;">
-                                <div class="video-play">
-                                    <a class="icon icon-play_circle_filled btn-play" href="#"></a>
-                                    <a class="icon icon-pause_circle_filled btn-pause" href="#"></a>
+                        </li>#}
+                        {% for slider in sliders %}
+                            <li data-thumb="{{ asset('uploads/slides/images/'~slider.slideName) }}" data-transition="fade" data-slotamount="1" data-masterspeed="1000" data-saveperformance="off"  data-title="Slide">
+                                <img src="{{ asset('uploads/slides/images/'~slider.slideName) }}"  alt="{{ slider.slideName }}"  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" >
+                                <div class="tp-caption tp-resizeme  lfb stb text-center"
+                                     data-x="center"
+                                     data-y="center"
+                                     data-hoffset="0"
+                                     data-voffset="-20"
+                                     data-speed="600"
+                                     data-start="900"
+                                     data-easing="Power4.easeOut"
+                                     data-endeasing="Power4.easeIn"
+                                     data-responsive_offset="on"
+                                     style="z-index: 2;">
+                                    <div class="tp-caption1-wd-1 color-white">{{ slider.caption1 }}</div>
+                                    <div class="tp-caption1-wd-2 color-white">{{ slider.caption2 }}</div>
+                                    <div class="tp-caption1-wd-3"><a href="" class="btn btn-lg" data-text="Shop now!">SHOP NOW!</a></div>
                                 </div>
-                            </div>
-                            <!-- TEXT -->
-                            <div class="tp-caption tp-resizeme  lfb lft text-center"
-                                 data-x="center"
-                                 data-y="center"
-                                 data-voffset="-20"
-                                 data-hoffset="0"
-                                 data-speed="600"
-                                 data-start="900"
-                                 data-easing="Power4.easeOut"
-                                 data-endeasing="Power4.easeIn"
-                                 data-responsive_offset="on"
-                                 style="z-index: 2;">
-                                <div class="tp-caption1-wd-1 color-white">There is no other template with that amount of</div>
-                                <div class="tp-caption1-wd-2 color-white">Features as You See <br>in <span class="color-base">MyShop</span></div>
-                                <div class="tp-caption1-wd-3 color-white"><a href="" class="btn btn-lg btn-red" data-text="Shop now!">SHOP NOW!</a></div>
-                            </div>
-                        </li>
+                            </li>
+                        {% endfor %}
+                        {#<li data-thumb="{{ asset('assets/frontend/images/slides/video/video_img.jpg') }}" data-transition="fade" data-slotamount="1" data-masterspeed="1000" data-saveperformance="off"  data-title="Slide">#}
+                            {#<!-- LAYER NR. 1 -->#}
+                            {#<div class="tp-caption tp-fade fadeout fullscreenvideo"#}
+                                 {#data-x="0"#}
+                                 {#data-y="0"#}
+                                 {#data-speed="600"#}
+                                 {#data-start="0"#}
+                                 {#data-easing="Power4.easeOut"#}
+                                 {#data-endspeed="1500"#}
+                                 {#data-endeasing="Power4.easeIn"#}
+                                 {#data-autoplay="true"#}
+                                 {#data-autoplayonlyfirsttime="false"#}
+                                 {#data-nextslideatend="true"#}
+                                 {#data-forceCover="1"#}
+                                 {#data-dottedoverlay="twoxtwo"#}
+                                 {#data-aspectratio="16:9"#}
+                                 {#data-forcerewind="on"#}
+                                 {#style="z-index: 2">#}
+                                {#<video class="video-js vjs-default-skin" preload="none"#}
+                                       {#poster='{{ asset('assets/frontend/images/slides/video/video_img.jpg') }}' data-setup="{}">#}
+                                    {#<source src='{{ asset('assets/frontend/images/slides/video/video.mp4') }}' type='video/mp4' />#}
+                                {#</video>#}
+                            {#</div>#}
+                            {#<div class="tp-caption  tp-fade"#}
+                                 {#data-x="right"#}
+                                 {#data-y="bottom"#}
+                                 {#data-voffset="-60"#}
+                                 {#data-hoffset="-90"#}
+                                 {#data-speed="600"#}
+                                 {#data-start="900"#}
+                                 {#data-easing="Power4.easeOut"#}
+                                 {#data-endeasing="Power4.easeIn"#}
+                                 {#data-responsive_offset="off"#}
+                                 {#style="z-index: 7;">#}
+                                {#<div class="video-play">#}
+                                    {#<a class="icon icon-play_circle_filled btn-play" href="#"></a>#}
+                                    {#<a class="icon icon-pause_circle_filled btn-pause" href="#"></a>#}
+                                {#</div>#}
+                            {#</div>#}
+                            {#<!-- TEXT -->#}
+                            {#<div class="tp-caption tp-resizeme  lfb lft text-center"#}
+                                 {#data-x="center"#}
+                                 {#data-y="center"#}
+                                 {#data-voffset="-20"#}
+                                 {#data-hoffset="0"#}
+                                 {#data-speed="600"#}
+                                 {#data-start="900"#}
+                                 {#data-easing="Power4.easeOut"#}
+                                 {#data-endeasing="Power4.easeIn"#}
+                                 {#data-responsive_offset="on"#}
+                                 {#style="z-index: 2;">#}
+                                {#<div class="tp-caption1-wd-1 color-white">There is no other template with that amount of</div>#}
+                                {#<div class="tp-caption1-wd-2 color-white">Features as You See <br>in <span class="color-base">MyShop</span></div>#}
+                                {#<div class="tp-caption1-wd-3 color-white"><a href="" class="btn btn-lg btn-red" data-text="Shop now!">SHOP NOW!</a></div>#}
+                            {#</div>#}
+                        {#</li>#}
                     </ul>
                 </div>
             </div>
         </div>
+        {% else %}
+
+        {% endif %}
     </div>
 </div>

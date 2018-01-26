@@ -15,7 +15,8 @@ class SliderType extends AbstractType
     {
         $builder
             ->add('slideName', FileType::class, [
-                'label' =>  'Slider Picture'
+                'label' =>  'Slider Picture',
+                'data_class'    => null
             ])
             ->add('caption1')
             ->add('caption2')
