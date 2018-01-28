@@ -44,10 +44,17 @@ class SliderController extends Controller
         if ($form->isSubmitted() && $form->isValid()){
 
             $file = $slider->getSlideName();
+            if ($file){
+                $fileName = $fileUploader->uploadSlider($file);
+                $slider->setSlideName($fileName);
+            }
 
-            $fileName = $fileUploader->uploadSlider($file);
+            $video = $slider->getSlideVideoName();
+            if ($video){
+                $videoName = $fileUploader->uploadSliderVideo($video);
+                $slider->setSlideVideoName($videoName);
+            }
 
-            $slider->setSlideName($fileName);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($slider);

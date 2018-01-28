@@ -14,10 +14,12 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class FileUploader
 {
     private $sliderDir;
+    private $videoSliderDir;
 
-    public function __construct($sliderDir)
+    public function __construct($sliderDir, $videoSliderDir)
     {
         $this->sliderDir = $sliderDir;
+        $this->videoSliderDir = $videoSliderDir;
     }
 
     public function uploadSlider(UploadedFile $file)
@@ -29,8 +31,22 @@ class FileUploader
         return $fileName;
     }
 
+    public function uploadSliderVideo(UploadedFile $file)
+    {
+        $fileName = $file->getClientOriginalName();
+
+        $file->move($this->getVideoSliderDir(), $fileName);
+
+        return $fileName;
+    }
+
     public function getSliderDir()
     {
         return $this->sliderDir;
+    }
+
+    public function getVideoSliderDir()
+    {
+        return $this->videoSliderDir;
     }
 }

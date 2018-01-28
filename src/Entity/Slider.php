@@ -19,8 +19,7 @@ class Slider
     private $sliderId;
 
     /**
-     * @ORM\Column(type="string", name="slide_name")
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", name="slide_name", nullable=true)
      * @Assert\File()
      */
     private $slideName;
@@ -34,6 +33,17 @@ class Slider
      * @ORM\Column(type="string", name="caption_2")
      */
     private $caption2;
+
+    /**
+     * @ORM\Column(type="string", name="slide_style")
+     */
+    private $slideStyle;
+
+    /**
+     * @ORM\Column(type="string", name="slide_video_name", nullable=true)
+     * @Assert\File()
+     */
+    private $slideVideoName;
 
     /**
      * @ORM\Column(name="created_at", type="datetime")
@@ -124,6 +134,27 @@ class Slider
     {
         $this->deletedAt = $deletedAt;
     }
+
+    public function getSlideStyle()
+    {
+        return $this->slideStyle;
+    }
+
+    public function setSlideStyle($slideStyle)
+    {
+        $this->slideStyle = $slideStyle;
+    }
+
+    public function getSlideVideoName()
+    {
+        return $this->slideVideoName;
+    }
+
+    public function setSlideVideoName($slideVideoName)
+    {
+        $this->slideVideoName = $slideVideoName;
+    }
+
 
     // add your own fields
 }

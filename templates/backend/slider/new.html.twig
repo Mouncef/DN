@@ -55,7 +55,13 @@
                         <div class="panel-body">
 
                             <div class="row row-pad-5">
-                                <div class="col-lg-4">
+                                <div class="col-lg-4" id="videoUpload">
+                                    <label class="btn btn-info-alt btn-block">
+                                        Upload a Video Here !
+                                        {{ form_widget(form.slideVideoName, { 'attr': {'': ''} }) }} {##}
+                                    </label>
+                                </div>
+                                <div class="col-lg-4" id="imageUpload">
                                     <label class="btn btn-success-alt btn-block">
                                         Upload a Picture Here !
                                         {{ form_widget(form.slideName, { 'attr': {'': ''} }) }} {##}
@@ -66,6 +72,9 @@
                                 </div>
                                 <div class="col-lg-4">
                                     {{ form_widget(form.caption2, { 'attr': {'class': 'form-control', 'placeholder':'Caption n°2'} }) }}
+                                </div>
+                                <div class="col-lg-4">
+                                    {{ form_widget(form.slideStyle, { 'attr': {'class': 'form-control', 'placeholder':'Style of elements'} }) }}
                                 </div>
                                 {#<textarea class="form-control" rows="5" placeholder="Message"></textarea>#}
                             </div>
@@ -123,6 +132,25 @@
             {#{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}#}
             {#jQuery('#slider_slideName').dropzone({ url: "{{ currentPath }}" });#}
             {#var myDropzone = new Dropzone("div#slider_slideName", { url: "{{ currentPath }}"});#}
+
+            //ListStyles on change
+            /*var listStyles = $('#slider_slideStyle');
+            listStyles.on('change', function () {
+                 var option = $( '#slider_slideStyle').find('option:selected' ).val();
+                 console.log(option);
+                 if (option === 'video')
+                 {
+                     $('#imageUpload').hide();
+                     $('#slider_slideName').hide();
+                     $('#videoUpload').show();
+                     $('#slider_slideVideoName').show();
+                 } else {
+                     $('#videoUpload').hide();
+                     $('#slider_slideVideoName').hide();
+                     $('#imageUpload').show();
+                     $('#slider_slideName').show();
+                 }
+            });*/
 
             // Tags Input
             jQuery('#tags').tagsInput({width:'auto'});
