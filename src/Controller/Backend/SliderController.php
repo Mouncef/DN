@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -78,6 +79,8 @@ class SliderController extends Controller
         $em = $this->getDoctrine()->getManager();
         $slide =  $em->getRepository(Slider::class)->find($id);
 
+        $slideName = $slide->getSlideName();
+        $videoName = $slide->getSlideVideoName();
         if (!$slide) {
 
             throw $this->createNotFoundException(
@@ -86,26 +89,33 @@ class SliderController extends Controller
 
         }
 
-        $form = $this->createFormBuilder($slide)
-            ->add('slideName', FileType::class, [
-                'data_class' => null,
-                'required'  => false
-            ])
-            ->add('caption1', null, ['required'  => false])
-            ->add('caption2', null, ['required'  => false])
-            ->getForm()
-        ;
+        $form = $this->createForm(SliderType::class, $slide);
         $form->handleRequest($request);
 
 
         if ($form->isSubmitted() && $form->isValid() && !$form->isEmpty()){
+            if (is_null($request->files->get('slider')['slideName']) && is_null($request->files->get('slider')['slideVideoName']))
+            {
+                $slide->setSlideVideoName($videoName);
+                $slide->setSlideName($slideName);
+            }
 
-            $file = $slide->getSlideName();
 
-            $fileName = $fileUploader->uploadSlider($file);
+            $file = $request->files->get('slider')['slideName'];
+            if ($file instanceof UploadedFile){
+                $dir = 'uploads/Slides/images/'.$slideName;
+                unlink($dir);
+                $fileName = $fileUploader->uploadSlider($file);
+                $slide->setSlideName($fileName);
+            }
 
-            $slide->setSlideName($fileName);
-
+            $video = $request->files->get('slider')['slideVideoName'];
+            if ($video){
+                $dir = 'uploads/Slides/videos/'.$videoName;
+                unlink($dir);
+                $videoName = $fileUploader->uploadSliderVideo($video);
+                $slide->setSlideVideoName($videoName);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
@@ -121,4 +131,35 @@ class SliderController extends Controller
 
     }
 
+    /**
+     * @Route("delete/{id}", name="slider_delete")
+     */
+    public function delete($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $slide =  $em->getRepository(Slider::class)->find($id);
+
+        if (!$slide) {
+
+            throw $this->createNotFoundException(
+                'No slide found for id '.$id
+            );
+
+        }
+
+        if ($slide->getSlideStyle() == 'video'){
+            $dir = 'uploads/Slides/videos/';
+            unlink($dir.$slide->getSlideVideoName());
+        }else {
+            $dir = 'uploads/Slides/images/';
+            unlink($dir.$slide->getSlideName());
+        }
+
+        $em->remove($slide);
+        $em->flush();
+
+        $this->addFlash('danger','Slide Deleted !');
+
+        return $this->redirectToRoute('slider_list');
+    }
 }

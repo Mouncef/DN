@@ -55,7 +55,7 @@
                         <div class="panel-body">
 
                             <div class="row row-pad-5">
-                                <div class="col-lg-4" id="videoUpload">
+                                <div class="col-lg-4" id="videoUpload" style="display: none">
                                     <label class="btn btn-info-alt btn-block">
                                         Upload a Video Here !
                                         {{ form_widget(form.slideVideoName, { 'attr': {'': ''} }) }} {##}
@@ -134,7 +134,7 @@
             {#var myDropzone = new Dropzone("div#slider_slideName", { url: "{{ currentPath }}"});#}
 
             //ListStyles on change
-            /*var listStyles = $('#slider_slideStyle');
+            var listStyles = $('#slider_slideStyle');
             listStyles.on('change', function () {
                  var option = $( '#slider_slideStyle').find('option:selected' ).val();
                  console.log(option);
@@ -150,7 +150,7 @@
                      $('#imageUpload').show();
                      $('#slider_slideName').show();
                  }
-            });*/
+            });
 
             // Tags Input
             jQuery('#tags').tagsInput({width:'auto'});

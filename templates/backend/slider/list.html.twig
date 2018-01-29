@@ -77,8 +77,43 @@
                                                 </div>
                                             </td>#}
                                             <td class="table-action-hide">
-                                                <a href="" style="opacity: 1;"><i class="fa fa-pencil"></i></a>
-                                                <a href="" class="delete-row" style="opacity: 1;"><i class="fa fa-trash-o"></i></a>
+                                                <a href="{{ path('slider_edit', {id: slide.sliderId}) }}" style="opacity: 1;"><i class="fa fa-pencil"></i></a>
+                                                <!-- Button trigger modal -->
+                                                <a style="opacity: 1;" data-toggle="modal" data-target="#modalDeleteSlider-{{ slide.sliderId }}">
+                                                    <i class="fa fa-trash-o"></i>
+                                                </a>
+
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="modalDeleteSlider-{{ slide.sliderId }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <h3>Are you sure to delete this slider :</h3>
+                                                                <br>
+                                                                {% if slide.slideStyle == 'video' %}
+                                                                    <div class="embed-responsive embed-responsive-16by9">
+                                                                        <video controls>
+                                                                            <source src="{{ asset('uploads/Slides/videos/'~slide.slideVideoName) }}" type="video/mp4" />
+                                                                        </video>
+                                                                        {#<iframe class="embed-responsive-item" src="{{ asset('uploads/Slides/videos/'~slide.slideVideoName) }}" ></iframe>#}
+                                                                    </div>
+                                                                {% else %}
+                                                                    <div class="thumbnail">
+                                                                        <img src="{{ asset('uploads/Slides/images/'~slide.slideName) }}" class="img-responsive"/>
+                                                                    </div>
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                <a href="{{ path('slider_delete', {id: slide.sliderId}) }}" class="btn btn-danger">Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     {% endfor %}

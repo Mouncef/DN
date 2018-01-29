@@ -14,7 +14,7 @@
         <div class="breadcrumb-wrapper">
             <span class="label">Add a new slide here : </span>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-plus-square"></i></a></li>
+                <li><a href="{{ path('slider_new') }}"><i class="fa fa-plus-square"></i></a></li>
                 <li class="active">New Slide</li>
             </ol>
         </div>
@@ -56,22 +56,41 @@
 
                         <div class="row row-pad-5">
                             <div class="col-lg-6">
-                                <div class="thumbnail">
-                                    <img src="{{ asset('uploads/Slides/images/'~slide.slideName) }}" class="img-responsive"/>
-                                </div>
+                                {% if slide.slideStyle == 'video' %}
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <iframe class="embed-responsive-item" src="{{ asset('uploads/Slides/videos/'~slide.slideVideoName) }}"></iframe>
+                                    </div>
+                                {% else %}
+                                    <div class="thumbnail">
+                                        <img src="{{ asset('uploads/Slides/images/'~slide.slideName) }}" class="img-responsive"/>
+                                    </div>
+                                {% endif %}
+
                             </div>
                             <div class="col-lg-6">
-                                <label class="btn btn-success-alt btn-block">
-                                    Upload a Picture Here !
-                                    {{ form_widget(form.slideName, { 'attr': {'': ''} }) }} {##}
-                                </label>
+                                <div class="col-lg-12" id="videoUpload" style="display: none">
+                                    <label class="btn btn-info-alt btn-block">
+                                        Upload a Video Here !
+                                        {{ form_widget(form.slideVideoName, { 'attr': {'': ''} }) }} {##}
+                                    </label>
+                                </div>
+                                <div class="col-lg-12" id="imageUpload" >
+                                    <label class="btn btn-success-alt btn-block">
+                                        Upload a Picture Here !
+                                        {{ form_widget(form.slideName, { 'attr': {'': ''} }) }} {##}
+                                    </label>
+                                </div>
+                                <div class="col-lg-12">
+                                    {{ form_widget(form.slideStyle, { 'attr': {'class': 'form-control', 'placeholder':'Style of elements'} }) }}
+                                </div>
+                                <div class="col-lg-12">
+                                    {{ form_widget(form.caption1, { 'attr': {'class': 'form-control', 'placeholder':'Caption n°1'} }) }}
+                                </div>
+                                <div class="col-lg-12">
+                                    {{ form_widget(form.caption2, { 'attr': {'class': 'form-control', 'placeholder':'Caption n°2'} }) }}
+                                </div>
                             </div>
-                            <div class="col-lg-12">
-                                {{ form_widget(form.caption1, { 'attr': {'class': 'form-control', 'placeholder':'Caption n°1'} }) }}
-                            </div>
-                            <div class="col-lg-12">
-                                {{ form_widget(form.caption2, { 'attr': {'class': 'form-control', 'placeholder':'Caption n°2'} }) }}
-                            </div>
+
                             {#<textarea class="form-control" rows="5" placeholder="Message"></textarea>#}
                         </div>
                     </div><!-- panel-body -->
@@ -128,6 +147,32 @@
             {#{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}#}
             {#jQuery('#slider_slideName').dropzone({ url: "{{ currentPath }}" });#}
             {#var myDropzone = new Dropzone("div#slider_slideName", { url: "{{ currentPath }}"});#}
+
+            //ListStyles on change
+            var listStyles = $('#slider_slideStyle');
+
+
+            function setUploader() {
+                var option = $( '#slider_slideStyle').find('option:selected' ).val();
+                if (option === 'video')
+                {
+                    $('#imageUpload').hide();
+                    $('#slider_slideName').hide();
+                    $('#videoUpload').show();
+                    $('#slider_slideVideoName').show();
+                } else {
+                    $('#videoUpload').hide();
+                    $('#slider_slideVideoName').hide();
+                    $('#imageUpload').show();
+                    $('#slider_slideName').show();
+                }
+            }
+
+            setUploader();
+
+            listStyles.on('change', function () {
+                setUploader();
+            });
 
             // Tags Input
             jQuery('#tags').tagsInput({width:'auto'});
