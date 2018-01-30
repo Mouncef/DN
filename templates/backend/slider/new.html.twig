@@ -76,6 +76,10 @@
                                 <div class="col-lg-4">
                                     {{ form_widget(form.slideStyle, { 'attr': {'class': 'form-control', 'placeholder':'Style of elements'} }) }}
                                 </div>
+                                <div class="col-lg-4">
+                                    <label>Publié : </label>
+                                    {{ form_widget(form.isPublicated, { 'attr': {} }) }}
+                                </div>
                                 {#<textarea class="form-control" rows="5" placeholder="Message"></textarea>#}
                             </div>
                         </div><!-- panel-body -->

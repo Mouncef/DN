@@ -49,7 +49,7 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Slide Name</th>
+                                        <th>Slide Type</th>
                                         <th>Caption n°1</th>
                                         <th>Caption n°2</th>
                                         <th></th>
@@ -59,7 +59,17 @@
                                     {% for slide in sliders %}
                                         <tr class="{% if loop.index is odd %}odd gradeX{% else %}even gradeC{% endif %}">
                                             <td class="center">{{ slide.sliderId }}</td>
-                                            <td class="center">{{ slide.slideName }}</td>
+                                            <td class="center">
+                                            {% if slide.slideStyle == 'video' %}
+                                                <a href="{{ asset('uploads/Slides/videos/'~slide.slideVideoName) }}">
+                                                    <i class="fa fa-video-camera" aria-hidden="true"></i>
+                                                </a>
+                                            {% else %}
+                                                <a href="{{ asset('uploads/Slides/images/'~slide.slideName) }}">
+                                                    <i class="fa fa-picture-o" aria-hidden="true"></i>
+                                                </a>
+                                            {% endif %}
+                                            </td>
                                             <td class="center">{{ slide.caption1 }}</td>
                                             <td class="center">{{ slide.caption2 }}</td>
                                             {#<td class="table-action">
@@ -77,9 +87,10 @@
                                                 </div>
                                             </td>#}
                                             <td class="table-action-hide">
-                                                <a href="{{ path('slider_edit', {id: slide.sliderId}) }}" style="opacity: 1;"><i class="fa fa-pencil"></i></a>
+                                                <a href="{{ path('slider_edit', {id: slide.sliderId}) }}" style="opacity: 1;color: #985f0d" title="edit"><i class="fa fa-pencil"></i></a>
+                                                <a href="{{ path('slider_edit', {id: slide.sliderId}) }}" style="opacity: 1;color: green" title="publish"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
                                                 <!-- Button trigger modal -->
-                                                <a style="opacity: 1;" data-toggle="modal" data-target="#modalDeleteSlider-{{ slide.sliderId }}">
+                                                <a style="opacity: 1;color: red" data-toggle="modal" data-target="#modalDeleteSlider-{{ slide.sliderId }}" title="delete" >
                                                     <i class="fa fa-trash-o"></i>
                                                 </a>
 

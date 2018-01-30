@@ -89,6 +89,10 @@
                                 <div class="col-lg-12">
                                     {{ form_widget(form.caption2, { 'attr': {'class': 'form-control', 'placeholder':'Caption n°2'} }) }}
                                 </div>
+                                <div class="col-lg-12">
+                                    <label>Publié : </label>
+                                    {{ form_widget(form.isPublicated, { 'attr': {} }) }}
+                                </div>
                             </div>
 
                             {#<textarea class="form-control" rows="5" placeholder="Message"></textarea>#}

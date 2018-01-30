@@ -34,6 +34,7 @@ class SliderType extends AbstractType
             ])
             ->add('caption1')
             ->add('caption2')
+            ->add('isPublicated')
         ;
         $builder->get('slideName')
             ->addModelTransformer(new CallbackTransformer(

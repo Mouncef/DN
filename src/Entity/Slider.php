@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="dn_tbl_slider")
+ * @ORM\Table(name="tbl_slider")
  * @ORM\Entity(repositoryClass="App\Repository\SliderRepository")
  */
 class Slider
@@ -60,9 +60,15 @@ class Slider
      */
     private $deletedAt;
 
+    /**
+     * @ORM\Column(name="is_publicated", type="boolean")
+     */
+    private $isPublicated;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime('now');
+        $this->isPublicated = false;
     }
 
     public function getSliderId()
@@ -154,6 +160,17 @@ class Slider
     {
         $this->slideVideoName = $slideVideoName;
     }
+
+    public function getisPublicated()
+    {
+        return $this->isPublicated;
+    }
+
+    public function setIsPublicated($isPublicated)
+    {
+        $this->isPublicated = $isPublicated;
+    }
+
 
 
     // add your own fields
