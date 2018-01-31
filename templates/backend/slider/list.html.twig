@@ -44,6 +44,15 @@
                             {#<h5 class="subtitle mb5">Alternative Pagination</h5>
                             <p>The example below shows the full_numbers type of pagination, where 'first', 'previous', 'next' and 'last' buttons are presented, as well as the five pages around the current page.</p>
                             <br>#}
+                            {% for label, messages in app.flashes(['warning', 'error', 'success', 'info', 'notice','primary']) %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ label }} alert-dismissable" id="messagesAlerte">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+
                             <div class="table-responsive">
                                 <table class="table table-hidaction table-hover" id="table2">
                                     <thead>
@@ -52,7 +61,7 @@
                                         <th>Slide Type</th>
                                         <th>Caption n°1</th>
                                         <th>Caption n°2</th>
-                                        <th></th>
+                                        <th>Actions</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -61,38 +70,58 @@
                                             <td class="center">{{ slide.sliderId }}</td>
                                             <td class="center">
                                             {% if slide.slideStyle == 'video' %}
-                                                <a href="{{ asset('uploads/Slides/videos/'~slide.slideVideoName) }}">
+                                                <a href="#" data-toggle="modal" data-target="#fileModal-{{ slide.sliderId }}">
                                                     <i class="fa fa-video-camera" aria-hidden="true"></i>
                                                 </a>
                                             {% else %}
-                                                <a href="{{ asset('uploads/Slides/images/'~slide.slideName) }}">
+                                                <a href="#" data-toggle="modal" data-target="#fileModal-{{ slide.sliderId }}">
                                                     <i class="fa fa-picture-o" aria-hidden="true"></i>
                                                 </a>
                                             {% endif %}
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="fileModal-{{ slide.sliderId }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">
+                                                                    {% if slide.slideStyle == 'video' %}
+                                                                        {{ slide.slideVideoName }}
+                                                                    {% else %}
+                                                                        {{ slide.slideName }}
+                                                                    {% endif %}
+                                                                </h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                {% if slide.slideStyle == 'video' %}
+                                                                    <div class="embed-responsive embed-responsive-16by9">
+                                                                        <iframe class="embed-responsive-item" src="{{ asset('uploads/Slides/videos/'~slide.slideVideoName) }}"></iframe>
+                                                                    </div>
+                                                                {% else %}
+                                                                    <div class="thumbnail">
+                                                                        <img src="{{ asset('uploads/Slides/images/'~slide.slideName) }}" class="img-responsive"/>
+                                                                    </div>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td class="center">{{ slide.caption1 }}</td>
                                             <td class="center">{{ slide.caption2 }}</td>
-                                            {#<td class="table-action">
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn-success dropdown-toggle" data-toggle="dropdown">
-                                                        <span class="fa fa-cogs"></span> Actions
-                                                    </button>
-                                                    <ul class="dropdown-menu" role="menu">
-                                                        <li><a href="#">Action</a></li>
-                                                        <li><a href="#">Another action</a></li>
-                                                        <li><a href="#">Something else here</a></li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#">Separated link</a></li>
-                                                    </ul>
-                                                </div>
-                                            </td>#}
+
                                             <td class="table-action-hide">
-                                                <a href="{{ path('slider_edit', {id: slide.sliderId}) }}" style="opacity: 1;color: #985f0d" title="edit"><i class="fa fa-pencil"></i></a>
-                                                <a href="{{ path('slider_edit', {id: slide.sliderId}) }}" style="opacity: 1;color: green" title="publish"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
-                                                <!-- Button trigger modal -->
-                                                <a style="opacity: 1;color: red" data-toggle="modal" data-target="#modalDeleteSlider-{{ slide.sliderId }}" title="delete" >
-                                                    <i class="fa fa-trash-o"></i>
-                                                </a>
+                                                {% if slide.isPublicated == '1' %}
+                                                    <a href="{{ path('slider_unpublish', {id: slide.sliderId}) }}" style="opacity: 1;" class="warning" title="publish"><i class="fa fa-cloud-download" aria-hidden="true"></i></a>
+
+                                                {% else %}
+                                                    <a href="{{ path('slider_edit', {id: slide.sliderId}) }}" style="opacity: 1;" class="info" title="edit"><i class="fa fa-pencil"></i></a>
+                                                    <a style="opacity: 1;" class="danger" data-toggle="modal" data-target="#modalDeleteSlider-{{ slide.sliderId }}" title="delete" >
+                                                        <i class="fa fa-trash-o"></i>
+                                                    </a>
+                                                    <a href="{{ path('slider_publish', {id: slide.sliderId}) }}" style="opacity: 1;" class="success" title="publish"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                                {% endif %}
+
 
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="modalDeleteSlider-{{ slide.sliderId }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -168,6 +197,11 @@
         jQuery(document).ready(function() {
 
             "use strict";
+
+            // Alert auto Close
+            $("#messagesAlerte").fadeTo(3000, 2000).slideUp(2000, function(){
+                $("messagesAlerte").slideUp(2000);
+            });
 
             jQuery('#table2').dataTable({
                 "sPaginationType": "full_numbers"

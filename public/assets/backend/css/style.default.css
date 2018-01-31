@@ -4109,6 +4109,42 @@ div.error label.error:before {
     display: inline-block;
 }
 
+.info {
+    color: #17A2B8 !important;
+}
+
+.primary {
+    color: #007BFF !important;
+}
+
+.success {
+    color: #28A745 !important;
+}
+
+.danger {
+    color: #DC3545 !important;
+}
+
+.warning {
+    color: #FFC107 !important;
+}
+
+.grey {
+    color: #6C757D !important;
+}
+
+.light {
+    color: #F8F9FA !important;
+}
+
+.dark {
+    color: #343A40 !important;
+}
+
+.white {
+    color: #FFFFFF !important;
+}
+
 
 
 /********** 18. MEDIA QUERIES **********/

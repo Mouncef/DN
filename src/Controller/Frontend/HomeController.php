@@ -15,7 +15,7 @@ class HomeController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
-        $sliders = $em->getRepository(Slider::class)->findAll();
+        $sliders = $em->getRepository(Slider::class)->getPublicatedSlides();
 
         return $this->render('frontend/index.html.twig', [
             'sliders' => $sliders

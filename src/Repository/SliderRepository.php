@@ -13,6 +13,18 @@ class SliderRepository extends ServiceEntityRepository
         parent::__construct($registry, Slider::class);
     }
 
+    public function getPublicatedSlides()
+    {
+        $query = $this->_em->getRepository(Slider::class)->createQueryBuilder('s')
+            ->where('s.isPublicated = 1')
+            ->orderBy('s.createdAt','DESC')
+            ->setMaxResults(5)
+            ->getQuery()->getResult()
+        ;
+
+        return $query;
+    }
+
     /*
     public function findBySomething($value)
     {

@@ -116,6 +116,9 @@ class SliderController extends Controller
                 $videoName = $fileUploader->uploadSliderVideo($video);
                 $slide->setSlideVideoName($videoName);
             }
+
+            $slide->setUpdatedAt(new \DateTime('now'));
+
             $em = $this->getDoctrine()->getManager();
             $em->flush();
 
@@ -159,6 +162,58 @@ class SliderController extends Controller
         $em->flush();
 
         $this->addFlash('danger','Slide Deleted !');
+
+        return $this->redirectToRoute('slider_list');
+    }
+
+    /**
+     * @Route("publish/{id}", name="slider_publish")
+     */
+    public function publish($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $slide =  $em->getRepository(Slider::class)->find($id);
+
+        if (!$slide) {
+
+            throw $this->createNotFoundException(
+                'No slide found for id '.$id
+            );
+
+        }
+
+        $slide->setIsPublicated(true);
+
+        $em->persist($slide);
+        $em->flush();
+
+        $this->addFlash('success','Slide Published !');
+
+        return $this->redirectToRoute('slider_list');
+    }
+
+    /**
+     * @Route("unpublish/{id}", name="slider_unpublish")
+     */
+    public function unpublish($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $slide =  $em->getRepository(Slider::class)->find($id);
+
+        if (!$slide) {
+
+            throw $this->createNotFoundException(
+                'No slide found for id '.$id
+            );
+
+        }
+
+        $slide->setIsPublicated(false);
+
+        $em->persist($slide);
+        $em->flush();
+
+        $this->addFlash('warning','Slide Unpublished !');
 
         return $this->redirectToRoute('slider_list');
     }
