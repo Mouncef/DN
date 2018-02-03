@@ -95,7 +95,10 @@
                                                             <div class="modal-body">
                                                                 {% if slide.slideStyle == 'video' %}
                                                                     <div class="embed-responsive embed-responsive-16by9">
-                                                                        <iframe class="embed-responsive-item" src="{{ asset('uploads/Slides/videos/'~slide.slideVideoName) }}"></iframe>
+                                                                        <video class="embed-responsive-item" controls>
+                                                                            <source src="{{ asset('uploads/Slides/videos/'~slide.slideVideoName) }}" type="video/mp4" />
+                                                                        </video>
+                                                                        {#<iframe class="embed-responsive-item" src="{{ asset('uploads/Slides/videos/'~slide.slideVideoName) }}" ></iframe>#}
                                                                     </div>
                                                                 {% else %}
                                                                     <div class="thumbnail">
@@ -136,7 +139,7 @@
                                                                 <br>
                                                                 {% if slide.slideStyle == 'video' %}
                                                                     <div class="embed-responsive embed-responsive-16by9">
-                                                                        <video controls>
+                                                                        <video class="embed-responsive-item" controls>
                                                                             <source src="{{ asset('uploads/Slides/videos/'~slide.slideVideoName) }}" type="video/mp4" />
                                                                         </video>
                                                                         {#<iframe class="embed-responsive-item" src="{{ asset('uploads/Slides/videos/'~slide.slideVideoName) }}" ></iframe>#}
