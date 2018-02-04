@@ -13,6 +13,17 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
+    public function getPublicatedCategories()
+    {
+        $query = $this->_em->getRepository(Category::class)->createQueryBuilder('c')
+            ->where('c.isPublicated = 1')
+            ->orderBy('c.createdAt','DESC')
+            ->getQuery()->getResult()
+        ;
+
+        return $query;
+    }
+
     /*
     public function findBySomething($value)
     {

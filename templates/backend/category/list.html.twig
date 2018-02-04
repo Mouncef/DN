@@ -44,13 +44,13 @@
                             {% endfor %}
 
                             <div class="table-responsive">
-                                <table class="table table-hidaction table-hover" id="table2">
+                                <table class="table table-hidaction table-hover" id="table3">
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Slide Type</th>
-                                        <th>Caption n°1</th>
-                                        <th>Caption n°2</th>
+                                        <th>Category Name</th>
+                                        <th>Cover</th>
+                                        <th>Caption</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
@@ -58,6 +58,7 @@
                                     {% for category in categories %}
                                         <tr class="{% if loop.index is odd %}odd gradeX{% else %}even gradeC{% endif %}">
                                             <td class="center">{{ category.categoryId }}</td>
+                                            <td class="center">{{ category.name }}</td>
                                             <td class="center">
                                                 <a href="#" data-toggle="modal" data-target="#fileModal-{{ category.categoryId }}">
                                                     <i class="fa fa-picture-o" aria-hidden="true"></i>
@@ -81,18 +82,25 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="center">{{ category.caption }}</td>
+
+                                            <td class="center">
+                                                {% if category.caption is empty %}
+                                                    <label class="label label-info">No Caption</label>
+                                                {% else %}
+                                                    {{ category.caption }}
+                                                {% endif %}
+                                            </td>
 
                                             <td class="table-action-hide">
                                                 {% if category.isPublicated == '1' %}
-                                                    <a href="{#{{ path('slider_unpublish', {id: slide.sliderId}) }}#}" style="opacity: 1;" class="warning" title="publish"><i class="fa fa-cloud-download" aria-hidden="true"></i></a>
+                                                    <a href="{{ path('category_unpublish', {id: category.categoryId}) }}" style="opacity: 1;" class="warning" title="publish"><i class="fa fa-cloud-download" aria-hidden="true"></i></a>
 
                                                 {% else %}
-                                                    <a href="{#{{ path('slider_edit', {id: slide.sliderId}) }}#}" style="opacity: 1;" class="info" title="edit"><i class="fa fa-pencil"></i></a>
+                                                    <a href="{{ path('category_edit', {id: category.categoryId}) }}" style="opacity: 1;" class="info" title="edit"><i class="fa fa-pencil"></i></a>
                                                     <a style="opacity: 1;" class="danger" data-toggle="modal" data-target="#modalDeleteCategory-{{ category.categoryId }}" title="delete" >
                                                         <i class="fa fa-trash-o"></i>
                                                     </a>
-                                                    <a href="{#{{ path('slider_publish', {id: slide.sliderId}) }}#}" style="opacity: 1;" class="success" title="publish"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                                    <a href="{{ path('category_publish', {id: category.categoryId}) }}" style="opacity: 1;" class="success" title="publish"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
                                                 {% endif %}
 
 
@@ -113,7 +121,7 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                <a href="{#{{ path('slider_delete', {id: slide.sliderId}) }}#}" class="btn btn-danger">Delete</a>
+                                                                <a href="{{ path('category_delete', {id: category.categoryId}) }}" class="btn btn-danger">Delete</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -167,7 +175,7 @@
                 $("messagesAlerte").slideUp(2000);
             });
 
-            jQuery('#table2').dataTable({
+            jQuery('#table3').dataTable({
                 "sPaginationType": "full_numbers"
             });
 

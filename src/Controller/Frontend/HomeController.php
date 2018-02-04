@@ -2,6 +2,7 @@
 
 namespace App\Controller\Frontend;
 
+use App\Entity\Category;
 use App\Entity\Slider;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,11 +19,13 @@ class HomeController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $sliders = $em->getRepository(Slider::class)->getPublicatedSlides();
+        $categories = $em->getRepository(Category::class)->getPublicatedCategories();
 
 //        var_dump($request->attributes->get('_route'));die;
 
         return $this->render('frontend/index.html.twig', [
-            'sliders' => $sliders
+            'sliders' => $sliders,
+            'categories' => $categories
         ]);
     }
 

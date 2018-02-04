@@ -10,12 +10,12 @@
 
 {% block pageHeader %}
     <div class="pageheader">
-        <h2><i class="fa fa-home"></i> Categories <span>Adding a new slide ...</span></h2>
+        <h2><i class="fa fa-home"></i> Categories <span>Editing ...</span></h2>
         <div class="breadcrumb-wrapper">
             <span class="label">Add a new category here : </span>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-plus-square"></i></a></li>
-                <li class="active">New Category</li>
+                <li><a href="{{ path('slider_new') }}"><i class="fa fa-plus-square"></i></a></li>
+                <li class="active">Edit Category</li>
             </ol>
         </div>
     </div>
@@ -23,7 +23,7 @@
 
 {% block contentPanel %}
     <style>
-        #category_caption {
+        #slider_caption1 ,#slider_caption2 {
             min-height: 63px;
         }
     </style>
@@ -39,45 +39,62 @@
                             <a href="" class="panel-close">×</a>
                             <a href="" class="minimize">−</a>
                         </div>
-                        <h4 class="panel-title">Add a new category</h4>
+                        <h4 class="panel-title">Edit {{ category.name }}</h4>
+                        <p>
+                            {#{% for label, messages in app.flashes(['warning', 'error', 'success', 'info', 'notice']) %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ label }}">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}#}
+                        </p>
                     </div>
 
                     {{ form_start(form, { 'attr' : { 'class': 'form' } }) }}
-                        <div class="panel-body">
+                    <div class="panel-body">
 
-                            <div class="row row-pad-5">
+                        <div class="row row-pad-5">
+                            <div class="col-lg-6">
+                                    <div class="thumbnail">
+                                        <img src="{{ asset('uploads/Categories/images/'~category.cover) }}" class="img-responsive"/>
+                                    </div>
+                             </div>
+                            <div class="col-lg-6">
                                 <div class="col-lg-12">
-                                    {{ form_widget(form.name, { 'attr': {'class': 'form-control', 'placeholder':'Category Name'} }) }}
-                                </div>
-                                <div class="col-lg-4">
                                     <label class="btn btn-success-alt btn-block">
                                         Upload a Picture Here !
                                         {{ form_widget(form.cover, { 'attr': {'': ''} }) }} {##}
                                     </label>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-12">
+                                    {{ form_widget(form.categoryStyle, { 'attr': {'class': 'form-control', 'placeholder':'Style of element'} }) }}
+                                </div>
+                                <div class="col-lg-12">
+                                    {{ form_widget(form.name, { 'attr': {'class': 'form-control', 'placeholder':'Category Name'} }) }}
+                                </div>
+                                <div class="col-lg-12">
                                     {{ form_widget(form.caption, { 'attr': {'class': 'form-control', 'placeholder':'Caption'} }) }}
                                 </div>
-                                <div class="col-lg-4">
-                                    {{ form_widget(form.categoryStyle, { 'attr': {'class': 'form-control', 'placeholder':'Style of elements'} }) }}
-                                </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-12">
                                     <label>Publié : </label>
                                     {{ form_widget(form.isPublicated, { 'attr': {} }) }}
                                 </div>
-                                {#<textarea class="form-control" rows="5" placeholder="Message"></textarea>#}
                             </div>
-                        </div><!-- panel-body -->
-                        <div class="panel-footer">
-                            <a type="button" href="{{ path('category_list') }}" class="btn btn-warning">
-                                <i class="fa fa-chevron-circle-left fa-lg" aria-hidden="true"></i>
-                                Back to list
-                            </a>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                                Save your category
-                            </button>
+
+                            {#<textarea class="form-control" rows="5" placeholder="Message"></textarea>#}
                         </div>
+                    </div><!-- panel-body -->
+                    <div class="panel-footer">
+                        <a type="button" href="{{ path('category_list') }}" class="btn btn-warning">
+                            <i class="fa fa-chevron-circle-left fa-lg" aria-hidden="true"></i>
+                            Back to list
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                            Edit your Category
+                        </button>
+                    </div>
                     {{ form_end(form) }}
 
                 </div>
@@ -123,23 +140,30 @@
             {#var myDropzone = new Dropzone("div#slider_slideName", { url: "{{ currentPath }}"});#}
 
             //ListStyles on change
-            var listStyles = $('#slider_slideStyle');
+            /*var listStyles = $('#slider_slideStyle');
+
+
+            function setUploader() {
+                var option = $( '#slider_slideStyle').find('option:selected' ).val();
+                if (option === 'video')
+                {
+                    $('#imageUpload').hide();
+                    $('#slider_slideName').hide();
+                    $('#videoUpload').show();
+                    $('#slider_slideVideoName').show();
+                } else {
+                    $('#videoUpload').hide();
+                    $('#slider_slideVideoName').hide();
+                    $('#imageUpload').show();
+                    $('#slider_slideName').show();
+                }
+            }
+
+            setUploader();
+
             listStyles.on('change', function () {
-                 var option = $( '#slider_slideStyle').find('option:selected' ).val();
-                 console.log(option);
-                 if (option === 'video')
-                 {
-                     $('#imageUpload').hide();
-                     $('#slider_slideName').hide();
-                     $('#videoUpload').show();
-                     $('#slider_slideVideoName').show();
-                 } else {
-                     $('#videoUpload').hide();
-                     $('#slider_slideVideoName').hide();
-                     $('#imageUpload').show();
-                     $('#slider_slideName').show();
-                 }
-            });
+                setUploader();
+            });*/
 
             // Tags Input
             jQuery('#tags').tagsInput({width:'auto'});

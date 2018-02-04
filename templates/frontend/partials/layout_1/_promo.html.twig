@@ -1,76 +1,39 @@
 <div class="container-fluid offset-0">
     <div class="row custom-layout indent-col-none">
-        <div class="col-xs-6 col-sm-6 col-md-4">
-            <a href="" class="promo-box zoom-in design-default">
-                <img src="{{ asset('assets/frontend/images/custom/promo-img-06.jpg') }}" alt="">
-                <div class="description">
-                    <div class="block-table">
-                        <div class="block-table-cell"></div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-4">
-            <a href="" class="promo-box zoom-in design-default">
-                <img src="{{ asset('assets/frontend/images/custom/promo-img-07.jpg') }}" alt="">
-                <div class="description">
-                    <div class="block-table">
-                        <div class="block-table-cell">
-                            <div>
-                                <img class="img-responsive" src="{{ asset('assets/frontend/images/custom/promo-img-07-icon-01.png') }}" alt="">
+        {% if categories %}
+            {% for category in categories %}
+                {% if category.categoryStyle == 'CoverWithCaption' %}
+                    <div class="col-xs-6 col-sm-6 col-md-4">
+                        <a href="" class="promo-box zoom-in design-default">
+                            <img src="{{ asset('uploads/Categories/images/'~category.cover) }}" alt="">
+                            <div class="description">
+                                <div class="block-table">
+                                    <div class="block-table-cell">
+                                        <div>
+                                            {#<img class="img-responsive" src="{{ asset('assets/frontend/images/custom/promo-img-07-icon-01.png') }}" alt="">#}
+                                        </div>
+                                        <div class="title">{{ category.caption }}</div>
+                                        <span class="btn btn-lg btn-red">SHOP NOW!</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="title">High Perfomance<br>and Pixel Perfect Design</div>
-                            <span class="btn btn-lg btn-red">SHOP NOW!</span>
-                        </div>
+                        </a>
                     </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-4">
-            <a href="" class="promo-box zoom-in design-default">
-                <img src="{{ asset('assets/frontend/images/custom/promo-img-08.jpg') }}" alt="">
-                <div class="description">
-                    <div class="block-table">
-                        <div class="block-table-cell"></div>
+                {% else %}
+                    <div class="col-xs-6 col-sm-6 col-md-4">
+                        <a href="" class="promo-box zoom-in design-default">
+                            <img src="{{ asset('uploads/Categories/images/'~category.cover) }}" alt="">
+                            <div class="description">
+                                <div class="block-table">
+                                    <div class="block-table-cell"></div>
+                                </div>
+                            </div>
+                        </a>
                     </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-4">
-            <a href="" class="promo-box zoom-in design-default">
-                <img src="{{ asset('assets/frontend/images/custom/promo-img-09.jpg') }}" alt="">
-                <div class="description">
-                    <div class="block-table">
-                        <div class="block-table-cell">
-                            <div class="title">Built with Love,<br>Trusted and Experienced<br>Elite Author</div>
-                            <span class="btn btn-lg">SHOP NOW!</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-4">
-            <a href="" class="promo-box zoom-in design-default">
-                <img src="{{ asset('assets/frontend/images/custom/promo-img-10.jpg') }}" alt="">
-                <div class="description">
-                    <div class="block-table">
-                        <div class="block-table-cell"></div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-xs-6 col-sm-6 col-md-4">
-            <a href="" class="promo-box zoom-in design-default">
-                <img src="{{ asset('assets/frontend/images/custom/promo-img-11.jpg') }}" alt="">
-                <div class="description">
-                    <div class="block-table">
-                        <div class="block-table-cell">
-                            <div class="title">It Does not Matter -<br>what Kind of Products do<br>You Want to Sell.</div>
-                            <span class="btn btn-lg">SHOP NOW!</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+
+        {% endif %}
     </div>
 </div>

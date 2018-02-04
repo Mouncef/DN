@@ -25,7 +25,7 @@ class Category
     private $cover;
 
     /**
-     * @ORM\Column(type="string", name="caption")
+     * @ORM\Column(type="string", name="caption", nullable=true)
      */
     private $caption;
 
@@ -43,6 +43,11 @@ class Category
      * @ORM\Column(type="datetime", name="created_at")
      */
     private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime", name="updated_at", nullable=true)
+     */
+    private $updatedAt;
 
     /**
      * @ORM\Column(type="boolean", name="is_publicated")
@@ -127,6 +132,16 @@ class Category
     public function setCategoryStyle($categoryStyle)
     {
         $this->categoryStyle = $categoryStyle;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
     }
 
 

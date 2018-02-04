@@ -307,7 +307,16 @@
                         <!-- header-menu -->
                         <nav class="header-menu">
                             <ul>
-                                <li class="dropdown selected">
+                                <li class="dropdown {% if app.request.attributes.get('_route') == 'homepage' %}selected{% endif %}"><a href="">Home</a></li>
+
+                                {% if categories %}
+                                    {% for category in categories %}
+                                        <li class="dropdown"><a href="">{{ category.name }}</a></li>
+                                    {% endfor %}
+                                {% else %}
+
+                                {% endif %}
+                                {#<li class="dropdown selected">
                                     <a href="">LAYOUT</a>
                                     <div class="dropdown-menu">
                                         <h2 class="title-submenu">LAYOUT</h2>
@@ -387,7 +396,6 @@
                                         </ul>
                                     </div>
                                 </li>
-                                <li class="dropdown"><a href="">RTL</a></li>
                                 <li class="dropdown">
                                     <a href="">LISTING</a>
                                     <div class="dropdown-menu">
@@ -938,7 +946,7 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li class="dropdown"><a href="#">BUY TEMPLATE</a></li>
+                                <li class="dropdown"><a href="#">BUY TEMPLATE</a></li>#}
                             </ul>
                         </nav>
                         <!-- /header-menu -->

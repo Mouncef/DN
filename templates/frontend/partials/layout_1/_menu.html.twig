@@ -1,6 +1,13 @@
 <nav class="panel-menu">
     <ul>
-        <li>
+        {% if categories %}
+            {% for category in categories %}
+                <li><a href="">{{ category.name }}</a></li>
+            {% endfor %}
+        {% else %}
+
+        {% endif %}
+        {#<li>
             <a href="">LAYOUT</a>
             <ul>
                 <li><a href="">Home page 1</a></li>
@@ -17,7 +24,6 @@
                 <li><a href="">Home page 12</a></li>
             </ul>
         </li>
-        <li><a href="">RTL</a></li>
         <li>
             <a href="">LISTING</a>
             <ul>
@@ -266,8 +272,8 @@
                     </ul>
                 </li>
             </ul>
-        </li>
-        <li><a href="#">BUY TEMPLATE</a></li>
+        </li>#}
+        <li><a href="#">MORE</a></li>
     </ul>
     <div class="mm-navbtn-names" style="display:none">
         <div class="mm-closebtn">CLOSE</div>

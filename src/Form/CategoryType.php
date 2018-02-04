@@ -26,7 +26,9 @@ class CategoryType extends AbstractType
                     'Cover without caption' => 'CoverWithoutCaption'
                 ]
             ])
-            ->add('caption')
+            ->add('caption', null, [
+                'required' =>   null
+            ])
             ->add('isPublicated')
         ;
     }
