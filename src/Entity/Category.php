@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -54,11 +56,28 @@ class Category
      */
     private $isPublicated;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="category")
+     */
+    private $articles;
+
+
     public function __construct()
     {
         $this->createdAt = new \DateTime('now');
         $this->isPublicated = false;
+        $this->articles = new ArrayCollection();
+
     }
+
+    /**
+     * @return Collection|Article[]
+     */
+    public function getProducts()
+    {
+        return $this->articles;
+    }
+
 
     public function getCategoryId()
     {
@@ -144,6 +163,22 @@ class Category
         $this->updatedAt = $updatedAt;
     }
 
+    public function addArticle(Article $article)
+    {
+        if ($this->articles->contains($article)) {
+            return;
+        }
 
+        $this->articles[] = $article;
+        // set the *owning* side!
+        $article->setCategory($this);
+    }
+
+    public function removeArticle(Article $article)
+    {
+        $this->articles->removeElement($article);
+        // set the owning side to null
+        $article->setCategory(null);
+    }
 
 }

@@ -17,7 +17,7 @@ class SliderRepository extends ServiceEntityRepository
     {
         $query = $this->_em->getRepository(Slider::class)->createQueryBuilder('s')
             ->where('s.isPublicated = 1')
-            ->orderBy('s.createdAt','DESC')
+            ->orderBy('s.createdAt','ASC')
             ->setMaxResults(5)
             ->getQuery()->getResult()
         ;
