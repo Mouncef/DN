@@ -3,8 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Article;
+use App\Entity\Category;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,8 +18,11 @@ class ArticleType extends AbstractType
         $builder
             ->add('name')
             ->add('price')
-            ->add('category')
-            ->add('description')
+            ->add('category', EntityType::class , [
+                'class' =>  Category::class,
+                'choice_label'  =>  'name'
+            ])
+            ->add('description', TextareaType::class)
             ->add('isPublished')
             ->add('isAvailable')
             ->add('principalCover', FileType::class, [

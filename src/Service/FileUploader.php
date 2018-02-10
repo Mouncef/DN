@@ -16,12 +16,14 @@ class FileUploader
     private $sliderDir;
     private $videoSliderDir;
     private $categoryCoverDir;
+    private $articleCoverDir;
 
-    public function __construct($sliderDir, $videoSliderDir, $categoryCoverDir)
+    public function __construct($sliderDir, $videoSliderDir, $categoryCoverDir, $articleCoverDir)
     {
         $this->sliderDir = $sliderDir;
         $this->videoSliderDir = $videoSliderDir;
         $this->categoryCoverDir = $categoryCoverDir;
+        $this->articleCoverDir = $articleCoverDir;
     }
 
     public function uploadSlider(UploadedFile $file)
@@ -51,6 +53,15 @@ class FileUploader
         return $fileName;
     }
 
+    public function uploadArticleCover(UploadedFile $file)
+    {
+        $fileName = $file->getClientOriginalName();
+
+        $file->move($this->getArticleCoverDir(), $fileName);
+
+        return $fileName;
+    }
+
     public function getSliderDir()
     {
         return $this->sliderDir;
@@ -66,5 +77,8 @@ class FileUploader
         return $this->categoryCoverDir;
     }
 
-
+    private function getArticleCoverDir()
+    {
+        return $this->articleCoverDir;
+    }
 }

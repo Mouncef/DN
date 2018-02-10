@@ -5,6 +5,7 @@ parameters:
     sliders_directory: '%kernel.project_dir%/public/uploads/Slides/images'
     video_sliders_directory: '%kernel.project_dir%/public/uploads/Slides/videos'
     category_cover_directory: '%kernel.project_dir%/public/uploads/Categories/images'
+    article_cover_directory: '%kernel.project_dir%/public/uploads/Articles/images'
 
 services:
     # default configuration for services in *this* file
@@ -34,3 +35,4 @@ services:
             $sliderDir:  '%sliders_directory%'
             $videoSliderDir:  '%video_sliders_directory%'
             $categoryCoverDir:  '%category_cover_directory%'
+            $articleCoverDir:  '%article_cover_directory%'

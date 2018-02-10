@@ -226,7 +226,7 @@ class Article
     }
 
 
-    public function getCategory(): Category
+    public function getCategory()
     {
         return $this->category;
     }
