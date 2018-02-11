@@ -6,6 +6,9 @@ parameters:
     video_sliders_directory: '%kernel.project_dir%/public/uploads/Slides/videos'
     category_cover_directory: '%kernel.project_dir%/public/uploads/Categories/images'
     article_cover_directory: '%kernel.project_dir%/public/uploads/Articles/images'
+    article_cover_second_directory: '%kernel.project_dir%/public/uploads/Articles/images/Second'
+    article_cover_third_directory: '%kernel.project_dir%/public/uploads/Articles/images/Third'
+    article_cover_fourth_directory: '%kernel.project_dir%/public/uploads/Articles/images/Fourth'
 
 services:
     # default configuration for services in *this* file
@@ -36,3 +39,6 @@ services:
             $videoSliderDir:  '%video_sliders_directory%'
             $categoryCoverDir:  '%category_cover_directory%'
             $articleCoverDir:  '%article_cover_directory%'
+            $articleSecondCoverDir:  '%article_cover_second_directory%'
+            $articleThirdCoverDir:  '%article_cover_third_directory%'
+            $articleFourthCoverDir:  '%article_cover_fourth_directory%'

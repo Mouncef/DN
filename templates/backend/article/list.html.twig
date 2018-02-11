@@ -16,7 +16,7 @@
         <div class="breadcrumb-wrapper">
             <span class="label">Add a new article here : </span>
             <ol class="breadcrumb">
-                <li><a href="{#{{ path('category_new') }}#}"><i class="fa fa-plus-square"></i></a></li>
+                <li><a href="{{ path('article_new') }}"><i class="fa fa-plus-square"></i></a></li>
                 <li class="active">List Articles</li>
             </ol>
         </div>
@@ -48,9 +48,13 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Article Name</th>
-                                        <th>Cover</th>
-                                        <th>Description</th>
+                                        <th>Name</th>
+                                        <th>Category</th>
+                                        <th>Price</th>
+                                        <th>Cover n°1</th>
+                                        <th>Cover n°2</th>
+                                        <th>Cover n°3</th>
+                                        <th>Cover n°4</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
@@ -59,12 +63,15 @@
                                         <tr class="{% if loop.index is odd %}odd gradeX{% else %}even gradeC{% endif %}">
                                             <td class="center">{{ article.articleId }}</td>
                                             <td class="center">{{ article.name }}</td>
+                                            <td class="center">{{ article.category.name }}</td>
+                                            <td class="center">{{ article.price }}</td>
                                             <td class="center">
-                                                <a href="#" data-toggle="modal" data-target="#fileModal-{{ article.articleId }}">
+                                                {% if article.principalCover %}
+                                                    <a href="#" data-toggle="modal" data-target="#fileModal-{{ article.articleId }}">
                                                     <i class="fa fa-picture-o" aria-hidden="true"></i>
                                                 </a>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="fileModal-{{ article.articleId }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="fileModal-{{ article.articleId }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -81,31 +88,107 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </td>
-
-                                            <td class="center">
-                                                {% if article.description is empty %}
-                                                    <label class="label label-info">No Caption</label>
                                                 {% else %}
-                                                    {{ article.description }}
+                                                    No Principal Cover !
+                                                {% endif %}
+                                            </td>
+                                            <td class="center">
+                                                {% if article.coverSecond %}
+                                                    <a href="#" data-toggle="modal" data-target="#file2Modal-{{ article.articleId }}">
+                                                        <i class="fa fa-picture-o" aria-hidden="true"></i>
+                                                    </a>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="file2Modal-{{ article.articleId }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                    <h4 class="modal-title" id="myModalLabel">
+                                                                        {{ article.coverSecond }}
+                                                                    </h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="thumbnail">
+                                                                        <img src="{{ asset('uploads/Articles/images/Second/'~article.coverSecond) }}" class="img-responsive"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% else %}
+                                                    No Second Cover !
+                                                {% endif %}
+                                            </td>
+                                            <td class="center">
+                                                {% if article.coverThird %}
+                                                    <a href="#" data-toggle="modal" data-target="#file3Modal-{{ article.articleId }}">
+                                                        <i class="fa fa-picture-o" aria-hidden="true"></i>
+                                                    </a>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="file3Modal-{{ article.articleId }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                    <h4 class="modal-title" id="myModalLabel">
+                                                                        {{ article.coverThird }}
+                                                                    </h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="thumbnail">
+                                                                        <img src="{{ asset('uploads/Articles/images/Third/'~article.coverThird) }}" class="img-responsive"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% else %}
+                                                    No Third Cover !
+                                                {% endif %}
+                                            </td>
+                                            <td class="center">
+                                                {% if article.coverFourth %}
+                                                    <a href="#" data-toggle="modal" data-target="#file4Modal-{{ article.articleId }}">
+                                                        <i class="fa fa-picture-o" aria-hidden="true"></i>
+                                                    </a>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="file4Modal-{{ article.articleId }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                    <h4 class="modal-title" id="myModalLabel">
+                                                                        {{ article.coverFourth }}
+                                                                    </h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="thumbnail">
+                                                                        <img src="{{ asset('uploads/Articles/images/Fourth/'~article.coverFourth) }}" class="img-responsive"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% else %}
+                                                    No Fourth Cover !
                                                 {% endif %}
                                             </td>
 
                                             <td class="table-action-hide">
                                                 {% if article.isPublished == '1' %}
-                                                    <a href="{#{{ path('category_unpublish', {id: category.categoryId}) }}#}" style="opacity: 1;" class="warning" title="publish"><i class="fa fa-cloud-download" aria-hidden="true"></i></a>
+                                                    <a href="{{ path('article_unpublish', {id: article.articleId}) }}" style="opacity: 1;" class="warning" title="publish"><i class="fa fa-cloud-download" aria-hidden="true"></i></a>
 
                                                 {% else %}
-                                                    <a href="{#{{ path('category_edit', {id: category.categoryId}) }}#}" style="opacity: 1;" class="info" title="edit"><i class="fa fa-pencil"></i></a>
-                                                    <a style="opacity: 1;" class="danger" data-toggle="modal" data-target="#modalDeleteCategory-{{ category.categoryId }}" title="delete" >
+                                                    <a href="{{ path('article_edit', {id: article.articleId}) }}" style="opacity: 1;" class="info" title="edit"><i class="fa fa-pencil"></i></a>
+                                                    <a style="opacity: 1;" class="danger" data-toggle="modal" data-target="#modalDeleteArticle-{{ article.articleId }}" title="delete" >
                                                         <i class="fa fa-trash-o"></i>
                                                     </a>
-                                                    <a href="{#{{ path('category_publish', {id: category.categoryId}) }}#}" style="opacity: 1;" class="success" title="publish"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                                    <a href="{{ path('article_publish', {id: article.articleId}) }}" style="opacity: 1;" class="success" title="publish"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
                                                 {% endif %}
 
 
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="modalDeleteCategory-{{ article.articleId }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal fade" id="modalDeleteArticle-{{ article.articleId }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
@@ -121,7 +204,7 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                <a href="{#{{ path('category_delete', {id: category.categoryId}) }}#}" class="btn btn-danger">Delete</a>
+                                                                <a href="{{ path('article_delete', {id: article.articleId}) }}" class="btn btn-danger">Delete</a>
                                                             </div>
                                                         </div>
                                                     </div>

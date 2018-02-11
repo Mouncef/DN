@@ -1,0 +1,355 @@
+{% extends 'backend/index.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset('assets/backend/css/style.default.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/backend/css/bootstrap-timepicker.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/backend/css/jquery.tagsinput.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/backend/css/colorpicker.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/backend/css/dropzone.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block pageHeader %}
+    <div class="pageheader">
+        <h2><i class="fa fa-home"></i> Articles <span>Editing ...</span></h2>
+        <div class="breadcrumb-wrapper">
+            <span class="label">Add a new article here : </span>
+            <ol class="breadcrumb">
+                <li><a href="{{ path('article_new') }}"><i class="fa fa-plus-square"></i></a></li>
+                <li class="active">Edit Article</li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}
+
+{% block contentPanel %}
+    <style>
+        /*#slider_caption1 ,#slider_caption2 {*/
+            /*min-height: 63px;*/
+        /*}*/
+        #listCovers li a  {
+            color: #ffffff;
+        }
+        #listCovers li a:hover  {
+            color: #222222;
+            background-color: #FFFFFF;
+        }
+        #listCovers .active a  {
+            color: #222222;
+        }
+    </style>
+    <div class="contentpanel">
+
+        <div class="row">
+
+            <div class="col-sm-12">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-btns">
+                            <a href="" class="panel-close">×</a>
+                            <a href="" class="minimize">−</a>
+                        </div>
+                        <h4 class="panel-title">Edit {{ article.name }}</h4>
+                        <p>
+                            {#{% for label, messages in app.flashes(['warning', 'error', 'success', 'info', 'notice']) %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ label }}">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}#}
+                        </p>
+                    </div>
+
+                    {{ form_start(form, { 'attr' : { 'class': 'form' } }) }}
+                    <div class="panel-body">
+
+                        <div class="row row-pad-5">
+                            <div class="col-lg-6">
+                                <div class="col-lg-12">
+                                    <div class="panel panel-dark panel-alt widget-quick-status-post">
+                                        <div class="panel-body">
+                                            <ul class="nav nav-tabs nav-justified panel-heading" id="listCovers">
+                                                <li class="active"><a href="#article-principalCover" data-toggle="tab"><i class="fa fa-picture-o"></i> <strong>Principal Cover</strong></a></li>
+                                                <li><a href="#article-secondCover" data-toggle="tab"><i class="fa fa-picture-o"></i> <strong>Second Cover</strong></a></li>
+                                                <li><a href="#article-thirdCover" data-toggle="tab"><i class="fa fa-picture-o"></i> <strong>Third Cover</strong></a></li>
+                                                <li><a href="#article-fourthCover" data-toggle="tab"><i class="fa fa-picture-o"></i> <strong>Fourth Cover</strong></a></li>
+                                            </ul>
+                                            <div class="tab-content">
+
+                                                <div id="article-principalCover" class="tab-pane active">
+                                                    {% if article.principalCover %}
+                                                        <div class="thumbnail">
+                                                            <img src="{{ asset('uploads/Articles/images/'~article.principalCover) }}" class="img-responsive"/>
+                                                            <div class="caption">
+                                                                <h5 class="text-success" style="text-align: center">Principal Cover</h5>
+                                                            </div>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="thumbnail">
+                                                            <div class="caption">
+                                                                <h5 style="text-align: center">
+                                                                    <i class="text-danger">No Principal Cover !</i>
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div id="article-secondCover" class="tab-pane">
+                                                    {% if article.coverSecond %}
+                                                        <div class="thumbnail">
+                                                            <img src="{{ asset('uploads/Articles/images/Second/'~article.coverSecond) }}" class="img-responsive"/>
+                                                            <div class="caption">
+                                                                <h5 class="text-success" style="text-align: center">Second Cover</h5>
+                                                            </div>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="thumbnail">
+                                                            <div class="caption">
+                                                                <h5 style="text-align: center">
+                                                                    <i class="text-danger">No Second Cover !</i>
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div id="article-thirdCover" class="tab-pane">
+                                                    {% if article.coverThird %}
+                                                        <div class="thumbnail">
+                                                            <img src="{{ asset('uploads/Articles/images/Third/'~article.coverThird) }}" class="img-responsive"/>
+                                                            <div class="caption">
+                                                                <h5 class="text-success" style="text-align: center">Third Cover</h5>
+                                                            </div>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="thumbnail">
+                                                            <div class="caption">
+                                                                <h5 style="text-align: center">
+                                                                    <i class="text-danger">No Third Cover !</i>
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                                <div id="article-fourthCover" class="tab-pane">
+                                                    {% if article.coverFourth %}
+                                                        <div class="thumbnail">
+                                                            <img src="{{ asset('uploads/Articles/images/Fourth/'~article.coverFourth) }}" class="img-responsive"/>
+                                                            <div class="caption">
+                                                                <h5 class="text-success" style="text-align: center">Fourth Cover</h5>
+                                                            </div>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="thumbnail">
+                                                            <div class="caption">
+                                                                <h5 style="text-align: center">
+                                                                    <i class="text-danger">No Fourth Cover !</i>
+                                                                </h5>
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div><!-- tab-content -->
+
+                                        </div><!-- panel-body -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="col-lg-12">
+                                    <label class="btn btn-success-alt btn-block">
+                                        Upload New Principal Cover Here !
+                                        {{ form_widget(form.principalCover, { 'attr': {'': ''} }) }} {##}
+                                    </label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label class="btn btn-info-alt btn-block">
+                                        Upload New Second Cover Here !
+                                        {{ form_widget(form.coverSecond, { 'attr': {'': ''} }) }} {##}
+                                    </label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label class="btn btn-info-alt btn-block">
+                                        Upload New Third Cover Here !
+                                        {{ form_widget(form.coverThird, { 'attr': {'': ''} }) }} {##}
+                                    </label>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label class="btn btn-info-alt btn-block">
+                                        Upload New Fourth Cover Here !
+                                        {{ form_widget(form.coverFourth, { 'attr': {'': ''} }) }} {##}
+                                    </label>
+                                </div>
+                            </div>
+
+                            {#<textarea class="form-control" rows="5" placeholder="Message"></textarea>#}
+                        </div>
+
+                        <div class="row row-pad-5">
+                            <div class="col-lg-12">
+                                <div class="col-lg-12">
+                                    {{ form_widget(form.name, { 'attr': {'class': 'form-control', 'placeholder':'Article Name'} }) }}
+                                </div>
+                                <div class="col-lg-12">
+                                    {{ form_widget(form.description, { 'attr': {'class': 'form-control', 'placeholder':'Article Description'} }) }}
+                                </div>
+                                <div class="col-lg-12">
+                                    {{ form_widget(form.price, { 'attr': {'class': 'form-control', 'placeholder':'Article Price'} }) }}
+                                </div>
+                                <div class="col-lg-12">
+                                    {{ form_widget(form.category, { 'attr': {'class': 'form-control', 'placeholder':'Article Category'} }) }}
+                                </div>
+                                <div class="col-lg-12">
+                                    <label>Publish : </label>
+                                    {{ form_widget(form.isPublished, { 'attr': {} }) }}
+                                    <label>Available : </label>
+                                    {{ form_widget(form.isAvailable, { 'attr': {} }) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- panel-body -->
+                    <div class="panel-footer">
+                        <a type="button" href="{{ path('article_list') }}" class="btn btn-warning">
+                            <i class="fa fa-chevron-circle-left fa-lg" aria-hidden="true"></i>
+                            Back to list
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                            Save your article
+                        </button>
+                    </div>
+                    {{ form_end(form) }}
+
+                </div>
+            </div><!-- col-sm-12 -->
+
+        </div><!-- row -->
+
+    </div><!-- contentpanel -->
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('assets/backend/js/jquery-1.11.1.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery-migrate-1.2.1.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery-ui-1.10.3.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/modernizr.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.sparkline.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/toggles.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/retina.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.cookies.js') }}"></script>
+
+    <script src="{{ asset('assets/backend/js/jquery.autogrow-textarea.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/bootstrap-timepicker.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.maskedinput.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.tagsinput.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.mousewheel.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/dropzone.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/colorpicker.js') }}"></script>
+
+    <script src="{{ asset('assets/backend/js/custom.js') }}"></script>
+
+    <script>
+        jQuery(document).ready(function(){
+
+
+            "use strict";
+
+            //dropzone
+            {#{% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}#}
+            {#jQuery('#slider_slideName').dropzone({ url: "{{ currentPath }}" });#}
+            {#var myDropzone = new Dropzone("div#slider_slideName", { url: "{{ currentPath }}"});#}
+
+            //ListStyles on change
+/*            var listStyles = $('#slider_slideStyle');
+
+
+            function setUploader() {
+                var option = $( '#slider_slideStyle').find('option:selected' ).val();
+                if (option === 'video')
+                {
+                    $('#imageUpload').hide();
+                    $('#slider_slideName').hide();
+                    $('#videoUpload').show();
+                    $('#slider_slideVideoName').show();
+                } else {
+                    $('#videoUpload').hide();
+                    $('#slider_slideVideoName').hide();
+                    $('#imageUpload').show();
+                    $('#slider_slideName').show();
+                }
+            }*/
+
+  /*          setUploader();
+
+            listStyles.on('change', function () {
+                setUploader();
+            });*/
+
+            // Tags Input
+            jQuery('#tags').tagsInput({width:'auto'});
+
+            // Select2
+            jQuery(".select2").select2({
+                width: '100%'
+            });
+
+            // Textarea Autogrow
+            jQuery('#autoResizeTA').autogrow();
+
+            // Color Picker
+            if(jQuery('#colorpicker').length > 0) {
+                jQuery('#colorSelector').ColorPicker({
+                    onShow: function (colpkr) {
+                        jQuery(colpkr).fadeIn(500);
+                        return false;
+                    },
+                    onHide: function (colpkr) {
+                        jQuery(colpkr).fadeOut(500);
+                        return false;
+                    },
+                    onChange: function (hsb, hex, rgb) {
+                        jQuery('#colorSelector span').css('backgroundColor', '#' + hex);
+                        jQuery('#colorpicker').val('#'+hex);
+                    }
+                });
+            }
+
+            // Color Picker Flat Mode
+            jQuery('#colorpickerholder').ColorPicker({
+                flat: true,
+                onChange: function (hsb, hex, rgb) {
+                    jQuery('#colorpicker3').val('#'+hex);
+                }
+            });
+
+            // Date Picker
+            jQuery('#datepicker').datepicker();
+
+            jQuery('#datepicker-inline').datepicker();
+
+            jQuery('#datepicker-multiple').datepicker({
+                numberOfMonths: 3,
+                showButtonPanel: true
+            });
+
+            // Spinner
+            var spinner = jQuery('#spinner').spinner();
+            spinner.spinner('value', 0);
+
+            // Input Masks
+            jQuery("#date").mask("99/99/9999");
+            jQuery("#phone").mask("(999) 999-9999");
+            jQuery("#ssn").mask("999-99-9999");
+
+            // Time Picker
+            jQuery('#timepicker').timepicker({defaultTIme: false});
+            jQuery('#timepicker2').timepicker({showMeridian: false});
+            jQuery('#timepicker3').timepicker({minuteStep: 15});
+
+
+        });
+    </script>
+{% endblock %}

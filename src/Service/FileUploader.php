@@ -17,13 +17,19 @@ class FileUploader
     private $videoSliderDir;
     private $categoryCoverDir;
     private $articleCoverDir;
+    private $articleSecondCoverDir;
+    private $articleThirdCoverDir;
+    private $articleFourthCoverDir;
 
-    public function __construct($sliderDir, $videoSliderDir, $categoryCoverDir, $articleCoverDir)
+    public function __construct($sliderDir, $videoSliderDir, $categoryCoverDir, $articleCoverDir, $articleSecondCoverDir, $articleThirdCoverDir, $articleFourthCoverDir)
     {
         $this->sliderDir = $sliderDir;
         $this->videoSliderDir = $videoSliderDir;
         $this->categoryCoverDir = $categoryCoverDir;
         $this->articleCoverDir = $articleCoverDir;
+        $this->articleSecondCoverDir = $articleSecondCoverDir;
+        $this->articleThirdCoverDir = $articleThirdCoverDir;
+        $this->articleFourthCoverDir = $articleFourthCoverDir;
     }
 
     public function uploadSlider(UploadedFile $file)
@@ -62,6 +68,33 @@ class FileUploader
         return $fileName;
     }
 
+    public function uploadArticleSecondCover(UploadedFile $file)
+    {
+        $fileName = $file->getClientOriginalName();
+
+        $file->move($this->getArticleSecondCoverDir(), $fileName);
+
+        return $fileName;
+    }
+
+    public function uploadArticleThirdCover(UploadedFile $file)
+    {
+        $fileName = $file->getClientOriginalName();
+
+        $file->move($this->getArticleThirdCoverDir(), $fileName);
+
+        return $fileName;
+    }
+
+    public function uploadArticleFourthCover(UploadedFile $file)
+    {
+        $fileName = $file->getClientOriginalName();
+
+        $file->move($this->getArticleFourthCoverDir(), $fileName);
+
+        return $fileName;
+    }
+
     public function getSliderDir()
     {
         return $this->sliderDir;
@@ -80,5 +113,18 @@ class FileUploader
     private function getArticleCoverDir()
     {
         return $this->articleCoverDir;
+    }
+
+    private function getArticleSecondCoverDir()
+    {
+        return $this->articleSecondCoverDir;
+    }
+    private function getArticleThirdCoverDir()
+    {
+        return $this->articleThirdCoverDir;
+    }
+    private function getArticleFourthCoverDir()
+    {
+        return $this->articleFourthCoverDir;
     }
 }
