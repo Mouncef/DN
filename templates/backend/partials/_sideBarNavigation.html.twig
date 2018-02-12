@@ -1,13 +1,21 @@
 <h5 class="sidebartitle">Navigation</h5>
 <ul class="nav nav-pills nav-stacked nav-bracket">
     <li class="{% if app.request.attributes.get('_route') == 'admin' %}active{% endif %}"><a href="{{ path('admin') }}"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
-    <li class="nav-parent {% if app.request.attributes.get('_route') == 'slider_list' or app.request.attributes.get('_route') == 'category_list'or app.request.attributes.get('_route') == 'article_list' %}nav-active{% endif %}">
+    <li class="nav-parent {% if app.request.attributes.get('_route') == 'slider_list'
+                            or app.request.attributes.get('_route') == 'category_list'
+                            or app.request.attributes.get('_route') == 'article_list'
+                            or app.request.attributes.get('_route') == 'collection_list'
+    %}nav-active{% endif %}">
         <a href="">
             <i class="fa fa-edit"></i>
             <span>Content Management</span>
         </a>
         <ul class="children"
-            style="display: {% if app.request.attributes.get('_route') == 'slider_list'or app.request.attributes.get('_route') == 'category_list' or app.request.attributes.get('_route') == 'article_list'   %}block{% endif %}" >
+            style="display: {% if app.request.attributes.get('_route') == 'slider_list'
+                                or app.request.attributes.get('_route') == 'category_list'
+                                or app.request.attributes.get('_route') == 'article_list'
+                                or app.request.attributes.get('_route') == 'collection_list'
+                           %}block{% endif %}" >
             <li class="{% if app.request.attributes.get('_route') == 'slider_list' %}active{% endif %}">
                 <a href="{{ path('slider_list') }}">
                     <i class="fa fa-caret-right"></i> Sliders
@@ -21,6 +29,11 @@
             <li class="{% if app.request.attributes.get('_route') == 'article_list' %}active{% endif %}">
                 <a href="{{ path('article_list') }}">
                     <i class="fa fa-caret-right"></i> Articles
+                </a>
+            </li>
+            <li class="{% if app.request.attributes.get('_route') == 'collection_list' %}active{% endif %}">
+                <a href="{{ path('collection_list') }}">
+                    <i class="fa fa-caret-right"></i> Collections
                 </a>
             </li>
             <li>

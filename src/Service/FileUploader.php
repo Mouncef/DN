@@ -20,8 +20,12 @@ class FileUploader
     private $articleSecondCoverDir;
     private $articleThirdCoverDir;
     private $articleFourthCoverDir;
+    private $collectionCoverDir;
 
-    public function __construct($sliderDir, $videoSliderDir, $categoryCoverDir, $articleCoverDir, $articleSecondCoverDir, $articleThirdCoverDir, $articleFourthCoverDir)
+    public function __construct(
+        $sliderDir, $videoSliderDir, $categoryCoverDir,
+        $articleCoverDir, $articleSecondCoverDir, $articleThirdCoverDir,
+        $articleFourthCoverDir,$collectionCoverDir)
     {
         $this->sliderDir = $sliderDir;
         $this->videoSliderDir = $videoSliderDir;
@@ -30,6 +34,7 @@ class FileUploader
         $this->articleSecondCoverDir = $articleSecondCoverDir;
         $this->articleThirdCoverDir = $articleThirdCoverDir;
         $this->articleFourthCoverDir = $articleFourthCoverDir;
+        $this->collectionCoverDir = $collectionCoverDir;
     }
 
     public function uploadSlider(UploadedFile $file)
@@ -95,6 +100,15 @@ class FileUploader
         return $fileName;
     }
 
+    public function uploadCollectionCover(UploadedFile $file)
+    {
+        $fileName = $file->getClientOriginalName();
+
+        $file->move($this->getCollectionCoverDir(), $fileName);
+
+        return $fileName;
+    }
+
     public function getSliderDir()
     {
         return $this->sliderDir;
@@ -126,5 +140,9 @@ class FileUploader
     private function getArticleFourthCoverDir()
     {
         return $this->articleFourthCoverDir;
+    }
+    private function getCollectionCoverDir()
+    {
+        return $this->collectionCoverDir;
     }
 }

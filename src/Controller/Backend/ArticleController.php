@@ -274,4 +274,6 @@ class ArticleController extends Controller
 
         return $this->redirectToRoute('article_list');
     }
+
+
 }

@@ -9,6 +9,7 @@ parameters:
     article_cover_second_directory: '%kernel.project_dir%/public/uploads/Articles/images/Second'
     article_cover_third_directory: '%kernel.project_dir%/public/uploads/Articles/images/Third'
     article_cover_fourth_directory: '%kernel.project_dir%/public/uploads/Articles/images/Fourth'
+    collection_cover_directory: '%kernel.project_dir%/public/uploads/Collections/images'
 
 services:
     # default configuration for services in *this* file
@@ -42,3 +43,4 @@ services:
             $articleSecondCoverDir:  '%article_cover_second_directory%'
             $articleThirdCoverDir:  '%article_cover_third_directory%'
             $articleFourthCoverDir:  '%article_cover_fourth_directory%'
+            $collectionCoverDir:  '%collection_cover_directory%'

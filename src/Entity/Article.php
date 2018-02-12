@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -84,10 +85,29 @@ class Article
      */
     private $category;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Collection", mappedBy="articles")
+     * @ORM\JoinTable(name="lnk_article_collection",
+     *     joinColumns={
+     *     @ORM\JoinColumn(name="article_id", referencedColumnName="article_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="collection_id", referencedColumnName="collection_id")
+     *   }
+     * )
+     */
+    private $collections;
+
     public function __construct()
     {
         $this->createdAt = new \Datetime('now');
         $this->isPublished = false;
+        $this->collections = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 
     public function getArticleId()
@@ -234,6 +254,11 @@ class Article
     public function setCategory(Category $category)
     {
         $this->category = $category;
+    }
+
+    public function getCollections()
+    {
+        return $this->collections;
     }
 
 
