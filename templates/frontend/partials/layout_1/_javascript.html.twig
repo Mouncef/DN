@@ -8,3 +8,12 @@
 <script src="{{ asset('assets/frontend/external/panelmenu/panelmenu.js') }}"></script>
 <script src="{{ asset('assets/frontend/js/quick-view.js') }}"></script>
 <script src="{{ asset('assets/frontend/js/main.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $("#messagesAlerte").fadeTo(6000, 4000).slideUp(4000, function(){
+            $("messagesAlerte").slideUp(4000);
+        });
+    });
+    // Alert auto Close
+
+</script>

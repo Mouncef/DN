@@ -2,6 +2,17 @@
     <div class="row">
         <div class="subscribe-box-01">
             <div class="container">
+
+                {% for label, messages in app.flashes(['warning', 'error', 'success', 'info', 'notice','primary']) %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ label }} alert-dismissable" id="messagesAlerte">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+
+
                 <div class="row mobile-collapse">
                     <h4 class="mobile-collapse_title visible-xs">GET THE LATEST NEWS DELIVERED DAILY!</h4>
                     <div class="mobile-collapse_content">
@@ -12,13 +23,13 @@
                             </p>
                         </div>
                         <div class="col-md-12 col-lg-5">
-                            <form class="form-inline">
+                            <form action="{{ path('subscribe') }}" method="post" class="form-inline">
                                 <label class="sr-only" for="email">Email</label>
                                                         <span class="addon-icon">
                                                         <span class="icon icon-email"></span>
                                                         </span>
-                                <input type="email" class="form-control addon-icon" id="email" placeholder="Enter please your e-mail">
-                                <a href="#" class="btn btn-inversion">SUBSCRIBE</a>
+                                <input type="email" class="form-control addon-icon" name="email" id="email" placeholder="Enter please your e-mail">
+                                <button type="submit" class="btn btn-inversion">SUBSCRIBE</button>
                             </form>
                         </div>
                     </div>

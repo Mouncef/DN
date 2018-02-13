@@ -93,7 +93,7 @@
                                             </td>
                                             <td class="center">
                                                 <a class="label label-success" data-toggle="modal" data-target="#articlesModal-{{ collection.collectionId }}">
-                                                    Articles
+                                                    Articles {{ collection.articles|length }}
                                                 </a>
                                                 <!-- Modal -->
                                                 <div class="modal fade" id="articlesModal-{{ collection.collectionId }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -129,14 +129,14 @@
 
                                             <td class="table-action-hide">
                                                 {% if collection.isPublicated == '1' %}
-                                                    <a href="{#{{ path('category_unpublish', {id: category.categoryId}) }}#}" style="opacity: 1;" class="warning" title="publish"><i class="fa fa-cloud-download" aria-hidden="true"></i></a>
+                                                    <a href="{{ path('collection_unpublish', {id: collection.collectionId }) }}" style="opacity: 1;" class="warning" title="publish"><i class="fa fa-cloud-download" aria-hidden="true"></i></a>
 
                                                 {% else %}
-                                                    <a href="{#{{ path('category_edit', {id: category.categoryId}) }}#}" style="opacity: 1;" class="info" title="edit"><i class="fa fa-pencil"></i></a>
-                                                    <a style="opacity: 1;" class="danger" data-toggle="modal" data-target="#modalDeleteCategory-{{ collection.collectionId }}" title="delete" >
+                                                    <a href="{{ path('collection_edit', {id: collection.collectionId }) }}" style="opacity: 1;" class="info" title="edit"><i class="fa fa-pencil"></i></a>
+                                                    <a style="opacity: 1;cursor: pointer" class="danger" data-toggle="modal" data-target="#modalDeleteCategory-{{ collection.collectionId }}" title="delete" >
                                                         <i class="fa fa-trash-o"></i>
                                                     </a>
-                                                    <a href="{#{{ path('category_publish', {id: category.categoryId}) }}#}" style="opacity: 1;" class="success" title="publish"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                                    <a href="{{ path('collection_publish', {id: collection.collectionId }) }}" style="opacity: 1;" class="success" title="publish"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
                                                 {% endif %}
 
 
@@ -156,8 +156,8 @@
                                                                     </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                <a href="{#{{ path('category_delete', {id: category.categoryId}) }}#}" class="btn btn-danger">Delete</a>
+                                                                <button style="color: #000;" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                <a href="{{ path('collection_delete', {id: collection.collectionId }) }}" class="btn btn-danger" style="color: #FFF;">Delete</a>
                                                             </div>
                                                         </div>
                                                     </div>
