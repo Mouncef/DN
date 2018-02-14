@@ -1,0 +1,178 @@
+{% extends 'backend/index.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset('assets/backend/css/style.default.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/backend/css/jquery.datatables.css') }}" rel="stylesheet">
+    <style>
+        #table2 tbody tr {
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+{% block pageHeader %}
+    <div class="pageheader">
+        <h2><i class="fa fa-home"></i> Subscribers <span>management & list...</span></h2>
+        <div class="breadcrumb-wrapper">
+            {#<span class="label">Add a new article here : </span>
+            <ol class="breadcrumb">
+                <li><a href="{{ path('article_new') }}"><i class="fa fa-plus-square"></i></a></li>
+                <li class="active">List Articles</li>
+            </ol>#}
+        </div>
+    </div>
+{% endblock %}
+
+{% block contentPanel %}
+    <div class="contentpanel">
+
+        <div class="row">
+
+            <div class="col-sm-12">
+
+                {% if subscribers %}
+                    <div class="panel panel-default">
+
+                        <div class="panel-body">
+                            {% for label, messages in app.flashes(['warning', 'error', 'success', 'info', 'notice','primary']) %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ label }} alert-dismissable" id="messagesAlerte">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+
+                            <div class="table-responsive">
+                                <table class="table table-hidaction table-hover" id="table3">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>email</th>
+                                        <th>Subscribed at</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for subscriber in subscribers %}
+                                        <tr class="{% if loop.index is odd %}odd gradeX{% else %}even gradeC{% endif %}">
+                                            <td class="center">{{ subscriber.subscriberId }}</td>
+                                            <td class="center">{{ subscriber.email }}</td>
+                                            <td class="center">{{ subscriber.createdAt|date('d-m-Y  H:i') }}</td>
+                                            <td class="table-action-hide">
+                                                <a href="{{ path('subscriber_edit', {id: subscriber.subscriberId}) }}" style="opacity: 1;" class="info" title="edit"><i class="fa fa-pencil"></i></a>
+                                                <a style="opacity: 1;cursor: pointer" class="danger" data-toggle="modal" data-target="#modalDeleteSubscriber-{{ subscriber.subscriberId }}" title="delete" >
+                                                    <i class="fa fa-trash-o"></i>
+                                                </a>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="modalDeleteSubscriber-{{ subscriber.subscriberId }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <h3>Are you sure to delete this subscriber :</h3>
+                                                                <br>
+                                                                <div class="well" style="text-align: center">
+                                                                    <samp>
+                                                                        {{ subscriber.email }}
+                                                                    </samp>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                <a href="{{ path('subscriber_delete', {id: subscriber.subscriberId }) }}" class="btn btn-danger" style="color: #000;">Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div><!-- table-responsive -->
+                            <div class="pull-right">
+                                <a href="{{ path('subscribers_list_pdf') }}" style="opacity: 1;" class="btn btn-info-alt" title="Pdf" target="_blank" ><i class="fa fa-file"></i> List PDF Format</a>
+                            </div>
+
+
+                        </div><!-- panel-body -->
+                    </div>
+
+                {% else %}
+                    <div class="alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <strong>Info : </strong>
+                        There is no Subscriber in your database !
+                    </div>
+                {% endif %}
+
+
+            </div><!-- col-sm-12 -->
+
+        </div><!-- row -->
+
+    </div><!-- contentpanel -->
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('assets/backend/js/jquery-1.11.1.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery-migrate-1.2.1.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/modernizr.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.sparkline.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/toggles.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/retina.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.cookies.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/custom.js') }}"></script>
+
+    <script>
+        jQuery(document).ready(function() {
+
+            "use strict";
+
+            // Alert auto Close
+            $("#messagesAlerte").fadeTo(3000, 2000).slideUp(2000, function(){
+                $("messagesAlerte").slideUp(2000);
+            });
+
+            jQuery('#table3').dataTable({
+                "sPaginationType": "full_numbers"
+            });
+
+            // Select2
+            jQuery('select').select2({
+                minimumResultsForSearch: -1
+            });
+
+            jQuery('select').removeClass('form-control');
+
+            // Delete row in a table
+            jQuery('.delete-row').click(function(){
+                var c = confirm("Continue delete?");
+                if(c)
+                    jQuery(this).closest('tr').fadeOut(function(){
+                        jQuery(this).remove();
+                    });
+
+                return false;
+            });
+
+            // Show aciton upon row hover
+            jQuery('.table-hidaction tbody tr').hover(function(){
+                jQuery(this).find('.table-action-hide a').animate({opacity: 1});
+            },function(){
+                jQuery(this).find('.table-action-hide a').animate({opacity: 0});
+            });
+
+
+        });
+    </script>
+{% endblock %}

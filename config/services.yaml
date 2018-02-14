@@ -44,3 +44,8 @@ services:
             $articleThirdCoverDir:  '%article_cover_third_directory%'
             $articleFourthCoverDir:  '%article_cover_fourth_directory%'
             $collectionCoverDir:  '%collection_cover_directory%'
+
+    App\Service\PDFGenerator:
+      arguments:
+        $pdf:  '@white_october.tcpdf'
+        $templating: '@Twig_Environment'
