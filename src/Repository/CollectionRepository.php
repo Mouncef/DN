@@ -13,16 +13,14 @@ class CollectionRepository extends ServiceEntityRepository
         parent::__construct($registry, Collection::class);
     }
 
-    /*
-    public function findBySomething($value)
+    public function getPublicatedCollections()
     {
-        return $this->createQueryBuilder('c')
-            ->where('c.something = :value')->setParameter('value', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+        $query = $this->createQueryBuilder('c')
+            ->where('c.isPublicated = 1')
+            ->orderBy('c.createdAt','DESC')
+            ->getQuery()->getResult()
         ;
+
+        return $query;
     }
-    */
 }

@@ -1,55 +1,19 @@
-<div class="container">
-    <h1 class="block-title">COLLECTIONS</h1>
-    <div class="row">
-        <div class="carousel-products-mobile subcategory-listing">
-            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                <a href="" class="subcategory-item zoom-in">
-                                    <span>
-                                    <img src="{{ asset('assets/frontend/images/custom/subcategory-item-01.jpg') }}" alt="">
-                                    </span>
-                    <span class="title">Women’s</span>
-                </a>
-            </div>
-            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                <a href="" class="subcategory-item zoom-in">
-                                    <span>
-                                    <img src="{{ asset('assets/frontend/images/custom/subcategory-item-02.jpg') }}" alt="">
-                                    </span>
-                    <span class="title">Men’s</span>
-                </a>
-            </div>
-            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                <a href="" class="subcategory-item zoom-in">
-                                    <span>
-                                    <img src="{{ asset('assets/frontend/images/custom/subcategory-item-03.jpg') }}" alt="">
-                                    </span>
-                    <span class="title">Bags</span>
-                </a>
-            </div>
-            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                <a href="" class="subcategory-item zoom-in">
-                                    <span>
-                                    <img src="{{ asset('assets/frontend/images/custom/subcategory-item-04.jpg') }}" alt="">
-                                    </span>
-                    <span class="title">Shoes</span>
-                </a>
-            </div>
-            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                <a href="" class="subcategory-item zoom-in">
-                                    <span>
-                                    <img src="{{ asset('assets/frontend/images/custom/subcategory-item-05.jpg') }}" alt="">
-                                    </span>
-                    <span class="title">Hats</span>
-                </a>
-            </div>
-            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                <a href="" class="subcategory-item zoom-in">
-                                    <span>
-                                    <img src="{{ asset('assets/frontend/images/custom/subcategory-item-06.jpg') }}" alt="">
-                                    </span>
-                    <span class="title">Sunglasses</span>
-                </a>
+{% if collections %}
+    <div class="container">
+        <h1 class="block-title">COLLECTIONS</h1>
+        <div class="row">
+            <div class="carousel-products-mobile subcategory-listing">
+                {% for collection in collections %}
+                    <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                    <a href="" class="subcategory-item zoom-in">
+                                        <span>
+                                        <img src="{{ asset('uploads/Collections/images/'~collection.cover) }}" alt="{{ collection.name }}">
+                                        </span>
+                        <span class="title">{{ collection.name }}</span>
+                    </a>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
-</div>
+{% endif %}

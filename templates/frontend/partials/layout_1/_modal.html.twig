@@ -1,5 +1,6 @@
 <!-- Modal (quickViewModal) -->
-<div class="modal  fade"  id="ModalquickView" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
+{% for newArticle in newArticles %}
+    <div class="modal  fade"  id="ModalquickView-{{ newArticle.articleId }}" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content ">
             <div class="modal-header">
@@ -12,37 +13,42 @@
                         <div class="row">
                             <div class="col-sm-5 col-lg-6">
                                 <div class="product-main-image">
-                                    <img src='{{ asset('assets/frontend/images/product/product-big-1.jpg') }}' alt="" />
+                                    <img src='{{ asset('uploads/Articles/images/'~newArticle.principalCover) }}' alt="{{ newArticle.name }}" />
                                 </div>
                             </div>
                             <div class="col-sm-7 col-lg-6">
                                 <div class="product-info">
                                     <div class="add-info">
                                         <div class="sku pull-left">
-                                            <span class="font-weight-medium color-defaulttext2">SKU:</span> mtk012c
+                                            {#<span class="font-weight-medium color-defaulttext2">SKU:</span> mtk012c#}
                                         </div>
                                         <div class="availability pull-left">
-                                            <span class="font-weight-medium color-defaulttext2">Availability:</span> <span class="color-red">In Stock</span> <span class="color-base">Out stock</span>
+                                            <span class="font-weight-medium color-defaulttext2">Availability:</span>
+                                            {% if newArticle.isAvailable == '1' %}
+                                                <span class="text-success">In Stock</span>
+                                            {% else %}
+                                                <span class="color-base">Out stock</span>
+                                            {% endif %}
                                         </div>
                                     </div>
-                                    <h1 class="title">Daisy Street 3/4 Sleeve Panelled Casual Shirt</h1>
+                                    <h1 class="title">{{ newArticle.name }}</h1>
                                     <div class="price">
-                                        $45
+                                        ${{ newArticle.price }}
                                     </div>
                                     <div class="description hidden-xs">
                                         <div class="text">
-                                            Silver, metallic-blue and metallic-lavender silk-blend jacquard, graphic pattern, pleated ruffle along collar, long sleeves with button-fastening cuffs, buckle-fastening silver skinny belt, large pleated rosettes at hips.
+                                            {{ newArticle.description }}
                                         </div>
                                     </div>
-                                    <div class="wrapper">
+                                    {#<div class="wrapper">
                                         <div class="title-options">Texture <span class="color-required">*</span></div>
                                         <ul class="options-swatch-texture">
                                             <li><a href="#"><img src="{{ asset('assets/frontend/images/custom/texture-img-01.jpg') }}" alt=""></a></li>
                                             <li><a href="#"><img src="{{ asset('assets/frontend/images/custom/texture-img-02.jpg') }}" alt=""></a></li>
                                             <li><a href="#"><img src="{{ asset('assets/frontend/images/custom/texture-img-03.jpg') }}" alt=""></a></li>
                                         </ul>
-                                    </div>
-                                    <div class="wrapper">
+                                    </div>#}
+                                    {#<div class="wrapper">
                                         <div class="title-options">Size <span class="color-required">*</span></div>
                                         <ul class="tags-list">
                                             <li><a href="#">XS</a></li>
@@ -50,23 +56,23 @@
                                             <li><a href="#">M</a></li>
                                             <li><a href="#">L</a></li>
                                         </ul>
-                                    </div>
+                                    </div>#}
                                     <div class="wrapper">
-                                        <div class="pull-left"><label class="qty-label">qty</label></div>
+                                        {#<div class="pull-left"><label class="qty-label">qty</label></div>
                                         <div class="pull-left">
                                             <div class="style-2 input-counter">
                                                 <span class="minus-btn"></span>
                                                 <input type="text" value="1" size="5"/>
                                                 <span class="plus-btn"></span>
                                             </div>
-                                        </div>
+                                        </div>#}
                                         <div class="pull-left">
                                             <a href="#" class="btn btn-addtocart"><span class="icon icon-shopping_basket"></span>SHOP NOW!</a>
                                         </div>
                                     </div>
                                     <div class="wrapper">
                                         <div class="pull-left">
-                                            <ul class="product_inside_info_link">
+                                            {#<ul class="product_inside_info_link">
                                                 <li class="text-right">
                                                     <a href="#">
                                                         <span class="fa fa-heart-o"></span>
@@ -79,17 +85,17 @@
                                                         <span class="text">ADD TO COMPARE</span>
                                                     </a>
                                                 </li>
-                                            </ul>
+                                            </ul>#}
                                         </div>
                                     </div>
                                     <div class="wrapper">
-                                        <ul class="social-icon-square">
+                                        {#<ul class="social-icon-square">
                                             <li><a class="icon-01" href="#"></a></li>
                                             <li><a class="icon-02" href="#"></a></li>
                                             <li><a class="icon-03" href="#"></a></li>
                                             <li><a class="icon-04" href="#"></a></li>
                                             <li><a class="icon-05" href="#"></a></li>
-                                        </ul>
+                                        </ul>#}
                                     </div>
                                 </div>
                             </div>
@@ -101,6 +107,7 @@
         </div>
     </div>
 </div>
+{% endfor %}
 <!-- / Modal (quickViewModal) -->
 <!-- Modal (newsletter) -->
 <div class="modal  fade"  id="Modalnewsletter" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true"  data-pause=2000>

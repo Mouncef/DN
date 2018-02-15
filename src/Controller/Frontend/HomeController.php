@@ -2,9 +2,12 @@
 
 namespace App\Controller\Frontend;
 
+use App\Entity\Article;
 use App\Entity\Category;
+use App\Entity\Collection;
 use App\Entity\Slider;
 use App\Entity\Subscribers;
+use App\Repository\CollectionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,27 +17,31 @@ class HomeController extends Controller
 {
     /**
      * @Route("/", name="homepage")
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param Request $request
      */
-    public function index(Request $request){
+    public function index(){
 
         $em = $this->getDoctrine()->getManager();
 
         $sliders = $em->getRepository(Slider::class)->getPublicatedSlides();
         $categories = $em->getRepository(Category::class)->getPublicatedCategories();
+        $collections = $em->getRepository(Collection::class)->getPublicatedCollections();
 
-//        var_dump($request->attributes->get('_route'));die;
+        $newArticles = $em->getRepository(Article::class)->getEightNewArticles();
 
         return $this->render('frontend/index.html.twig', [
             'sliders' => $sliders,
-            'categories' => $categories
+            'categories' => $categories,
+            'collections' => $collections,
+            'newArticles' => $newArticles
         ]);
     }
 
     /**
      * @Route("/Subscribe", name="subscribe")
      * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function subscribe(Request $request)
     {

@@ -1,22 +1,14 @@
 security:
 
     role_hierarchy:
-        ROLE_CLIENT:          ROLE_USER
+        ROLE_MEMBER:          ROLE_USER
+        ROLE_CLIENT:          ROLE_MEMBER
         ROLE_MANAGER:         ROLE_CLIENT
         ROLE_ADMIN:           ROLE_MANAGER
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory:
-                users:
-                    ryan:
-                        password: $2y$12$SEAkLLM6kqcVfSgb2DeRAOLmJGXPOIdQ9w5ehepUA/zDNUJMon84O
-                        roles:  'ROLE_CLIENT'
-                    manager:
-                        password: $2y$12$kE8tYwacEVZlSTtd4PyrmuPC7B21J1YXGP8BMtYJWxLcMvEylIeri
-                        roles:  'ROLE_MANAGER'
         our_db_provider:
             entity:
                 class:  App\Entity\User
@@ -25,10 +17,6 @@ security:
                 # manager_name: customer
 
     encoders:
-#        Symfony\Component\Security\Core\User\User: plaintext
-        Symfony\Component\Security\Core\User\User:
-            algorithm: bcrypt
-            cost: 12
         App\Entity\User:
             algorithm: bcrypt
 

@@ -43,7 +43,7 @@
                             {#<li><a href=""><span class="fa fa-balance-scale"></span>Compare</a></li>#}
                             <li><a href=""><span class="icon icon-check"></span>Checkout</a></li>
                             {% if is_granted('ROLE_MANAGER') %}
-                                <li><a href="{{ path('admin') }}"><span class="icon icon-settings"></span>Administration</a></li>
+                                <li><a href="{{ path('admin') }}" target="_blank"><span class="icon icon-settings"></span>Administration</a></li>
                             {% endif %}
                             <li><a href="{{ path('logout') }}" ><span class="icon icon-power_settings_new"></span>Log Out</a></li>
                         </ul>
@@ -191,7 +191,7 @@
                                 {#<li><a href=""><span class="fa fa-balance-scale"></span>Compare</a></li>#}
                                 <li><a href=""><span class="icon icon-check"></span>Checkout</a></li>
                                 {% if is_granted('ROLE_MANAGER') %}
-                                    <li><a href="{{ path('admin') }}"><span class="icon icon-settings"></span>Administration</a></li>
+                                    <li><a href="{{ path('admin') }}" target="_blank"><span class="icon icon-settings"></span>Administration</a></li>
                                 {% endif %}
                                 <li><a href="{{ path('logout') }}" ><span class="icon icon-power_settings_new"></span>Log Out</a></li>
 

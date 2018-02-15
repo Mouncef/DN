@@ -56,12 +56,34 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $isActive;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Profil", inversedBy="users")
+     * @ORM\JoinColumn(name="profil", referencedColumnName="profil_id")
+     */
+    private $profil;
+
     public function __construct()
     {
         $this->isActive = true;
-        $this->roles[] = 'ROLE_USER';
+        $this->roles[] = 'ROLE_MEMBER';
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProfil()
+    {
+        return $this->profil;
+    }
+
+    /**
+     * @param mixed $profil
+     */
+    public function setProfil($profil)
+    {
+        $this->profil = $profil;
     }
 
 

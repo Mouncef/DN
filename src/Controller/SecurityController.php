@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Profil;
 use App\Entity\User;
 use App\Form\RegisterType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -39,6 +40,8 @@ class SecurityController extends Controller
      */
     public function register(Request $request, UserPasswordEncoderInterface $encoder)
     {
+        $em = $this->getDoctrine()->getManager();
+
         $user = new User();
 
         $form = $this->createForm(RegisterType::class, $user);
@@ -49,8 +52,9 @@ class SecurityController extends Controller
 
             $password = $encoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
+            $profilMember = $em->getRepository(Profil::class)->getProfilMember();
+            $user->setProfil($profilMember);
 
-            $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 

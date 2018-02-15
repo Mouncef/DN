@@ -16,4 +16,13 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    /*public function getMembers()
+    {
+        return $this->createQueryBuilder('u')
+
+            ->getQuery()
+            ->getResult()
+        ;
+    }*/
 }

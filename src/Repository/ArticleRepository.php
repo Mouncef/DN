@@ -13,6 +13,18 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
+    public function getEightNewArticles()
+    {
+        $query = $this->createQueryBuilder('a')
+            ->orderBy('a.createdAt','DESC')
+            ->setMaxResults(8)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $query;
+    }
+
     /*
     public function findBySomething($value)
     {
