@@ -1,0 +1,100 @@
+{% extends 'frontend/index.html.twig' %}
+
+
+{% block body %}
+    {% block loader %}
+        {% include 'frontend/partials/layout_1/_loader.html.twig' %}
+    {% endblock %}
+
+    {% block menu %}
+        {% include 'frontend/partials/layout_1/_menu.html.twig' %}
+    {% endblock %}
+
+    {% block header %}
+        {% include 'frontend/partials/layout_1/_header.html.twig' %}
+    {% endblock %}
+
+    {% block breadcrumb %}
+        <div class="breadcrumb">
+            <div class="container">
+                <ul>
+                    <li><a href="{{ path('homepage') }}">Home</a></li>
+                    <li>Email check</li>
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block content %}
+        <!-- Content -->
+        <div id="pageContent">
+
+            {% block slider %}
+
+                <div class="container offset-14">
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-push-2 col-lg-6 col-lg-push-3">
+                            <div class="login-form-box">
+                                {% for label, messages in app.flashes(['warning', 'error', 'success', 'info', 'notice','primary','danger']) %}
+                                    {% for message in messages %}
+                                        <div class="alert alert-{{ label }} alert-dismissable" id="messagesAlerte">
+                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+                                {% endfor %}
+                                <h2 class="text-uppercase" style="text-align: center">Email Check</h2>
+                                <form action="{{ path('forgot_password') }}" method="post">
+                                    <div class="form-group">
+                                        <div class="input-group">
+										<span class="input-group-addon">
+										<span class="icon icon-email"></span>
+										</span>
+                                            <input type="email" id="email" name="email" class="form-control" placeholder="Email">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="button-block">
+                                                <button type="submit" class="btn">CHECK EMAIL</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="additional-links-01">or <a href="{{ path('homepage') }}">Return to Home</a></div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
+
+            {% block promo %}
+                {#{% include 'frontend/partials/layout_1/_promo.html.twig' %}#}
+            {% endblock %}
+
+            {% block collections %}
+                {#{% include 'frontend/partials/layout_1/_collections.html.twig' %}#}
+            {% endblock %}
+
+            {% block features %}
+                {#{% include 'frontend/partials/layout_1/_features.html.twig' %}#}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block footer %}
+        {% include 'frontend/partials/layout_1/_footer.html.twig' %}
+    {% endblock %}
+
+    {% block modal %}
+        {% include 'frontend/partials/layout_1/_modal.html.twig' %}
+    {% endblock %}
+
+
+    {% block javascripts %}
+        {% include 'frontend/partials/layout_1/_javascript.html.twig' %}
+    {% endblock %}
+
+{% endblock %}

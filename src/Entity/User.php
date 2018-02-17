@@ -23,6 +23,16 @@ class User implements AdvancedUserInterface, \Serializable
     private $userId;
 
     /**
+     * @ORM\Column(type="string", length=255, name="name", nullable=true)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255, name="last_name", nullable=true)
+     */
+    private $lastName;
+
+    /**
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\NotBlank()
      */
@@ -215,6 +225,38 @@ class User implements AdvancedUserInterface, \Serializable
             // see section on salt below
             // $this->salt,
             ) = unserialize($serialized);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param mixed $lastName
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
     }
 
 

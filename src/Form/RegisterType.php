@@ -20,15 +20,17 @@ class RegisterType extends AbstractType
         $builder
             ->add('username', TextType::class)
             ->add('email', EmailType::class)
+            ->add('name', TextType::class)
+            ->add('lastName', TextType::class)
             ->add('plainPassword', RepeatedType::class, [
                 'type'  =>  PasswordType::class,
                 'first_options' =>  array('label' => 'Password'),
                 'second_options'    => array('label' => 'Repeat Password'),
             ])
-            ->add('termsAccepted', CheckboxType::class, [
-                'mapped'        =>  false,
-                'constraints'   =>  new IsTrue(),
-            ])
+//            ->add('termsAccepted', CheckboxType::class, [
+//                'mapped'        =>  false,
+//                'constraints'   =>  new IsTrue(),
+//            ])
         ;
     }
 

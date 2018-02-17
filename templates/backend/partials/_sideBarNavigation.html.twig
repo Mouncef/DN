@@ -38,16 +38,23 @@
             </li>
         </ul>
     </li>
-    <li class="nav-parent {% if app.request.attributes.get('_route') == 'subscribers_list' %}nav-active{% endif %}">
+    <li class="nav-parent {% if app.request.attributes.get('_route') == 'subscribers_list'
+                            or app.request.attributes.get('_route') == 'members_list' %}nav-active{% endif %}">
         <a href="">
             <i class="fa fa-database"></i>
             <span>Data base</span>
         </a>
         <ul class="children"
-            style="display: {% if app.request.attributes.get('_route') == 'subscribers_list'%}block{% endif %}" >
+            style="display: {% if app.request.attributes.get('_route') == 'subscribers_list'
+                                or app.request.attributes.get('_route') == 'members_list' %}block{% endif %}" >
             <li class="{% if app.request.attributes.get('_route') == 'subscribers_list' %}active{% endif %}">
                 <a href="{{ path('subscribers_list') }}">
                     <i class="fa fa-caret-right"></i> Subscribers
+                </a>
+            </li>
+            <li class="{% if app.request.attributes.get('_route') == 'members_list' %}active{% endif %}">
+                <a href="{{ path('members_list') }}">
+                    <i class="fa fa-caret-right"></i> Members
                 </a>
             </li>
         </ul>

@@ -49,7 +49,6 @@ class SecurityController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-
             $password = $encoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
             $profilMember = $em->getRepository(Profil::class)->getProfilMember();
@@ -61,6 +60,8 @@ class SecurityController extends Controller
             $this->addFlash('success','Account successfully created ');
 
             return $this->redirectToRoute('homepage');
+        }else {
+            $this->addFlash('danger','Fields  email and login must be unique');
         }
 
         return $this->render('security/register.html.twig', [
@@ -68,5 +69,42 @@ class SecurityController extends Controller
             'form'  =>  $form->createView(),
         ]);
 
+    }
+
+    /**
+     * @Route("/forgotPassword", name="forgot_password")
+     */
+    public function forgotPassword(Request $request)
+    {
+        $email = $request->get('email');
+        if ($email)
+        {
+            $isIdentical = false;
+            $em = $this->getDoctrine()->getManager();
+            $emails = $em->getRepository(User::class)->findAll();
+
+            foreach ($emails as $mail){
+                if ($mail->getEmail() == $email){
+                    $isIdentical = true;
+                }
+            }
+
+            if ($isIdentical)
+            {
+                $this->addFlash('success','An Email has been sent to you !');
+                $this->sendNewPasswordMail($email);
+
+            }else {
+                $this->addFlash('danger','There is no email corresponding in our database !');
+
+            }
+        }
+        return $this->render('security/emailCheck.html.twig');
+    }
+
+
+    public function sendNewPasswordMail($email)
+    {
+        return false;
     }
 }

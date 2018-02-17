@@ -116,10 +116,11 @@
                 <div class="product">
                     <div class="product_inside">
                         <div class="image-box">
+                            {#{{ newArticle.createdAt|date('d-m-Y') }}{{ date('-7days')|date('d-m-Y') }}#}
                             <a href="">
                                 <img src="{{ asset('uploads/Articles/images/'~newArticle.principalCover) }}" alt="{{ newArticle.name }}">
 
-                                {% if date(newArticle.createdAt) < date('-7days')  %}<div class="label-new">New</div>{% endif %}
+                                {% if newArticle.createdAt|date('d-m-Y') > date('-7days')|date('d-m-Y')  %}<div class="label-new">New</div>{% endif %}
                             </a>
                             <a href="#" data-toggle="modal" data-target="#ModalquickView-{{ newArticle.articleId }}" class="quick-view">
                                 <span>
@@ -449,3 +450,114 @@
         <!--------------------------------------------------------------------------------------->
     </div>
 </div>
+<!-- Modal (quickViewModal) -->
+{% for newArticle in newArticles %}
+    <div class="modal  fade"  id="ModalquickView-{{ newArticle.articleId }}" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="icon icon-clear"></span></button>
+                </div>
+                <form>
+                    <div class="modal-body">
+                        <!--modal-quick-view-->
+                        <div class="modal-quick-view">
+                            <div class="row">
+                                <div class="col-sm-5 col-lg-6">
+                                    <div class="product-main-image">
+                                        <img src='{{ asset('uploads/Articles/images/'~newArticle.principalCover) }}' alt="{{ newArticle.name }}" />
+                                    </div>
+                                </div>
+                                <div class="col-sm-7 col-lg-6">
+                                    <div class="product-info">
+                                        <div class="add-info">
+                                            <div class="sku pull-left">
+                                                {#<span class="font-weight-medium color-defaulttext2">SKU:</span> mtk012c#}
+                                            </div>
+                                            <div class="availability pull-left">
+                                                <span class="font-weight-medium color-defaulttext2">Availability:</span>
+                                                {% if newArticle.isAvailable == '1' %}
+                                                    <span class="text-success">In Stock</span>
+                                                {% else %}
+                                                    <span class="color-base">Out stock</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <h1 class="title">{{ newArticle.name }}</h1>
+                                        <div class="price">
+                                            ${{ newArticle.price }}
+                                        </div>
+                                        <div class="description hidden-xs">
+                                            <div class="text">
+                                                {{ newArticle.description }}
+                                            </div>
+                                        </div>
+                                        {#<div class="wrapper">
+                                            <div class="title-options">Texture <span class="color-required">*</span></div>
+                                            <ul class="options-swatch-texture">
+                                                <li><a href="#"><img src="{{ asset('assets/frontend/images/custom/texture-img-01.jpg') }}" alt=""></a></li>
+                                                <li><a href="#"><img src="{{ asset('assets/frontend/images/custom/texture-img-02.jpg') }}" alt=""></a></li>
+                                                <li><a href="#"><img src="{{ asset('assets/frontend/images/custom/texture-img-03.jpg') }}" alt=""></a></li>
+                                            </ul>
+                                        </div>#}
+                                        {#<div class="wrapper">
+                                            <div class="title-options">Size <span class="color-required">*</span></div>
+                                            <ul class="tags-list">
+                                                <li><a href="#">XS</a></li>
+                                                <li class="active"><a href="#">S</a></li>
+                                                <li><a href="#">M</a></li>
+                                                <li><a href="#">L</a></li>
+                                            </ul>
+                                        </div>#}
+                                        <div class="wrapper">
+                                            {#<div class="pull-left"><label class="qty-label">qty</label></div>
+                                            <div class="pull-left">
+                                                <div class="style-2 input-counter">
+                                                    <span class="minus-btn"></span>
+                                                    <input type="text" value="1" size="5"/>
+                                                    <span class="plus-btn"></span>
+                                                </div>
+                                            </div>#}
+                                            <div class="pull-left">
+                                                <a href="#" class="btn btn-addtocart"><span class="icon icon-shopping_basket"></span>SHOP NOW!</a>
+                                            </div>
+                                        </div>
+                                        <div class="wrapper">
+                                            <div class="pull-left">
+                                                {#<ul class="product_inside_info_link">
+                                                    <li class="text-right">
+                                                        <a href="#">
+                                                            <span class="fa fa-heart-o"></span>
+                                                            <span class="text">ADD TO WISHLIST</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="text-left">
+                                                        <a href="#" class="compare-link">
+                                                            <span class="fa fa-balance-scale"></span>
+                                                            <span class="text">ADD TO COMPARE</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>#}
+                                            </div>
+                                        </div>
+                                        <div class="wrapper">
+                                            {#<ul class="social-icon-square">
+                                                <li><a class="icon-01" href="#"></a></li>
+                                                <li><a class="icon-02" href="#"></a></li>
+                                                <li><a class="icon-03" href="#"></a></li>
+                                                <li><a class="icon-04" href="#"></a></li>
+                                                <li><a class="icon-05" href="#"></a></li>
+                                            </ul>#}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/modal-quick-view-->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+<!-- / Modal (quickViewModal) -->

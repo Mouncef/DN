@@ -2,6 +2,7 @@
 
 namespace App\Controller\Backend;
 
+use App\Entity\Profil;
 use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -20,9 +21,10 @@ class MemberController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $members = $em->getRepository(User::class)->findAll();
+        $profilMember = $em->getRepository(Profil::class)->getProfilMember();
+        $members = $em->getRepository(User::class)->getMembers($profilMember);
 
-        return $this->render('backend/subscribers/list.html.twig', [
+        return $this->render('backend/members/list.html.twig', [
             'members'   => $members
         ]);
     }

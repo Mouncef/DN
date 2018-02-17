@@ -49,3 +49,8 @@ services:
       arguments:
         $pdf:  '@white_october.tcpdf'
         $templating: '@Twig_Environment'
+
+    App\Twig\:
+      resource: '../src/Twig'
+      tags: ['twig.extension']
+      arguments: ['@doctrine.orm.entity_manager']

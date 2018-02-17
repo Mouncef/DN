@@ -1,5 +1,6 @@
 <nav class="panel-menu">
     <ul>
+        {% set categories = getCategories() %}
         {% if categories %}
             {% for category in categories %}
                 <li><a href="">{{ category.name }}</a></li>
