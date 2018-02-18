@@ -68,6 +68,7 @@
                 <a href=""><img src="{{ asset('assets/frontend/images/logo-mobile.png') }}" alt=""/></a>
             </div>
             <!-- /logo -->
+
         </div>
         <div class="container-fluid top-line">
             <div class="pull-left">
@@ -166,10 +167,11 @@
                         <a href=""><img src="{{ asset('assets/frontend/images/logo.png') }}" alt=""/></a>
                     </div>
                     <!-- /logo -->
+
                 </div>
                 <div class="pull-right" style="font-size: 1em ;">
-                    <!-- account -->
 
+                    <!-- account -->
                     <div class="account dropdown" style="padding: 3.5% 0 0 0;">
                         <a class="dropdown-toggle" data-toggle="dropdown">
                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -210,87 +212,87 @@
                             <div class="dropdown">
                                 <a class="dropdown-toggle">
                                     <span class="icon icon-shopping_basket"></span>
-                                    <span class="badge badge-cart">2</span>
+                                    <span class="badge badge-cart">
+                                        {% set cart = getUserCart() %}
+                                        {% if cart %}
+                                            {{ cart.articles|length }}
+                                        {% else %}
+                                            0
+                                        {% endif %}
+                                    </span>
                                     <div class="dropdown-label hidden-sm hidden-xs">YOUR BAG</div>
                                 </a>
                                 <div class="dropdown-menu slide-from-top">
                                     <div class="container">
-                                        <div class="top-title">RECENTLY ADDED ITEM(S)</div>
-                                        <a href="#" class="icon icon-close cart-close"></a>
-                                        <ul>
-                                            <li class="item">
-                                                <div class="img">
-                                                    <a href="#"><img src="{{ asset('assets/frontend/images/product/product-01.jpg') }}" alt=""/></a>
-                                                </div>
-                                                <div class="info">
-                                                    <div class="title-col">
-                                                        <h2 class="title">
-                                                            <a href="#">Daisy Street 3/4 Sleeve Panelled Casual Shirt</a>
-                                                        </h2>
-                                                        <div class="details">
-                                                            Black, XL
+                                        {% set cart = getUserCart() %}
+                                        {% if cart %}
+                                            <div class="top-title">RECENTLY ADDED ITEM(S)</div>
+                                                <a href="#" class="icon icon-close cart-close"></a>
+                                                <ul>
+                                                    {% set total = 0 %}
+                                                    {% set totalProducts = 0 %}
+                                                    {% for article in cart.articles %}
+                                                        {% set totalProducts = total + article.price  %}
+                                                        {% set total = totalProducts %}
+                                                        <li class="item">
+                                                            <div class="img">
+                                                                <a href="#"><img src="{{ asset('uploads/Articles/images/'~article.principalCover) }}" alt="{{ article.name }}"/></a>
+                                                            </div>
+                                                            <div class="info">
+                                                                <div class="title-col">
+                                                                    <h2 class="title">
+                                                                        <a href="#">{{ article.name }}</a>
+                                                                    </h2>
+                                                                    <div class="details">
+                                                                        {{ article.description }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="price">
+                                                                    ${{ article.price|number_format(2, '.', ',') }}
+                                                                </div>
+                                                                {#<div class="qty">
+                                                                    <div class="qty-label">Qty:</div>
+                                                                    <div class="style-2 input-counter">
+                                                                        <span class="minus-btn"></span>
+                                                                        <input type="text" value="1" size="5"/>
+                                                                        <span class="plus-btn"></span>
+                                                                    </div>
+                                                                </div>#}
+                                                            </div>
+                                                            <div class="item-control">
+                                                                <div class="delete"><a href="{{ path('remove_article_from_cart', {'id' : article.articleId}) }}" class="icon icon-delete" title="Delete"></a></div>
+                                                                {#<div class="edit"><a href="#" class="icon icon-edit" title="Edit"></a></div>#}
+                                                            </div>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                                <h4 class="empty-cart-js hide">Your Cart is Empty</h4>
+                                                <div class="cart-bottom">
+                                                    <div class="pull-right">
+                                                        <div class="pull-left">
+                                                            <div class="cart-total">TOTAL:
+                                                                <span>
+                                                                    ${{ totalProducts|number_format(2, '.', ',') }}
+                                                                </span>
+                                                            </div>
                                                         </div>
+                                                        <a href="" class="btn icon-btn-left"><span class="icon icon-check_circle"></span>CHECKOUT</a>
                                                     </div>
-                                                    <div class="price">
-                                                        $45
+                                                    <div class="pull-left">
+                                                        <a href="{{ path('cart_index') }}" class="btn icon-btn-left"><span class="icon icon-shopping_basket"></span>VIEW CART</a>
                                                     </div>
-                                                    <div class="qty">
-                                                        <div class="qty-label">Qty:</div>
-                                                        <div class="style-2 input-counter">
-                                                            <span class="minus-btn"></span>
-                                                            <input type="text" value="1" size="5"/>
-                                                            <span class="plus-btn"></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="item-control">
-                                                    <div class="delete"><a href="#" class="icon icon-delete" title="Delete"></a></div>
-                                                    <div class="edit"><a href="#" class="icon icon-edit" title="Edit"></a></div>
-                                                </div>
-                                            </li>
-                                            <li class="item">
-                                                <div class="img">
-                                                    <a href="#"><img src="{{ asset('assets/frontend/images/product/product-01.jpg') }}" alt=""/></a>
-                                                </div>
-                                                <div class="info">
-                                                    <div class="title-col">
-                                                        <h2 class="title">
-                                                            <a href="#">Daisy Street 3/4 Sleeve Panelled Casual Shirt</a>
-                                                        </h2>
-                                                        <div class="details">
-                                                            Black, XL
-                                                        </div>
-                                                    </div>
-                                                    <div class="price">
-                                                        $45
-                                                    </div>
-                                                    <div class="qty">
-                                                        <div class="qty-label">Qty:</div>
-                                                        <div class="style-2 input-counter">
-                                                            <span class="minus-btn"></span>
-                                                            <input type="text" value="1" size="5"/>
-                                                            <span class="plus-btn"></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="item-control">
-                                                    <div class="delete"><a href="#" class="icon icon-delete" title="Delete"></a></div>
-                                                    <div class="edit"><a href="#" class="icon icon-edit" title="Edit"></a></div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                        <h4 class="empty-cart-js hide">Your Cart is Empty</h4>
-                                        <div class="cart-bottom">
-                                            <div class="pull-right">
-                                                <div class="pull-left">
-                                                    <div class="cart-total">TOTAL:  <span> $135.00</span></div>
-                                                </div>
-                                                <a href="" class="btn icon-btn-left"><span class="icon icon-check_circle"></span>CHECKOUT</a>
                                             </div>
-                                            <div class="pull-left">
-                                                <a href="" class="btn icon-btn-left"><span class="icon icon-shopping_basket"></span>VIEW CART</a>
+                                        {% else %}
+                                            <div class="top-title">YOUR CART IS EMPTY</div>
+                                            <a href="#" class="icon icon-close cart-close"></a>
+                                            <h4 class="empty-cart-js hide">Your Cart is Empty</h4>
+                                            <div class="cart-bottom">
+                                                <div class="pull-right">
+                                                    <a href="" class="btn icon-btn-left"><span class="icon icon-check_circle"></span>SHOP</a>
+                                                </div>
                                             </div>
-                                        </div>
+                                        {% endif %}
+
                                     </div>
                                 </div>
                             </div>
@@ -985,4 +987,17 @@
         </div>
     </div>
     <!-- /stuck nav -->
+    <div class="row">
+        <div class="col-md-12">
+            {% for label, messages in app.flashes(['warning', 'error', 'success', 'info', 'notice','primary']) %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }} alert-dismissable" id="messagesAlerte">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+
 </header>

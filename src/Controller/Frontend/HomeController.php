@@ -3,6 +3,7 @@
 namespace App\Controller\Frontend;
 
 use App\Entity\Article;
+use App\Entity\Cart;
 use App\Entity\Category;
 use App\Entity\Collection;
 use App\Entity\Slider;
@@ -65,6 +66,55 @@ class HomeController extends Controller
         $em->persist($subscriber);
         $em->flush();
         $this->addFlash('success','Welcome in our subscribers database !');
+
+        return $this->redirectToRoute('homepage');
+    }
+
+    /**
+     * @Route("/AddArticleToCart/{id}", name="add_article_to_cart")
+     */
+    public function addArticleToCart($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $article = $em->getRepository(Article::class)->find($id);
+        $user = $this->getUser();
+        $cart = $em->getRepository(Cart::class)->getUserCart($user);
+
+        if ($cart) {
+            $cart->addArticle($article);
+        }else {
+            $cart = new Cart();
+            $cart->setUser($user);
+            $cart->addArticle($article);
+        }
+
+        $em->persist($cart);
+        $em->flush();
+
+        $this->addFlash('success','Article added to cart');
+
+        return $this->redirectToRoute('homepage');
+    }
+
+    /**
+     * @Route("/RemoveArticleFromCart/{id}", name="remove_article_from_cart")
+     */
+    public function removeArticleFromCart($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $article = $em->getRepository(Article::class)->find($id);
+        $user = $this->getUser();
+        $cart = $em->getRepository(Cart::class)->getUserCart($user);
+
+        if ($cart) {
+            if (count($cart->getArticles()) == 1){
+            $em->remove($cart);
+            } elseif (count($cart->getArticles()) > 1 )
+            $cart->removeArticle($article);
+        }
+        $em->flush();
+
+        $this->addFlash('success','Article removed from cart');
 
         return $this->redirectToRoute('homepage');
     }

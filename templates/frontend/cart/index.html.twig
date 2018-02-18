@@ -1,0 +1,219 @@
+{% extends 'frontend/index.html.twig' %}
+
+{% block body %}
+    {% block loader %}
+        {% include 'frontend/partials/layout_1/_loader.html.twig' %}
+    {% endblock %}
+
+    {% block menu %}
+        {% include 'frontend/partials/layout_1/_menu.html.twig' %}
+    {% endblock %}
+
+    {% block header %}
+        {% include 'frontend/partials/layout_1/_header.html.twig' %}
+    {% endblock %}
+
+    {% block breadcrumb %}
+        <div class="breadcrumb">
+            <div class="container">
+                <ul>
+                    <li><a href="{{ path('homepage') }}">Home</a></li>
+                    <li>Shopping cart</li>
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block content %}
+        <!-- Content -->
+        <div id="pageContent">
+
+            {% block slider %}
+                <div class="container offset-18">
+                    <h1 class="block-title text-inherit large text">Shopping cart</h1>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="shopping-cart-col">
+                                <table class="shopping-cart-table">
+                                    <tbody>
+                                    {% set total = 0 %}
+                                    {% set totalProducts = 0 %}
+                                    {% set cart = getUserCart() %}
+                                    {% if cart %}
+
+                                        {% for article in cart.articles %}
+                                            {% set totalProducts = total + article.price  %}
+                                            {% set total = totalProducts %}
+                                            <tr>
+                                                <td>
+                                                    <div class="product-image">
+                                                        <a href="#">
+                                                            <img src="{{ asset('uploads/Articles/images/'~article.principalCover) }}" alt="{{ article.name }}">
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <h5 class="product-title">
+                                                        <a href="#">{{ article.name }}</a>
+                                                    </h5>
+                                                    <ul class="list-parameters">
+                                                        <li>
+                                                            {{ article.description }}
+                                                        </li>
+                                                        <li class="visible-xs visible-sm">
+                                                            <div class="product-price subtotal">${{ article.price|number_format(2, '.', ',') }}</div>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                                {#<td>
+                                                    <div class="detach-quantity-desctope">
+                                                        <div class="input">
+                                                            <label>Qty:</label>
+                                                            <div class="style-2 input-counter">
+                                                                <span class="minus-btn"></span>
+                                                                <input type="text" value="1" size="5"/>
+                                                                <span class="plus-btn"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>#}
+                                                <td>
+                                                    <div class="product-price subtotal">
+                                                        ${{ article.price|number_format(2, '.', ',') }}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <a class="product-delete icon icon-delete" href="{{ path('remove_article_from_cart', {'id' : article.articleId}) }}"></a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for label, messages in app.flashes(['warning', 'error', 'success', 'info', 'notice','primary','danger']) %}
+                                            {% for message in messages %}
+                                                <div class="alert alert-{{ label }} alert-dismissable" id="messagesAlerte">
+                                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                                                    {{ message }}
+                                                </div>
+                                            {% endfor %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    </tbody>
+                                </table>
+                                <div class="shopping-cart-btns">
+                                    <div class="pull-right">
+                                        {#<a class="btn-link" href="#"><span class="icon icon-cached color-base"></span>UPDATE CART</a>#}
+                                        <div class="clearfix visible-xs visible-sm"></div>
+                                        <a class="btn-link" href="{{ path('clear_articles_from_cart') }}"><span class="icon icon-delete"></span>CLEAR SHOPPING CART</a>
+                                    </div>
+                                    <div class="pull-left">
+                                        <a class="btn-link" href="#"><span class="icon icon-keyboard_arrow_left"></span>CONTINUE SHOPPING </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 shopping-cart-box-aside">
+                            {#<div class="shopping-cart-box">
+                                <h4>ESTIMATE SHIPPING AND TAX</h4>
+                                <p>Enter your destination to get a shipping estimate.</p>
+                                <form>
+                                    <div class="form-group">
+                                        <label  for="selectCountry">Country<span class="color-base">*</span></label>
+                                        <select  id="selectCountry" class="form-control">
+                                            <option>Austria </option>
+                                            <option>Belgium</option>
+                                            <option>Cyprus </option>
+                                            <option>Croatia </option>
+                                            <option>Czech Republic </option>
+                                            <option>Denmark </option>
+                                            <option>Finland </option>
+                                            <option>France </option>
+                                            <option>Germany </option>
+                                            <option>Greece </option>
+                                            <option>Hungary </option>
+                                            <option>Ireland </option>
+                                            <option>France </option>
+                                            <option>Italy </option>
+                                            <option>Luxembourg </option>
+                                            <option>Netherlands </option>
+                                            <option>Poland </option>
+                                            <option>Portugal </option>
+                                            <option>Slovakia </option>
+                                            <option>Slovenia </option>
+                                            <option>Spain </option>
+                                            <option>United Kingdom </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputZip">Zip/Postal Code</label>
+                                        <input type="text" class="form-control" id="inputZip">
+                                    </div>
+                                    <a href="#" class="btn btn-top btn-border btn-full color-default">CALCULATE SHIPPING</a>
+                                </form>
+                            </div>
+                            <div class="shopping-cart-box">
+                                <h4>NOTE</h4>
+                                <p>
+                                    Add special instructions for your order...
+                                </p>
+                                <form>
+                                    <textarea class="form-control" rows="10"></textarea>
+                                </form>
+                            </div>#}
+                            <div class="shopping-cart-box">
+                                <table class="table-total">
+                                    <tbody>
+                                    <tr>
+                                        <th class="text-left">SUBTOTAL:</th>
+                                        <td class="text-right">${{ totalProducts|number_format(2, '.', ',') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-left">SHIPPING &amp; HANDLING:</th>
+                                        <td class="text-right">$0 FREE</td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>GRAND TOTAL:</th>
+                                        <td>
+                                            ${{ totalProducts|number_format(2, '.', ',') }}
+                                        </td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                <a href="#" class="btn btn-full icon-btn-left"><span class="icon icon-check_circle"></span>PROCEED TO CHECKOUT</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            {% endblock %}
+
+            {% block promo %}
+                {#{% include 'frontend/partials/layout_1/_promo.html.twig' %}#}
+            {% endblock %}
+
+            {% block collections %}
+                {#{% include 'frontend/partials/layout_1/_collections.html.twig' %}#}
+            {% endblock %}
+
+            {% block features %}
+                {#{% include 'frontend/partials/layout_1/_features.html.twig' %}#}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block footer %}
+        {% include 'frontend/partials/layout_1/_footer.html.twig' %}
+    {% endblock %}
+
+    {% block modal %}
+        {% include 'frontend/partials/layout_1/_modal.html.twig' %}
+    {% endblock %}
+
+
+    {% block javascripts %}
+        {% include 'frontend/partials/layout_1/_javascript.html.twig' %}
+    {% endblock %}
+
+{% endblock %}

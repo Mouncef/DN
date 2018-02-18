@@ -132,7 +132,7 @@
                             <a href="">{{ newArticle.name }}</a>
                         </h2>
                         <div class="price view">
-                            {{ newArticle.price }}
+                            {{ newArticle.price|number_format(2, '.', ',') }}
                         </div>
                         <div class="description">
                             {{ newArticle.description }}
@@ -163,9 +163,22 @@
                                     <span class="icon-star"></span>
                                     <span class="icon-star empty-star"></span>
                                 </div>#}
-                                <a class="btn btn-product_addtocart" href="#" data-toggle="modal" data-target="#modalAddToCartProduct">
-                                    <span class="icon icon-shopping_basket"></span>ADD TO CART
-                                </a>
+                                {% set cart = getUserCart() %}
+                                {% set inCart = false %}
+                                {% if cart %}
+                                    {% for article in cart.articles %}
+                                        {% if article == newArticle %}
+                                            {% set inCart = true %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
+
+                                {% if inCart == false %}
+                                    <a class="btn btn-product_addtocart" href="#" data-toggle="modal" data-target="#ModalAddToCartProduct-{{ newArticle.articleId }}">
+                                        <span class="icon icon-shopping_basket"></span>ADD TO CART
+                                    </a>
+                                {% endif %}
+
                                 <a href="#"  class="quick-view btn" data-toggle="modal" data-target="#ModalquickView">
                                     <span>
                                         <span class="icon icon-visibility"></span>QUICK VIEW
@@ -485,7 +498,7 @@
                                         </div>
                                         <h1 class="title">{{ newArticle.name }}</h1>
                                         <div class="price">
-                                            ${{ newArticle.price }}
+                                            ${{ newArticle.price|number_format(2, '.', ',') }}
                                         </div>
                                         <div class="description hidden-xs">
                                             <div class="text">
@@ -559,5 +572,213 @@
             </div>
         </div>
     </div>
+
+    <!-- modalAddToCartProduct -->
+    <div class="modal  fade"  id="ModalAddToCartProduct-{{ newArticle.articleId }}" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="icon icon-clear"></span></button>
+                </div>
+                <div class="modal-body">
+                    <!--  -->
+                    <div class="modal-add-cart-product desctope visible-md visible-lg">
+                        <div class="row">
+                            <div class="col-sm-6" style="position: relative;text-align: center;">
+                                <div class="modal-messages" style="text-align: center">
+                                    <span class="icon color-base icon-error" style="font-size: 34px;line-height: 34px;"></span>
+                                    <p style="font-size: 20px;
+                                        line-height: 26px;
+                                        margin: 1px 8% 0;
+                                        font-weight: 500;
+                                        color: #333333;">
+                                        Add {{ newArticle.name }} to your shopping cart
+                                    </p>
+                                </div>
+                                <div class="modal-product" style="margin-top: 34px;">
+                                    <div class="image-box" style="width: 202px;margin: 0 auto;">
+                                        <img src="{{ asset('uploads/Articles/images/'~newArticle.principalCover) }}" alt="{{ newArticle.name }}" style="width: 100%;height: auto;">
+                                    </div>
+                                    <div class="title" style="color: #333333;
+                                                                font-size: 14px;
+                                                                line-height: 21px;
+                                                                margin: 15px 8% 0;">
+                                        {{ newArticle.name }}
+                                    </div>
+                                    <div class="description" style="color: #777;
+                                                                    font-size: 12px;
+                                                                    line-height: 21px;
+                                                                    margin-top: 6px;">
+                                        {{ newArticle.description }}
+                                    </div>
+                                    <div class="qty" style="color: #333333;
+                                                            margin-top: 26px;
+                                                            font-size: 14px;
+                                                            font-weight: 500;">
+                                        Qty: 1
+                                    </div>
+                                </div>
+                                <div class="total" style="padding-bottom: 0;font-size: 20px;
+                                                            color: #333333;
+                                                            font-weight: bold;
+                                                            margin-top: 9px;
+                                                            letter-spacing: 0.02em;">
+                                    TOTAL: <span style="font-size: 24px;
+                                                        color: #5fd179;
+                                                        font-weight: 500;
+                                                        letter-spacing: inherit;">
+                                        ${{ newArticle.price|number_format(2, '.', ',') }}</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6" style="position: relative;text-align: center;">
+
+                                {% set cart = getUserCart() %}
+                                {% if cart %}
+                                    <div class="cart-item-total" style="color: #333333;font-size: 20px;text-align: center;">
+                                        <a href="{{ path('cart_index') }}">
+                                            <div class="cart-item-icon" style="display: flex;
+                                                                            justify-content: center;
+                                                                            align-items: center;
+                                                                            font-weight: 500;
+                                                                            color: #5fd179;">
+                                            <span class="icon icon-shopping_basket" style=" font-size: 34px;
+                                                                                            line-height: 34px;
+                                                                                            margin: 0 7px;"></span>
+                                                View Cart
+                                            </div>
+                                        </a>
+                                        <p style="  font-size: 20px;
+                                                line-height: 26px;
+                                                font-weight: 500;
+                                                margin-top: 2px;">
+                                            There are {{ cart.articles|length }} items<br> in your cart
+                                        </p>
+                                    </div>
+                                    <div class="total-product" style="  font-size: 14px;
+                                                                    font-weight: 500;
+                                                                    color: #333333;
+                                                                    margin-top: 24px;
+                                                                    text-align: center;">
+                                        Total products:
+                                        <span style="color: #5fd179;">
+                                            {% set total = 0 %}
+                                            {% set totalProducts = 0 %}
+                                            {% for article  in cart.articles %}
+                                                {% set totalProducts = total + article.price  %}
+                                                {% set total = totalProducts %}
+                                            {% endfor %}
+                                            ${{ totalProducts|number_format(2, '.', ',') }}
+                                        </span>
+                                    </div>
+                                    <div class="total" style="  font-size: 20px;
+                                                            color: #333333;
+                                                            font-weight: bold;
+                                                            margin-top: 9px;
+                                                            letter-spacing: 0.02em;
+                                                            padding-bottom: 23px;
+                                                            text-align: center;">
+                                        TOTAL:
+                                        <span style="font-size: 24px;
+                                                        color: #5fd179;
+                                                        font-weight: 500;
+                                                        letter-spacing: inherit;">
+                                            {% set newTotal = totalProducts + newArticle.price %}
+                                            ${{ newTotal|number_format(2, '.', ',') }}
+                                            {#$135#}
+                                        </span>
+                                    </div>
+                                {% else %}
+                                    <div class="cart-item-total" style="color: #333333;font-size: 20px;text-align: center;">
+                                        <a href="{{ path('cart_index') }}">
+                                            <div class="cart-item-icon" style="display: flex;
+                                                                            justify-content: center;
+                                                                            align-items: center;
+                                                                            font-weight: 500;
+                                                                            color: #5fd179;">
+                                            <span class="icon icon-shopping_basket" style=" font-size: 34px;
+                                                                                            line-height: 34px;
+                                                                                            margin: 0 7px;"></span>
+                                                View Cart
+                                            </div>
+                                        </a>
+                                        <p style="  font-size: 20px;
+                                                line-height: 26px;
+                                                font-weight: 500;
+                                                margin-top: 2px;">
+                                            There are no item<br> in your cart
+                                        </p>
+                                    </div>
+                                    <div class="total-product" style="  font-size: 14px;
+                                                                    font-weight: 500;
+                                                                    color: #333333;
+                                                                    margin-top: 24px;
+                                                                    text-align: center;">
+                                        Total products: <span style="color: #5fd179;">${{ newArticle.price|number_format(2, '.', ',') }}</span>
+                                    </div>
+                                    <div class="total" style="  font-size: 20px;
+                                                            color: #333333;
+                                                            font-weight: bold;
+                                                            margin-top: 9px;
+                                                            letter-spacing: 0.02em;
+                                                            padding-bottom: 23px;
+                                                            text-align: center;">
+                                        TOTAL: <span style="font-size: 24px;
+                                                        color: #5fd179;
+                                                        font-weight: 500;
+                                                        letter-spacing: inherit;">
+                                        ${{ newArticle.price|number_format(2, '.', ',') }}</span>
+                                    </div>
+                                {% endif %}
+
+                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                    <a href="{{ path('add_article_to_cart', {'id': newArticle.articleId}) }}" class="btn invert" style="margin-top: 10px;">ADD TO CART</a>
+                                {% else %}
+                                    <a href="{{ path('login')}}" class="btn invert" style="margin-top: 10px;">
+                                        Login to add to cart</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-add-cart-product mobile visible-sm visible-xs" style="text-align: center;">
+                        <div class="modal-messages" style=" text-align: center;
+                                                            font-size: 14px;
+                                                            line-height: 17px;">
+                            <span class="icon color-base icon-error" style="font-size: 34px;line-height: 34px;"></span>
+                            <p style="font-size: 14px;
+                                    line-height: 17px;
+                                    font-weight: 500;
+                                    margin-top: 8px;
+                                    color: #777;">
+                                {{ newArticle.name }}
+                            </p>
+                        </div>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <a href="{{ path('add_article_to_cart', {'id': newArticle.articleId}) }}" class="btn btn-underline" style="margin-top: 20px;
+                                                                    color: #333333;
+                                                                    background: none;
+                                                                    text-decoration: none;
+                                                                    line-height: 15px;
+                                                                    padding: 5px 0 0 0;
+                                                                    height: inherit;
+                                                                    border-bottom: 2px solid #333333;">
+                            ADD TO CART!</a>
+                        {% else %}
+                            <a href="{{ path('login')}}" class="btn btn-underline" style="margin-top: 20px;
+                                                                    color: #333333;
+                                                                    background: none;
+                                                                    text-decoration: none;
+                                                                    line-height: 15px;
+                                                                    padding: 5px 0 0 0;
+                                                                    height: inherit;
+                                                                    border-bottom: 2px solid #333333;">
+                                Login to add to cart</a>
+                        {% endif %}
+                    </div>
+                    <!-- / -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /modalAddToCartProduct -->
 {% endfor %}
 <!-- / Modal (quickViewModal) -->

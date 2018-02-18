@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
@@ -72,10 +73,17 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $profil;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Cart", mappedBy="user")
+     */
+    private $carts;
+
     public function __construct()
     {
         $this->isActive = true;
         $this->roles[] = 'ROLE_MEMBER';
+        $this->carts = new ArrayCollection();
+
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
     }
@@ -260,6 +268,22 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
 
+    public function addCart(Cart $cart)
+    {
+        if ($this->carts->contains($cart)) {
+            return;
+        }
 
+        $this->carts[] = $cart;
+        // set the *owning* side!
+        $cart->setUser($this);
+    }
+
+    public function removeCart(Cart $cart)
+    {
+        $this->carts->removeElement($cart);
+        // set the owning side to null
+        $cart->setUser(null);
+    }
 
 }

@@ -98,11 +98,25 @@ class Article
      */
     private $collections;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Cart", mappedBy="articles")
+     * @ORM\JoinTable(name="lnk_article_cart",
+     *     joinColumns={
+     *     @ORM\JoinColumn(name="article_id", referencedColumnName="article_id")
+     *   },
+     *   inverseJoinColumns={
+     *     @ORM\JoinColumn(name="cart_id", referencedColumnName="cart_id")
+     *   }
+     * )
+     */
+    private $carts;
+
     public function __construct()
     {
         $this->createdAt = new \Datetime('now');
         $this->isPublished = false;
         $this->collections = new ArrayCollection();
+        $this->carts = new ArrayCollection();
     }
 
     public function __toString()
@@ -259,6 +273,11 @@ class Article
     public function getCollections()
     {
         return $this->collections;
+    }
+
+    public function getCarts()
+    {
+        return $this->carts;
     }
 
 
