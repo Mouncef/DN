@@ -78,12 +78,13 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $carts;
 
+
+
     public function __construct()
     {
         $this->isActive = true;
         $this->roles[] = 'ROLE_MEMBER';
         $this->carts = new ArrayCollection();
-
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid('', true));
     }

@@ -52,11 +52,17 @@ class Cart
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="cart")
+     */
+    private $orders;
+
     // add your own fields
 
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->orders = new ArrayCollection();
         $this->createdAt = new \DateTime('now');
     }
 
@@ -95,4 +101,16 @@ class Cart
     {
         return $this->cartId;
     }
+
+    public function getCheckedAt()
+    {
+        return $this->checkedAt;
+    }
+
+    public function setCheckedAt($checkedAt)
+    {
+        $this->checkedAt = $checkedAt;
+    }
+
+
 }

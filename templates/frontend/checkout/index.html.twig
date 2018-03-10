@@ -1,0 +1,394 @@
+{% extends 'frontend/index.html.twig' %}
+
+{% block body %}
+    {% block loader %}
+        {% include 'frontend/partials/layout_1/_loader.html.twig' %}
+    {% endblock %}
+
+    {% block menu %}
+        {% include 'frontend/partials/layout_1/_menu.html.twig' %}
+    {% endblock %}
+
+    {% block header %}
+        {% include 'frontend/partials/layout_1/_header.html.twig' %}
+    {% endblock %}
+
+    {% block breadcrumb %}
+        <div class="breadcrumb">
+            <div class="container">
+                <ul>
+                    <li><a href="{{ path('homepage') }}">Home</a></li>
+                    <li>Check Out</li>
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block content %}
+        <!-- Content -->
+        <div id="pageContent">
+
+            {% block slider %}
+                {% set total = 0 %}
+                {% set totalProducts = 0 %}
+                {% if cart %}
+                    <div class="container offset-18">
+                        <h1 class="block-title large">Checkout</h1>
+                        <div class="row offset-48">
+                            <div class="col-md-8">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs checkout-tab">
+                                    <li class="active" id="address">
+                                        <a disabled>
+                                            <div class="numeral-box">
+                                                <span class="numeral">1</span>
+                                                <span class="icon icon-check"></span>
+                                            </div>
+                                            <div class="title">
+                                                Shipping
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li id="payment">
+                                        <a disabled >
+                                            <div class="numeral-box">
+                                                <span class="numeral">2</span>
+                                            </div>
+                                            <div class="title">
+                                                Review &amp; Payments
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!-- Tab panes -->
+                                {{ form_start(form) }}
+                                    {% if form_errors(form.adressText) is not empty %}
+                                        <div class="alert alert-danger alert-dismissible" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            Address : {{ form_errors(form.adressText) }}
+                                        </div>
+                                    {% endif %}
+                                    {% if form_errors(form.city) is not empty %}
+                                        <div class="alert alert-danger alert-dismissible" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            City : {{ form_errors(form.city) }}
+                                        </div>
+                                    {% endif %}
+                                    {% if form_errors(form.zipCode) is not empty %}
+                                        <div class="alert alert-danger alert-dismissible" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            Zip Code : {{ form_errors(form.zipCode) }}
+                                        </div>
+                                    {% endif %}
+                                    {% if form_errors(form.phone) is not empty %}
+                                        <div class="alert alert-danger alert-dismissible" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            Phone Number : {{ form_errors(form.phone) }}
+                                        </div>
+                                    {% endif %}
+                                    {% if form_errors(form.country) is not empty %}
+                                        <div class="alert alert-danger alert-dismissible" role="alert">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            Country : {{ form_errors(form.country) }}
+                                        </div>
+                                    {% endif %}
+                                    <div class="tab-content checkout-tab-content">
+                                    <div class="tab-pane active" id="Shipping">
+                                        <h2 class="title-checkout">SHIPPING ADDRESS</h2>
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
+                                                <label for="inputFirstName" class="col-sm-3 control-label">First Name: <span>*</span></label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" value="{{ cart.user.name }}" id="inputFirstName" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputLastName" class="col-sm-3 control-label">Last Name: <span>*</span></label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" value="{{ cart.user.lastName }}" id="inputLastName" disabled>
+                                                </div>
+                                            </div>
+                                            <!---------------------- Adress form ---------------->
+
+
+                                                <div class="form-group">
+                                                    <label for="inputStreet" class="col-sm-3 control-label">Address: <span>*</span></label>
+                                                    <div class="col-sm-9">
+                                                        {{ form_widget(form.adressText, {'id': 'inputStreet', 'attr': {'class': 'form-control'} }) }}
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="inputCity" class="col-sm-3 control-label">City: <span>*</span></label>
+                                                    <div class="col-sm-9">
+                                                        {{ form_widget(form.city, {'id': 'inputCity', 'attr': {'class': 'form-control'} }) }}
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="inputZip" class="col-sm-3 control-label">Zip/Postal Code: <span>*</span></label>
+                                                    <div class="col-sm-9">
+                                                        {{ form_widget(form.zipCode, {'id': 'inputZip', 'attr': {'class': 'form-control'} }) }}
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="inputCountry" class="col-sm-3 control-label">Country: <span>*</span></label>
+                                                    <div class="col-sm-9">
+                                                        {{ form_widget(form.country, {'id': 'inputCountry', 'attr': {'class': 'form-control'} }) }}
+                                                        {#<select id="inputCountry" class="form-control">
+                                                            <option>text</option>
+                                                        </select>#}
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="inputPhone" class="col-sm-3 control-label">Phone Number: <span>*</span></label>
+                                                    <div class="col-sm-9">
+                                                        {{ form_widget(form.phone, {'id': 'inputPhone', 'attr': {'class': 'form-control'} }) }}
+                                                        {#<input type="text" class="form-control" id="inputPhone">#}
+                                                    </div>
+                                                </div>
+
+
+                                            <!---------------------- Adress form ---------------->
+
+                                        </div>
+                                        <hr>
+{#                                        <h2 class="title-checkout">SHIPPING METHODS</h2>
+                                        <table class="checkout-table-01">
+                                            <tbody>
+                                            <tr>
+                                                <td>Select Method:</td>
+                                                <td>
+                                                    <label class="radio">
+                                                        <input id="radio1" type="radio" name="radios">
+                                                        <span class="outer"><span class="inner"></span></span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Price:</td>
+                                                <td>
+                                                    <span class="color-base">$5.00</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Method Title:</td>
+                                                <td>Fixed</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Carrier Title:</td>
+                                                <td>Flat Rate</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>#}
+                                        <br/>
+                                        <a class="btn icon-btn-right"
+                                           href="#Review" data-toggle="tab"
+                                           onclick="function changeLabel() {span = `<span class='numeral'>1</span><span class='icon icon-check'>&nbsp;</span>`;$('#address .numeral-box').html(span); $('#address').removeClass('active'); $('#payment').addClass('active');}
+                                        changeLabel()">
+                                            NEXT
+                                            <span class="icon icon-chevron_right"></span>
+                                        </a>
+                                    </div>
+                                    <div class="tab-pane checkout-tab-content" id="Review">
+                                        <h2 class="title-checkout">PAYMENT</h2>
+                                        <div class="checkout-box-01">
+                                            <h6>Payment Information</h6>
+                                            {#Check / Money order
+                                            <label class="radio">
+                                                <input id="radio2" type="radio" name="radios">
+                                                <span class="outer"><span class="inner"></span></span>
+                                                My billing and shipping address are the same
+                                            </label>
+                                            Lorem ipsum dolor sit amet conse <br>
+                                            Ctetur adipisicing elit, sed do <br>
+                                            Wiusmod tempor incididunt ut labore <br>
+                                            Et dolore magna aliqua.#}
+                                        </div>
+                                        <hr>
+                                        {#<h2 class="title-checkout">APPLY DISCOUNT CODE </h2>
+                                        <div class="checkout-box-02">
+                                            <form class="form-inline">
+                                                <input type="text" class="form-control">
+                                                <a class="btn btn-border color-default" href="#">APPLY DISCOUNT</a>
+                                            </form>
+                                        </div>#}
+
+                                        <a class="btn"
+                                           href="#Shipping" data-toggle="tab"
+                                           onclick="function changeLabelSecond() {
+//                                               span = `<span class='numeral'>1</span><span class='icon icon-check'>&nbsp;</span>`;
+//                                               $('#address .numeral-box').html(span);
+                                               $('#payment').removeClass('active');
+                                               $('#address').addClass('active');}
+                                           changeLabelSecond()">
+
+                                            <span class="icon icon-chevron_left"></span>
+                                            Back
+                                        </a>
+                                        <button class="btn" type="submit"
+                                           {#onclick="function submitAddress() {#}
+                                               {#$('#address_form').submit();}#}
+                                            {#submitAddress()"#}
+                                        >
+                                            ORDER
+                                        </button>
+                                    </div>
+                                </div>
+                                {{ form_end(form) }}
+
+                            </div>
+                            <div class="col-md-4 checkout-box-aside ">
+                                <div class="checkout-box">
+                                    <div class="checkout-table-02">
+                                        <table>
+                                            <thead>
+                                            <tr>
+                                                <td colspan="2">Order Summary</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>SUBTOTAL:</td>
+                                                <td>
+                                                    {% for article in cart.articles %}
+                                                        {% set totalProducts = total + article.price  %}
+                                                        {% set total = totalProducts %}
+                                                    {% endfor %}
+                                                    ${{ totalProducts|number_format(2, '.', ',') }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>SHIPPING:</td>
+                                                <td>$0 FREE</td>
+                                            </tr>
+                                            <tr>
+                                                <td>ORDER TOTAL:</td>
+                                                <td><strong class="color-base">${{ totalProducts|number_format(2, '.', ',') }}</strong></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="checkout-box">
+                                    <h3>
+                                        {% set nbArticles = cart.articles|length %}
+                                        {{ nbArticles }}
+
+                                             ITEM{% if nbArticles > 1 %}S{% endif %}
+
+                                        IN CART
+                                    </h3>
+                                    <div class="checkout-box-03">
+                                        {% for article in cart.articles %}
+                                            <div class="item">
+                                                <div class="img">
+                                                    <a href="#"><img src="{{ asset('uploads/Articles/images/'~article.principalCover) }}" alt="{{ article.name }}"></a>
+                                                </div>
+                                                <div class="description">
+                                                    <a href="#" class="title">{{ article.name }}</a>
+                                                    <p>
+                                                        {{ article.description }}
+                                                    </p>
+                                                    <div class="price">${{ article.price }}</div>
+                                                    {#<p>#}
+                                                        {#QTY:1#}
+                                                    {#</p>#}
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                        {#<div class="item">#}
+                                            {#<div class="img">#}
+                                                {#<a href="#"><img src="images/product/product-80x100-1.jpg" alt=""></a>#}
+                                            {#</div>#}
+                                            {#<div class="description">#}
+                                                {#<a href="#" class="title">Daisy Street 3/4 Sleeve Pane</a>#}
+                                                {#<p>#}
+                                                    {#Black,  Xl#}
+                                                {#</p>#}
+                                                {#<div class="price">$45</div>#}
+                                                {#<p>#}
+                                                    {#QTY:1#}
+                                                {#</p>#}
+                                            {#</div>#}
+                                        {#</div>#}
+                                        {#<div class="item">#}
+                                            {#<div class="img">#}
+                                                {#<a href="#"><img src="images/product/product-80x100-2.jpg" alt=""></a>#}
+                                            {#</div>#}
+                                            {#<div class="description">#}
+                                                {#<a href="#" class="title">Daisy Street 3/4 Sleeve Pane</a>#}
+                                                {#<p>#}
+                                                    {#Black,  Xl#}
+                                                {#</p>#}
+                                                {#<div class="price">$45</div>#}
+                                                {#<p>#}
+                                                    {#QTY:1#}
+                                                {#</p>#}
+                                            {#</div>#}
+                                        {#</div>#}
+                                    </div>
+                                </div>
+                                {#<div class="checkout-box">#}
+                                    {#<div class="button-edit">#}
+                                        {#<span class="icon icon-create"></span>#}
+                                    {#</div>#}
+                                    {#<h3>SHIP TO:</h3>#}
+                                    {#<div class="checkout-box-content">#}
+                                        {#<p>#}
+                                            {#My billing and shipping address are the same#}
+                                            {#Lorem ipsum dolor sit amet conse#}
+                                            {#Ctetur adipisicing elit, sed do#}
+                                            {#Wiusmod tempor incididunt ut labore#}
+                                            {#Et dolore magna aliqua.#}
+                                        {#</p>#}
+                                    {#</div>#}
+                                {#</div>#}
+                                {#<div class="checkout-box">#}
+                                    {#<div class="button-edit">#}
+                                        {#<span class="icon icon-create"></span>#}
+                                    {#</div>#}
+                                    {#<h3>SHIPPING METHOD:</h3>#}
+                                    {#<div class="checkout-box-content">#}
+                                        {#<p>m ipsum dolor sit amet conse</p>#}
+                                    {#</div>#}
+                                {#</div>#}
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    No cart exist !
+                {% endif %}
+
+            {% endblock %}
+
+            {% block promo %}
+                {#{% include 'frontend/partials/layout_1/_promo.html.twig' %}#}
+            {% endblock %}
+
+            {% block collections %}
+                {#{% include 'frontend/partials/layout_1/_collections.html.twig' %}#}
+            {% endblock %}
+
+            {% block features %}
+                {#{% include 'frontend/partials/layout_1/_features.html.twig' %}#}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block footer %}
+        {% include 'frontend/partials/layout_1/_footer.html.twig' %}
+    {% endblock %}
+
+    {% block modal %}
+        {% include 'frontend/partials/layout_1/_modal.html.twig' %}
+    {% endblock %}
+
+
+    {% block javascripts %}
+        {% include 'frontend/partials/layout_1/_javascript.html.twig' %}
+    {% endblock %}
+
+{% endblock %}

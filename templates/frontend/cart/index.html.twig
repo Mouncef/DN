@@ -180,7 +180,10 @@
                                     </tr>
                                     </tfoot>
                                 </table>
-                                <a href="#" class="btn btn-full icon-btn-left"><span class="icon icon-check_circle"></span>PROCEED TO CHECKOUT</a>
+                                <a href="{{ path('checkout_index', {'cart': cart.cartId}) }}" class="btn btn-full icon-btn-left">
+                                    <span class="icon icon-check_circle"></span>
+                                    PROCEED TO CHECKOUT
+                                </a>
                             </div>
                         </div>
                     </div>
