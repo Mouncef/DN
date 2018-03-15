@@ -1,0 +1,283 @@
+{% extends 'backend/index.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset('assets/backend/css/style.default.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/backend/css/jquery.datatables.css') }}" rel="stylesheet">
+    <style>
+        #table2 tbody tr {
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+{% block pageHeader %}
+    <div class="pageheader">
+        <h2><i class="fa fa-home"></i> Orders <span>management & list...</span></h2>
+        <div class="breadcrumb-wrapper">
+            {#<span class="label">Add a new article here : </span>
+            <ol class="breadcrumb">
+                <li><a href="{{ path('article_new') }}"><i class="fa fa-plus-square"></i></a></li>
+                <li class="active">List Articles</li>
+            </ol>#}
+        </div>
+    </div>
+{% endblock %}
+
+{% block contentPanel %}
+    <div class="contentpanel">
+
+        <div class="row">
+
+            <div class="col-sm-12">
+                {% set total = 0 %}
+                {% set totalProducts = 0 %}
+                {% if orders %}
+                    <div class="panel panel-default">
+
+                        <div class="panel-body">
+                            {% for label, messages in app.flashes(['warning', 'error', 'success', 'info', 'notice','primary']) %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ label }} alert-dismissable" id="messagesAlerte">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+
+                            <div class="table-responsive">
+                                <table class="table table-hidaction table-hover" id="table3">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Order Code</th>
+                                        <th>Order Time</th>
+                                        <th>Order Sum</th>
+                                        <th>Client</th>
+                                        <th>Articles</th>
+                                        <th>Paid</th>
+                                        <th>Delivered</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for order in orders %}
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="articlesModal-{{ order.orderId }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title" id="myModalLabel">
+                                                            Articles
+                                                        </h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            {% for article in order.cart.articles %}
+                                                                <div class="col-md-4">
+                                                                    <div class="thumbnail">
+                                                                        <img src="{{ asset('uploads/Articles/images/'~article.principalCover) }}" class="img-responsive"/>
+                                                                        <div class="caption" style="text-align: center">
+                                                                            <span class="label label-info">{{ article.name }}</span>
+                                                                            <span class="label label-info">{{ article.price }} $</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                {% set totalProducts = total + article.price  %}
+                                                                {% set total = totalProducts %}
+                                                            {% endfor %}
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- endModal -->
+
+                                        <tr class="{% if loop.index is odd %}odd gradeX{% else %}even gradeC{% endif %}">
+                                            <td class="center">{{ order.orderId }}</td>
+                                            <td class="center">{{ order.orderCode }}</td>
+                                            <td class="center">{{ order.createdAt|date("jS F Y \\a\\t g:ia") }}</td> {#date('d F Y  H:i')#}
+                                            <td class="center">{{ totalProducts|number_format(2, '.', ',') }} $</td>
+                                            <td class="center">{{ order.cart.user.name }} {{ order.cart.user.lastName }}</td>
+                                            <td class="center">
+                                                <a class="label label-success" data-toggle="modal" data-target="#articlesModal-{{ order.orderId }}">
+                                                    Articles {{ order.cart.articles|length }}
+                                                </a>
+                                            </td>
+                                            <td class="center">
+                                                {% if order.isPaid %}
+                                                    <i class="label label-primary">Paid</i>
+                                                {% else %}
+                                                    <i class="label label-danger">Not Paid</i>
+                                                {% endif %}
+                                            </td>
+                                            <td class="center">
+                                                {% if order.isDelivered %}
+                                                    <i class="label label-primary">Delivered</i>
+                                                {% else %}
+                                                    <i class="label label-danger">Not Delivered</i>
+                                                {% endif %}
+                                            </td>
+                                            <td class="table-action-hide">
+                                                {% if not order.isPaid %}
+                                                    <span data-toggle="modal" data-target="#modalMarkPaidOrder-{{ order.orderId }}">
+                                                        <a data-toggle="tooltip" data-placement="left" style="opacity: 1;cursor: pointer" class="danger" title="Mark your Order as Paid">
+                                                            <i class="fa fa-money"></i>
+                                                        </a>
+                                                    </span>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="modalMarkPaidOrder-{{ order.orderId }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                    <h4 class="modal-title" id="myModalLabel">Check order paiement</h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <h3>Are you sure to check the paiement of this order :</h3>
+                                                                    <br>
+                                                                    <div class="well" style="text-align: center">
+                                                                        <samp>
+                                                                            {{ order.orderCode }}
+                                                                        </samp>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                    <a href="{{ path('order_check_paiement', {id: order.orderId }) }}" class="btn btn-danger" style="color: #000;">Check paiement</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+
+                                                {% if not order.isDelivered %}
+                                                    <span data-toggle="modal" data-target="#modalMarkDeliveredOrder-{{ order.orderId }}">
+                                                        <a data-toggle="tooltip" data-placement="left" style="opacity: 1;cursor: pointer" class="danger"  title="Mark your Order as Delivered">
+                                                            <i class="fa fa-truck"></i>
+                                                        </a>
+                                                    </span>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="modalMarkDeliveredOrder-{{ order.orderId }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                    <h4 class="modal-title" id="myModalLabel">Check order paiement</h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <h3>Are you sure to mark this order as delivered :</h3>
+                                                                    <br>
+                                                                    <div class="well" style="text-align: center">
+                                                                        <samp>
+                                                                            {{ order.orderCode }}
+                                                                        </samp>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                    <a href="{{ path('order_check_delivery', {id: order.orderId }) }}" class="btn btn-danger" style="color: #000;">Delivered</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+
+                                                <a href="{{ path('invoice_pdf', {'id': order.orderId}) }}"  data-toggle="tooltip" data-placement="left" style="opacity: 1;cursor: pointer" class="info" title="Invoice">
+                                                    <i class="fa fa-file-text"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div><!-- table-responsive -->
+                            <div class="pull-right">
+                                <a href="{#{{ path('subscribers_list_pdf') }}#}" style="opacity: 1;" class="btn btn-info-alt" title="Pdf" target="_blank" ><i class="fa fa-file"></i> List PDF Format</a>
+                            </div>
+
+
+                        </div><!-- panel-body -->
+                    </div>
+
+                {% else %}
+                    <div class="alert alert-info">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <strong>Info : </strong>
+                        There is no Order on your website !
+                    </div>
+                {% endif %}
+
+
+            </div><!-- col-sm-12 -->
+
+        </div><!-- row -->
+
+    </div><!-- contentpanel -->
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('assets/backend/js/jquery-1.11.1.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery-migrate-1.2.1.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/modernizr.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.sparkline.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/toggles.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/retina.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.cookies.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/custom.js') }}"></script>
+
+    <script>
+        jQuery(document).ready(function() {
+
+            "use strict";
+
+            // tooltip bootstrap
+            $('[data-toggle="tooltip"]').tooltip();
+
+            // Alert auto Close
+            $("#messagesAlerte").fadeTo(3000, 2000).slideUp(2000, function(){
+                $("messagesAlerte").slideUp(2000);
+            });
+
+            jQuery('#table3').dataTable({
+                "sPaginationType": "full_numbers"
+            });
+
+            // Select2
+            jQuery('select').select2({
+                minimumResultsForSearch: -1
+            });
+
+            jQuery('select').removeClass('form-control');
+
+            // Delete row in a table
+            jQuery('.delete-row').click(function(){
+                var c = confirm("Continue delete?");
+                if(c)
+                    jQuery(this).closest('tr').fadeOut(function(){
+                        jQuery(this).remove();
+                    });
+
+                return false;
+            });
+
+            // Show aciton upon row hover
+            jQuery('.table-hidaction tbody tr').hover(function(){
+                jQuery(this).find('.table-action-hide a').animate({opacity: 1});
+            },function(){
+                jQuery(this).find('.table-action-hide a').animate({opacity: 0});
+            });
+
+
+        });
+    </script>
+{% endblock %}

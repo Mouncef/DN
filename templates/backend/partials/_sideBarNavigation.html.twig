@@ -59,6 +59,20 @@
             </li>
         </ul>
     </li>
+    <li class="nav-parent {% if app.request.attributes.get('_route') == 'order_list' %}nav-active{% endif %}">
+        <a href="">
+            <i class="fa fa-shopping-cart"></i>
+            <span>E-Commerce</span>
+        </a>
+        <ul class="children"
+            style="display: {% if app.request.attributes.get('_route') == 'order_list' %}block{% endif %}" >
+            <li class="{% if app.request.attributes.get('_route') == 'order_list' %}active{% endif %}">
+                <a href="{{ path('order_list') }}">
+                    <i class="fa fa-caret-right"></i> Orders
+                </a>
+            </li>
+        </ul>
+    </li>
     {#<li><a href="#"><span class="pull-right badge badge-success">2</span><i class="fa fa-envelope-o"></i> <span>Email</span></a></li>
     <li class="nav-parent"><a href=""><i class="fa fa-edit"></i> <span>Forms</span></a>
         <ul class="children">

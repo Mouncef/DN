@@ -7,13 +7,12 @@
  */
 namespace App\Service;
 
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Tests\DependencyInjection\RendererService;
-use Twig\Template;
+
+use TCPDF;
 use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 
-class PDFGenerator extends \TCPDF
+class PDFGenerator extends TCPDF
 {
     private $pdf;
     private $templating;
@@ -29,8 +28,8 @@ class PDFGenerator extends \TCPDF
         $pdf = $this->pdf->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
         // set document information
-        $pdf->SetCreator(PDF_CREATOR);
-        $pdf->SetAuthor('Nicola Asuni');
+        $pdf->SetCreator('Mouncef ZAGHRAT');
+        $pdf->SetAuthor('Mouncef ZAGHRAT');
         $pdf->SetTitle('TCPDF Example 001');
         $pdf->SetSubject('TCPDF Tutorial');
         $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
@@ -139,4 +138,69 @@ class PDFGenerator extends \TCPDF
         $pdf->Output('PDF/'.$pdfName.'.pdf', 'F');
         /*------------------------------------  End of PDF Saving  -------------------------------------*/
     }
+
+    public function generateInvoicePDF($html, $filename){
+
+        // create new PDF document
+        $pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+
+        // set document information
+        $pdf->SetCreator('Dar Nawal');
+        $pdf->SetAuthor('Dar Nawal');
+        $pdf->SetTitle('Invoice');
+        $pdf->SetSubject('Invoice');
+        $pdf->SetKeywords('DarNawal, Luxe, Caftans');
+
+
+        // set default header data
+        $pdf->SetHeaderData('tcpdf_logo.jpg', 50, null, null);
+
+        // set header and footer fonts
+        $pdf->setHeaderFont(Array('helvetica', '', 10));
+        $pdf->setFooterFont(Array('helvetica', '', 8));
+
+        // set default monospaced font
+        $pdf->SetDefaultMonospacedFont('courier');
+
+        // set margins
+        $pdf->SetMargins(15, 27, 15);
+        $pdf->SetHeaderMargin(5);
+        $pdf->SetFooterMargin(10);
+
+        // set auto page breaks
+        $pdf->SetAutoPageBreak(TRUE, 25);
+
+        // set image scale factor
+        $pdf->setImageScale(1);
+
+        // set some language-dependent strings (optional)
+        if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+            require_once(dirname(__FILE__).'/lang/eng.php');
+            $pdf->setLanguageArray($l);
+        }
+
+        // ---------------------------------------------------------
+
+        // set font
+        $pdf->SetFont('helvetica', 'B', 20);
+
+        // add a page
+        $pdf->AddPage();
+
+        $pdf->Write(25, 'Invoice', '', 0, 'C', true, 0, false, false, 0);
+
+        $pdf->SetFont('helvetica', '', 9, 0,0,0);
+
+        $pdf->writeHTML($html, true, true, false, false, '');
+
+        // ---------------------------------------------------------
+
+        // Close and output PDF document
+        // This method has several options, check the source code documentation for more information.
+        $pdf->Output($filename.".pdf", 'I');
+
+
+    }
+
+
 }
