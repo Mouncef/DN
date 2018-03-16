@@ -187,7 +187,7 @@ class PDFGenerator extends TCPDF
         // add a page
         $pdf->AddPage();
 
-        $pdf->Write(25, 'Invoice', '', 0, 'C', true, 0, false, false, 0);
+//        $pdf->Write(25, '', '', 0, 'C', true, 0, false, false, 0);
 
         $pdf->SetFont('helvetica', '', 9, 0,0,0);
 

@@ -33,7 +33,35 @@ class OrdersController extends Controller
     }
 
     /**
-     * @Route("CheckPaiement/{id}", name="order_check_paiement")
+     * @Route("/{id}", name="order_view")
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @internal param Request $request
+     */
+    public function viewAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $order = $em->getRepository(Order::class)->find($id);
+
+        if (!$order) {
+
+            throw $this->createNotFoundException(
+                'No order found for id '.$id
+            );
+
+        }
+
+        $order->setNotified(true);
+
+        $em->flush();
+
+        return $this->render('backend/order/view.html.twig', [
+            'order'   => $order
+        ]);
+    }
+
+    /**
+     * @Route("/CheckPaiement/{id}", name="order_check_paiement")
      */
     public function checkPaiement($id)
     {
@@ -59,7 +87,7 @@ class OrdersController extends Controller
     }
 
     /**
-     * @Route("CheckDelivery/{id}", name="order_check_delivery")
+     * @Route("/CheckDelivery/{id}", name="order_check_delivery")
      */
     public function checkDelivery($id)
     {

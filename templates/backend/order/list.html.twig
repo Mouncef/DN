@@ -98,7 +98,11 @@
 
                                         <tr class="{% if loop.index is odd %}odd gradeX{% else %}even gradeC{% endif %}">
                                             <td class="center">{{ order.orderId }}</td>
-                                            <td class="center">{{ order.orderCode }}</td>
+                                            <td class="center">
+                                                <a href="{{ path('order_view', {'id': order.orderId}) }}">
+                                                    {{ order.orderCode }}
+                                                </a>
+                                            </td>
                                             <td class="center">{{ order.createdAt|date("jS F Y \\a\\t g:ia") }}</td> {#date('d F Y  H:i')#}
                                             <td class="center">{{ totalProducts|number_format(2, '.', ',') }} $</td>
                                             <td class="center">{{ order.cart.user.name }} {{ order.cart.user.lastName }}</td>
@@ -188,8 +192,11 @@
                                                     </div>
                                                 {% endif %}
 
-                                                <a href="{{ path('invoice_pdf', {'id': order.orderId}) }}"  data-toggle="tooltip" data-placement="left" style="opacity: 1;cursor: pointer" class="info" title="Invoice">
+                                                <a href="{{ path('invoice_pdf', {'id': order.orderId}) }}" target="_blank" data-toggle="tooltip" data-placement="left" style="opacity: 1;cursor: pointer" class="info" title="Invoice">
                                                     <i class="fa fa-file-text"></i>
+                                                </a>
+                                                <a href="{{ path('order_view', {'id': order.orderId}) }}" data-toggle="tooltip" data-placement="left" style="opacity: 1;cursor: pointer" class="success" title="View Order">
+                                                    <i class="fa fa-eye"></i>
                                                 </a>
                                             </td>
                                         </tr>
@@ -197,9 +204,9 @@
                                     </tbody>
                                 </table>
                             </div><!-- table-responsive -->
-                            <div class="pull-right">
-                                <a href="{#{{ path('subscribers_list_pdf') }}#}" style="opacity: 1;" class="btn btn-info-alt" title="Pdf" target="_blank" ><i class="fa fa-file"></i> List PDF Format</a>
-                            </div>
+                            {#<div class="pull-right">
+                                <a href="#}{#{{ path('subscribers_list_pdf') }}#}{#" style="opacity: 1;" class="btn btn-info-alt" title="Pdf" target="_blank" ><i class="fa fa-file"></i> List PDF Format</a>
+                            </div>#}
 
 
                         </div><!-- panel-body -->

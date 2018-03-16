@@ -164,6 +164,46 @@
         </li>#}
         <li>
             <div class="btn-group">
+                {% set orderNotifs = getOrdersNotification() %}
+                <button class="btn btn-default dropdown-toggle tp-icon" data-toggle="dropdown">
+                    <i class="glyphicon glyphicon-shopping-cart"></i>
+                    {% if orderNotifs|length > 0 %}
+                        <span class="badge">
+                            {{ orderNotifs|length }}
+                        </span>
+                    {% endif %}
+                </button>
+                <div class="dropdown-menu dropdown-menu-head pull-right">
+                    <h5 class="title">
+                        {% if orderNotifs|length > 0 %}
+                            You Have {{ orderNotifs|length }} New Order(s)
+                        {% else %}
+                            No New Order !
+                        {% endif %}
+                    </h5>
+                    <ul class="dropdown-list gen-list">
+                        {% for order in orderNotifs %}
+                            <li class="new">
+                                <a href="{{ path('order_view', {'id': order.orderId}) }}">
+                                    <span class="thumb">
+                                        <img src="{{ asset('assets/backend/images/photos/user4.png') }}" alt="" />
+                                    </span>
+                                    <span class="desc">
+                                        <span class="name">
+                                            Order Code : {{ order.orderCode }} <span class="badge badge-success">new</span>
+                                        </span>
+                                        <span class="msg">Articles : {{ order.cart.articles|length }}</span>
+                                    </span>
+                                </a>
+                            </li>
+
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="btn-group">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                     <img src="{{ asset('assets/backend/images/photos/loggeduser.png') }}" alt="" />
                     {{ app.user.username }}

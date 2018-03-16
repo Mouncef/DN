@@ -1,0 +1,210 @@
+{% extends 'backend/index.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset('assets/backend/css/style.default.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/backend/css/jquery.datatables.css') }}" rel="stylesheet">
+    <style>
+        #table2 tbody tr {
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+{% block pageHeader %}
+    <div class="pageheader">
+        <h2><i class="fa fa-home"></i> Order <span>view...</span></h2>
+        <div class="breadcrumb-wrapper">
+            {#<span class="label">Add a new article here : </span>
+            <ol class="breadcrumb">
+                <li><a href="{{ path('article_new') }}"><i class="fa fa-plus-square"></i></a></li>
+                <li class="active">List Articles</li>
+            </ol>#}
+        </div>
+    </div>
+{% endblock %}
+
+{% block contentPanel %}
+    <div class="contentpanel">
+        {% set total = 0 %}
+        {% set totalProducts = 0 %}
+        {% if order %}
+            <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-6">
+
+                        <h5 class="subtitle mb10">From</h5>
+                        <img src="{{ asset('assets/backend/images/logo.png') }}" class="img-responsive mb10" alt="" />
+                        <address>
+                            <strong>DarNawal, Inc.</strong><br>
+                            address, number<br>
+                            City, country zipcode<br>
+                            <abbr title="Phone">P:</abbr> (000) 000-0000
+                        </address>
+
+                    </div><!-- col-sm-6 -->
+
+                    <div class="col-sm-6 text-right">
+                        <h5 class="subtitle mb10">Invoice No.</h5>
+                        <h4 class="text-primary">INV-000464F4-00</h4>
+
+                        <h5 class="subtitle mb10">To</h5>
+                        <address>
+                            <strong>{{ order.cart.user.name|capitalize }} {{ order.cart.user.lastName|upper }}</strong><br>
+                            {{ order.address.adressText }}<br>
+                            {{ order.address.city }}, {{ order.address.country }} {{ order.address.zipCode }}<br>
+                            <abbr title="Phone">P:</abbr> {{ order.address.phone }}
+                        </address>
+
+                        <p><strong>Invoice Date:</strong> {{ order.createdAt|date('F j, Y') }}</p>
+                        <p><strong>Due Date:</strong> {{ order.createdAt|date('F j, Y') }}</p>
+
+                    </div>
+                </div><!-- row -->
+
+                <div class="table-responsive">
+                    <table class="table table-invoice">
+                        <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Total Price</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for article in order.cart.articles %}
+                            <tr>
+                                <td>
+                                    <div class="pull-left">
+                                        <img src="{{ asset('uploads/Articles/images/'~article.principalCover) }}" class="img-responsive" width="75">
+                                    </div>
+                                    <div style="margin-left: 2%" class="pull-left">
+                                        <div class="text-primary"><strong>{{ article.name }}</strong></div>
+
+                                        <small>
+                                            {{ article.description }}
+                                        </small>
+                                    </div>
+
+                                </td>
+                                <td style="vertical-align: middle">1</td>
+                                <td style="vertical-align: middle">${{ article.price|number_format(2, '.', ',') }}</td>
+                                <td style="vertical-align: middle">${{ article.price|number_format(2, '.', ',') }}</td>
+                            </tr>
+                            {% set totalProducts = total + article.price  %}
+                            {% set total = totalProducts %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div><!-- table-responsive -->
+
+                <table class="table table-total">
+                    <tbody>
+                    <tr>
+                        <td><strong>Sub Total :</strong></td>
+                        <td>${{ totalProducts|number_format(2, '.', ',') }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TVA :</strong></td>
+                        <td>$00.00</td>
+                    </tr>
+                    <tr>
+                        <td><strong>TOTAL :</strong></td>
+                        <td>${{ totalProducts|number_format(2, '.', ',') }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="text-right btn-invoice">
+                    {% if not order.isPaid %}
+                        <a class="btn btn-primary mr5" href="{{ path('order_check_paiement', {'id': order.orderId}) }}">
+                            <i class="fa fa-dollar mr5"></i> Mark as Paid
+                        </a>
+                    {% endif %}
+                    {% if not order.isDelivered %}
+                        <a class="btn btn-success mr5" href="{{ path('order_check_delivery', {'id': order.orderId}) }}">
+                            <i class="fa fa-truck mr5"></i> Mark as Delivered
+                        </a>
+                    {% endif %}
+                    <a class="btn btn-white" href="{{ path('invoice_pdf', {'id': order.orderId}) }}" target="_blank">
+                        <i class="fa fa-print mr5"></i> Print Invoice
+                    </a>
+                </div>
+
+                <div class="mb40"></div>
+
+
+            </div><!-- panel-body -->
+        </div><!-- panel -->
+        {% else %}
+            <div class="alert alert-info">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <strong>Info : </strong>
+                There is no Order on your website !
+            </div>
+        {% endif %}
+
+    </div><!-- contentpanel -->
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('assets/backend/js/jquery-1.11.1.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery-migrate-1.2.1.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/modernizr.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.sparkline.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/toggles.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/retina.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.cookies.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/custom.js') }}"></script>
+
+    <script>
+        jQuery(document).ready(function() {
+
+            "use strict";
+
+            // tooltip bootstrap
+            $('[data-toggle="tooltip"]').tooltip();
+
+            // Alert auto Close
+            $("#messagesAlerte").fadeTo(3000, 2000).slideUp(2000, function(){
+                $("messagesAlerte").slideUp(2000);
+            });
+
+            jQuery('#table3').dataTable({
+                "sPaginationType": "full_numbers"
+            });
+
+            // Select2
+            jQuery('select').select2({
+                minimumResultsForSearch: -1
+            });
+
+            jQuery('select').removeClass('form-control');
+
+            // Delete row in a table
+            jQuery('.delete-row').click(function(){
+                var c = confirm("Continue delete?");
+                if(c)
+                    jQuery(this).closest('tr').fadeOut(function(){
+                        jQuery(this).remove();
+                    });
+
+                return false;
+            });
+
+            // Show aciton upon row hover
+            jQuery('.table-hidaction tbody tr').hover(function(){
+                jQuery(this).find('.table-action-hide a').animate({opacity: 1});
+            },function(){
+                jQuery(this).find('.table-action-hide a').animate({opacity: 0});
+            });
+
+
+        });
+    </script>
+{% endblock %}

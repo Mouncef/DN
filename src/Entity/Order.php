@@ -50,12 +50,18 @@ class Order
      */
     private $isDelivered;
 
+    /**
+     * @ORM\Column(name="notified", type="boolean")
+     */
+    private $notified;
+
 
     public function __construct()
     {
         $this->createdAt = new \DateTime('now');
         $this->isDelivered = false;
         $this->isPaid = false;
+        $this->notified = false;
     }
 
     public function getOrderId()
@@ -127,6 +133,18 @@ class Order
     public function setIsDelivered($isDelivered)
     {
         $this->isDelivered = $isDelivered;
+    }
+
+
+    public function getNotified()
+    {
+        return $this->notified;
+    }
+
+
+    public function setNotified($notified)
+    {
+        $this->notified = $notified;
     }
 
 

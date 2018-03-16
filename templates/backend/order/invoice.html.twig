@@ -3,97 +3,277 @@
 
 </head>
 <body>
+<link rel="shortcut icon" href="{{ asset('assets/backend/images/favicon.ico') }}" type="image/x-icon">
+<link rel="icon" href="{{ asset('assets/backend/images/favicon.ico') }}" type="image/x-icon">
+    {% set total = 0 %}
+    {% set totalProducts = 0 %}
+
+    {% for article in order.cart.articles %}
+        {% set totalProducts = total + article.price  %}
+        {% set total = totalProducts %}
+    {% endfor %}
 
     <!--  https://slicedinvoices.com/pdf/wordpress-pdf-invoice-plugin-sample.pdf -->
+    <br/><br/>
+    <table cellspacing="0" cellpadding="2" border="0">
+        <tr>
+
+            {#<td>
+                <table cellspacing="0" cellpadding="0" border="0" width="10">
+                    <tr><td>&nbsp;</td></tr>
+                </table>
+            </td>#}
+            <td width="180">&nbsp;</td>
+            <td>
+                <table cellspacing="0" cellpadding="0" border="0" >
+                    <tr>
+                        <td style="font-size: 19px;color: #2c2c2c;"><b>INVOICE N° {{ order.orderCode }}</b></td>
+                    </tr>
+                </table>
+            </td>
+            <td width="220">&nbsp;</td>
+        </tr>
+    </table>
+
+    <br/><br/><br/><br/>
 
     <table cellspacing="0" cellpadding="2" border="0">
         <tr>
             <td>
                 <table cellspacing="0" cellpadding="0" border="0" >
                     <tr>
-                        <td><b>From:</b></td>
+                        <td style="font-size: 9px;color: #000000;"><b>From:</b></td>
                     </tr>
                     <tr>
-                        <td style="color: #00A8FF">DEMO - Sliced Invoices</td>
+                        <td style="font-size: 9px;color: #3e83bf;">Dar Nawal</td>
                     </tr>
                     <tr>
-                        <td>Suite 5A-1204</td>
+                        <td style="font-size: 9px;color: #2c2c2c;">Suite 5A-1204</td>
                     </tr>
                     <tr>
-                        <td>123 Somewhere Street</td>
+                        <td style="font-size: 9px;color: #2c2c2c;">address</td>
                     </tr>
                     <tr>
-                        <td>Your City AZ 12345</td>
+                        <td style="font-size: 9px;color: #2c2c2c;">City 12345, Country</td>
                     </tr>
                     <tr>
-                        <td>admin@slicedinvoices.com</td>
+                        <td style="font-size: 9px;color: #2c2c2c;">info@darnawal.com</td>
                     </tr>
                 </table>
             </td>
+            {#<td>
+                <table cellspacing="0" cellpadding="0" border="0" width="10">
+                    <tr><td>&nbsp;</td></tr>
+                </table>
+            </td>#}
+            <td width="130">&nbsp;</td>
             <td>
-                <table cellspacing="0" cellpadding="0" border="0">
-                    <tr><td>Holla</td></tr>
+                <table cellspacing="0" cellpadding="2" width="200" {#style="border:1px solid #999999"#}>
+                    <tr>
+                        <td style="background-color: #FEFEFE;border: 0.1px solid #999999; font-size: 9px;color: #2c2c2c;">
+                            &nbsp;
+                            Invoice Code
+                        </td>
+                        <td style="background-color: #FEFEFE;border: 0.1px solid #999999;font-size: 9px;color: #2c2c2c;">
+                            &nbsp;
+                            {{ order.orderCode }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #FEFEFE;border: 0.1px solid #999999;font-size: 9px;color: #2c2c2c;">
+                            &nbsp;
+                            Order Code
+                        </td>
+                        <td style="background-color: #FEFEFE;border: 0.1px solid #999999;font-size: 9px;color: #2c2c2c;">
+                            &nbsp;
+                            {{ order.orderCode }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #FEFEFE ;border: 0.1px solid #999999;font-size: 9px;color: #2c2c2c;">
+                            &nbsp;
+                            Invoice Date
+                        </td>{#/*ddd*/#}
+                        <td style="background-color: #FEFEFE;border: 0.1px solid #999999;font-size: 9px;color: #2c2c2c;">
+                            &nbsp;
+                            {{ date('now')|date("F j, Y") }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #FEFEFE ;border: 0.1px solid #999999;font-size: 9px;color: #2c2c2c;">
+                            &nbsp;
+                            Due Date
+                        </td>{#/*f2f2f2*/#}
+                        <td style="background-color: #FEFEFE;border: 0.1px solid #999999;font-size: 9px;color: #2c2c2c;">
+                            &nbsp;
+                            {{ order.createdAt|date("F j, Y") }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #f2f2f2;border: 0.1px solid #999999;font-size: 9px;color: #2c2c2c;">
+                            &nbsp;
+                            <strong>Total Due</strong>
+                        </td>
+                        <td style="background-color: #f2f2f2;border: 0.1px solid #999999;font-size: 9px;color: #2c2c2c;">
+                            <strong>
+                                ${{ totalProducts|number_format(2, '.', ',') }}
+                            </strong>
+                        </td>
+                    </tr>
                 </table>
             </td>
+        </tr>
+    </table>
+
+    <br/><br/><br/>
+
+    <table cellspacing="0" cellpadding="2" border="0">
+        <tr>
             <td>
-                <table cellspacing="0" cellpadding="3"  style="border:1px solid #ddd">
-                    <tr><td style="background-color: #4CAF50;">Holla</td><td style="background-color: #4CAF50;">Holla</td></tr>
-                    <tr><td style="background-color: #ddd;">Holla</td><td style="background-color: #ddd;">Holla</td></tr>
-                    <tr><td style="background-color: #f2f2f2;">Holla</td><td style="background-color: #f2f2f2;">Holla</td></tr>
+                <table cellspacing="0" cellpadding="0" border="0" >
+                    <tr>
+                        <td style="font-size: 9px;color: #000000;"><b>To:</b></td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 9px;color: #2c2c2c;">{{ order.cart.user.name|capitalize }} {{ order.cart.user.lastName|upper }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 9px;color: #2c2c2c;">{{ order.address.adressText }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 9px;color: #2c2c2c;">{{ order.address.city }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 9px;color: #2c2c2c;">{{ order.address.zipCode }}, {{ order.address.country }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size: 9px;color: #2c2c2c;">{{ order.cart.user.email }}</td>
+                    </tr>
                 </table>
             </td>
-
         </tr>
     </table>
 
-    <table cellspacing="0" cellpadding="2" border="0" width="30%" bgcolor="#faebd7">
+    <br /><br /><br /><br />
+
+    <table cellspacing="0" cellpadding="2" border="0">
         <tr>
-            <td><b>From:</b></td>
-        </tr>
-        <tr>
-            <td style="color: #00A8FF">DEMO - Sliced Invoices</td>
-        </tr>
-        <tr>
-            <td>Suite 5A-1204</td>
-        </tr>
-        <tr>
-            <td>123 Somewhere Street</td>
-        </tr>
-        <tr>
-            <td>Your City AZ 12345</td>
-        </tr>
-        <tr>
-            <td>admin@slicedinvoices.com</td>
+            <td>
+                <table cellspacing="0" cellpadding="6" {#style="border:1px solid #999999"#}>
+                    <tr>
+                        <td style="font-size: 9px;
+                            color: #2c2c2c;background-color: #f2f2f2;
+                            border: 0.1px solid #999999;
+                            text-align: center" width="50"
+                        >
+                            <b>#</b>
+                        </td>
+                        <td style="font-size: 9px;
+                            color: #2c2c2c;background-color: #f2f2f2;
+                            border: 0.1px solid #999999" width="220"
+                        >
+                            <b>Product(s)</b>
+                        </td>
+                        <td style="font-size: 9px;
+                            color: #2c2c2c;background-color: #f2f2f2;
+                            border: 0.1px solid #999999; text-align: right;"
+                            width="80"
+                        >
+                            <b>Rate Price</b>
+                        </td>
+                        <td style="font-size: 9px;color: #2c2c2c;
+                            background-color: #f2f2f2;border: 0.1px solid #999999;
+                            text-align: right;" width="80"
+                        >
+                            <b>Adjust</b>
+                        </td>
+                        <td style="font-size: 9px;color: #2c2c2c;
+                            background-color: #f2f2f2;border: 0.1px solid #999999;
+                             text-align: right;" width="80"
+                        >
+                            <b>Sub Total</b></td>
+                    </tr>
+                </table>
+                {% for article in order.cart.articles %}
+                    <table cellspacing="0" cellpadding="2">
+                        <tr>
+                            <td style="font-size: 9px;
+                            color: #2c2c2c;background-color: #FEFEFE ;
+                            border: 0.1px solid #999999; text-align: center;"
+                                width="50"
+                            >
+                                <span style="margin-top: 100px;">{{ loop.index }}</span>
+                            </td>{#/*f2f2f2*/#}
+                            <td style="font-size: 9px;color: #2c2c2c;background-color: #FEFEFE ;border: 0.1px solid #999999" width="220">
+                                <img src="{{ asset('uploads/Articles/images/'~article.principalCover) }}" width="50" />
+                                {{ article.name }}<br />
+                                <i style="font-size: 8px;color: #999">
+                                    &nbsp;
+                                    {{ article.description }}
+                                </i>
+                            </td>{#/*f2f2f2*/#}
+                            <td style="font-size: 9px;color: #2c2c2c;background-color: #FEFEFE ;border: 0.1px solid #999999; text-align: right;" width="80">
+                                ${{ article.price|number_format(2, '.', ',') }}
+                            </td>{#/*f2f2f2*/#}
+                            <td style="font-size: 9px;color: #2c2c2c;background-color: #FEFEFE ;border: 0.1px solid #999999; text-align: right;" width="80">
+                                0.00%
+                            </td>{#/*f2f2f2*/#}
+                            <td style="font-size: 9px;color: #2c2c2c;background-color: #FEFEFE;border: 0.1px solid #999999; text-align: right;" width="80">
+                                ${{ article.price|number_format(2, '.', ',') }}
+                            </td>
+                        </tr>
+                    </table>
+                {% endfor %}
+
+            </td>
         </tr>
     </table>
 
-    <table cellspacing="0" cellpadding="2" border="0" width="35%" bgcolor="#ffcc33">
+    <br /><br /><br />
+
+    <table cellspacing="0" cellpadding="2" border="0">
         <tr>
-            <td><b>From:</b></td>
-        </tr>
-        <tr>
-            <td style="color: #00A8FF">DEMO - Sliced Invoices</td>
-        </tr>
-        <tr>
-            <td>Suite 5A-1204</td>
-        </tr>
-        <tr>
-            <td>123 Somewhere Street</td>
-        </tr>
-        <tr>
-            <td>Your City AZ 12345</td>
-        </tr>
-        <tr>
-            <td>admin@slicedinvoices.com</td>
+            <td width="155">&nbsp;</td>
+            <td width="155">&nbsp;</td>
+            <td>
+                <table cellspacing="0" cellpadding="2" width="200" {#style="border:1px solid #999999"#}>
+                    <tr>
+                        <td style="background-color: #FEFEFE ;border: 0.1px solid #999999;font-size: 9px;color: #2c2c2c;text-align: right;">
+                            &nbsp;
+                            Sub Total
+                        </td>{#/*ddd*/#}
+                        <td style="background-color: #FEFEFE;border: 0.1px solid #999999;font-size: 9px;color: #2c2c2c;text-align: right;">
+                            &nbsp;
+                            ${{ totalProducts|number_format(2, '.', ',') }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #FEFEFE ;border: 0.1px solid #999999;font-size: 9px;color: #2c2c2c;text-align: right;">
+                            &nbsp;
+                            Tax
+                        </td>{#/*f2f2f2*/#}
+                        <td style="background-color: #FEFEFE;border: 0.1px solid #999999;font-size: 9px;color: #2c2c2c;text-align: right;">
+                            &nbsp;
+                            $0.00
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #f2f2f2;border: 0.1px solid #999999;font-size: 9px;color: #2c2c2c;text-align: right;">
+                            &nbsp;
+                            <strong>Total</strong>
+                        </td>
+                        <td style="background-color: #f2f2f2;border: 0.1px solid #999999;font-size: 9px;color: #2c2c2c;text-align: right;">
+                            <strong>
+                                ${{ totalProducts|number_format(2, '.', ',') }}
+                            </strong>
+                        </td>
+                    </tr>
+                </table>
+            </td>
         </tr>
     </table>
-
-
-
-<br />
-<br />
-
-<table cellspacing="0" cellpadding="1" border="1">
+<!----------------------------------------------------------- Tables Examples ---------------------------------------------------------->
+    {#<table cellspacing="0" cellpadding="1" border="1">
     <tr>
         <td rowspan="3">COL 1 - ROW 1<br />COLSPAN 3</td>
         <td>COL 2 - ROW 1</td>
@@ -307,6 +487,8 @@
             <td style="border: 1px solid #666666;text-align: center;">- {{ order.orderCode }}</td>
         </tr>
     </tbody>
-</table>
+</table>#}
+<!-----------------------------------------------------------End Tables Examples -------------------------------------------------------->
+
 </body>
 </html>
