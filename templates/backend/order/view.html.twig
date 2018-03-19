@@ -117,6 +117,9 @@
                 </table>
 
                 <div class="text-right btn-invoice">
+                    <a class="btn btn-warning" href="{{ path('order_list') }}">
+                        <i class="fa fa-arrow-left mr5"></i> Print Invoice
+                    </a>
                     {% if not order.isPaid %}
                         <a class="btn btn-primary mr5" href="{{ path('order_check_paiement', {'id': order.orderId}) }}">
                             <i class="fa fa-dollar mr5"></i> Mark as Paid
@@ -130,6 +133,7 @@
                     <a class="btn btn-white" href="{{ path('invoice_pdf', {'id': order.orderId}) }}" target="_blank">
                         <i class="fa fa-print mr5"></i> Print Invoice
                     </a>
+
                 </div>
 
                 <div class="mb40"></div>

@@ -39,4 +39,15 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             ->getResult()
         ;
     }*/
+
+    public function getClients() {
+        $query = $this->createQueryBuilder('c')
+            ->innerJoin('c.carts', 'carts')
+            ->where('carts.checkedAt is NOT NULL')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $query;
+    }
 }

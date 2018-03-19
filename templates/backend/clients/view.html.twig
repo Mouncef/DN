@@ -1,0 +1,194 @@
+{% extends 'backend/index.html.twig' %}
+
+{% block stylesheets %}
+    <link href="{{ asset('assets/backend/css/style.default.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/backend/css/jquery.datatables.css') }}" rel="stylesheet">
+    <style>
+        #table2 tbody tr {
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+{% block pageHeader %}
+    <div class="pageheader">
+        <h2><i class="fa fa-home"></i> Client <span>view...</span></h2>
+        <div class="breadcrumb-wrapper">
+            {#<span class="label">Add a new article here : </span>
+            <ol class="breadcrumb">
+                <li><a href="{{ path('article_new') }}"><i class="fa fa-plus-square"></i></a></li>
+                <li class="active">List Articles</li>
+            </ol>#}
+        </div>
+    </div>
+{% endblock %}
+
+{% block contentPanel %}
+
+
+
+    <div class="contentpanel">
+        {% set total = 0 %}
+        {% set totalProducts = 0 %}
+        {% if client %}
+            <div class="panel panel-default">
+            <div class="panel-body">
+                <h2 class="text-center">Customer : {{ client.name }}  {{ client.lastName }}</h2>
+                <br/>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Email</th>
+                            <th>Number of shopping carts</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ client.userId }}</td>
+                                <td>{{ client.email }}</td>
+                                <td>{{ client.carts|length }}</td>
+                            </tr>
+                            {#{% set totalProducts = total + article.price  %}#}
+                            {#{% set total = totalProducts %}#}
+                        </tbody>
+                    </table>
+                </div><!-- table-responsive -->
+                <br/>
+
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <h5 class="subtitle">Shopping Carts :</h5>
+                        <div class="panel-group panel-group-dark" id="accordion2">
+                            {% for cart in client.carts %}
+                                {% for article in cart.articles %}
+                                    {% set totalProducts = total + article.price  %}
+                                    {% set total = totalProducts %}
+                                {% endfor %}
+                                <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" class="collapsed" data-parent="#accordion2" href="#Cart-{{ cart.cartId }}">
+                                            Shopping Cart Id : #{{ cart.cartId }}
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="Cart-{{ cart.cartId }}" class="panel-collapse collapse {#{% if loop.index == 1 %}in{% endif %}#}">
+                                    <div class="panel-body">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Order Date</th>
+                                                    <th>Number of articles</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>{{ cart.cartId }}</td>
+                                                    <td>{{ cart.checkedAt|date('jS F Y \\a\\t g:ia') }}</td>
+                                                    <td>{{ cart.articles|length }}</td>
+                                                    <td>${{ totalProducts|number_format(2, '.', ',') }}</td>
+                                                </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div><!-- table-responsive -->
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="text-right btn-invoice">
+                    <a class="btn btn-warning" href="{{ path('clients_list') }}">
+                        <i class="fa fa-arrow-left mr5"></i> Return
+                    </a>
+                </div>
+
+
+
+                <div class="mb40"></div>
+
+
+
+            </div><!-- panel-body -->
+        </div><!-- panel -->
+        {% else %}
+            <div class="alert alert-info">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <strong>Info : </strong>
+                There is no Client on your website !
+            </div>
+        {% endif %}
+
+    </div><!-- contentpanel -->
+
+{% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('assets/backend/js/jquery-1.11.1.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery-migrate-1.2.1.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/modernizr.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.sparkline.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/toggles.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/retina.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.cookies.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/jquery.datatables.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/backend/js/custom.js') }}"></script>
+
+    <script>
+        jQuery(document).ready(function() {
+
+            "use strict";
+
+            // tooltip bootstrap
+            $('[data-toggle="tooltip"]').tooltip();
+
+            // Alert auto Close
+            $("#messagesAlerte").fadeTo(3000, 2000).slideUp(2000, function(){
+                $("messagesAlerte").slideUp(2000);
+            });
+
+            jQuery('#table3').dataTable({
+                "sPaginationType": "full_numbers"
+            });
+
+            // Select2
+            jQuery('select').select2({
+                minimumResultsForSearch: -1
+            });
+
+            jQuery('select').removeClass('form-control');
+
+            // Delete row in a table
+            jQuery('.delete-row').click(function(){
+                var c = confirm("Continue delete?");
+                if(c)
+                    jQuery(this).closest('tr').fadeOut(function(){
+                        jQuery(this).remove();
+                    });
+
+                return false;
+            });
+
+            // Show aciton upon row hover
+            jQuery('.table-hidaction tbody tr').hover(function(){
+                jQuery(this).find('.table-action-hide a').animate({opacity: 1});
+            },function(){
+                jQuery(this).find('.table-action-hide a').animate({opacity: 0});
+            });
+
+
+        });
+    </script>
+{% endblock %}

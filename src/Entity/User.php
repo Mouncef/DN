@@ -287,4 +287,10 @@ class User implements AdvancedUserInterface, \Serializable
         $cart->setUser(null);
     }
 
+    public function getCarts()
+    {
+        return $this->carts;
+    }
+
+
 }

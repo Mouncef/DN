@@ -59,16 +59,23 @@
             </li>
         </ul>
     </li>
-    <li class="nav-parent {% if app.request.attributes.get('_route') == 'order_list' %}nav-active{% endif %}">
+    <li class="nav-parent {% if app.request.attributes.get('_route') == 'order_list'
+            or app.request.attributes.get('_route') == 'clients_list' %}nav-active{% endif %}">
         <a href="">
             <i class="fa fa-shopping-cart"></i>
             <span>E-Commerce</span>
         </a>
         <ul class="children"
-            style="display: {% if app.request.attributes.get('_route') == 'order_list' %}block{% endif %}" >
+            style="display: {% if app.request.attributes.get('_route') == 'order_list'
+                            or app.request.attributes.get('_route') == 'clients_list' %}block{% endif %}" >
             <li class="{% if app.request.attributes.get('_route') == 'order_list' %}active{% endif %}">
                 <a href="{{ path('order_list') }}">
                     <i class="fa fa-caret-right"></i> Orders
+                </a>
+            </li>
+            <li class="{% if app.request.attributes.get('_route') == 'clients_list' %}active{% endif %}">
+                <a href="{{ path('clients_list') }}">
+                    <i class="fa fa-caret-right"></i> Clients
                 </a>
             </li>
         </ul>

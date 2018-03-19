@@ -1,0 +1,152 @@
+{% extends 'frontend/index.html.twig' %}
+
+{% block body %}
+    {% block loader %}
+        {% include 'frontend/partials/layout_1/_loader.html.twig' %}
+    {% endblock %}
+
+    {% block menu %}
+        {% include 'frontend/partials/layout_1/_menu.html.twig' %}
+    {% endblock %}
+
+    {% block header %}
+        {% include 'frontend/partials/layout_1/_header.html.twig' %}
+    {% endblock %}
+
+    {% block breadcrumb %}
+        <div class="breadcrumb">
+            <div class="container">
+                <ul>
+                    <li><a href="{{ path('homepage') }}">Home</a></li>
+                    <li>Account</li>
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block content %}
+        <!-- Content -->
+        <div id="pageContent">
+
+            {% block slider %}
+                <div class="container offset-18">
+                    <div class="offset-36">
+                        <h4>My Account</h4>
+                        <hr class="hr-offset-7">
+                        <h4>Account Details</h4>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                                <div class="responsive-table">
+                                    <table class="table table-params">
+                                        <tbody>
+                                        <tr>
+                                            <td>Name:</td>
+                                            <td>{{ user.name|capitalize }} {{ user.lastName|upper }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>E-mail:</td>
+                                            <td><a href="mailto:{{ user.email }}">{{ user.email }}</a></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="hr-offset-7">
+                        {% if user.carts %}
+                            <h4>Order History ({{ user.carts|length }})</h4>
+                            <div class="table-responsive">
+                                {% for cart in user.carts %}
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <td><b>Order Code</b></td>
+                                            <td><b>Order Date</b></td>
+                                            <td><b>Delivery Address</b></td>
+                                            <td><b>Paid</b></td>
+                                            <td><b>Delivered</b></td>
+                                            <td><b>Number of articles</b></td>
+                                            <td><b>Total</b></td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% set orders = getOrderFromCart(cart) %}
+                                        {% for order in orders %}
+                                            <tr>
+                                                <td>{{ order.orderCode }}</td>
+                                                <td>{{ order.createdAt|date('jS F Y \\a\\t g:ia') }}</td>
+                                                <td>
+                                                    {{ order.address.adressText }}<br/>
+                                                    {{ order.address.zipCode }},
+                                                    {{ order.address.city }}<br/>
+                                                    {{ order.address.country }}
+                                                </td>
+                                                <td>
+                                                    {% if order.isPaid %}
+                                                        <span class="fa fa-check-circle fa-2x" style="color: green"></span>
+                                                    {% else %}
+                                                        <span class="fa fa-close fa-2x" style="color: darkred"></span>
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if order.isDelivered %}
+                                                        <span class="fa fa-check-circle fa-2x" style="color: green"></span>
+                                                    {% else %}
+                                                        <span class="fa fa-close fa-2x" style="color: darkred"></span>
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ order.cart.articles|length }}</td>
+                                                <td>
+                                                    {% set total = 0 %}
+                                                    {% set totalProducts = 0 %}
+                                                    {% for article in order.cart.articles %}
+                                                        {% set totalProducts = total + article.price  %}
+                                                        {% set total = totalProducts %}
+                                                    {% endfor %}
+                                                    ${{ totalProducts|number_format(2, '.', ',') }}
+                                                </td>
+                                                <td>
+                                                    <a href="{{ path('account_order_detail', {'id': order.orderId}) }}" class="btn btn-inversion">View Detail</a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p>You haven't placed any orders yet.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endblock %}
+
+            {% block promo %}
+                {#{% include 'frontend/partials/layout_1/_promo.html.twig' %}#}
+            {% endblock %}
+
+            {% block collections %}
+                {#{% include 'frontend/partials/layout_1/_collections.html.twig' %}#}
+            {% endblock %}
+
+            {% block features %}
+                {#{% include 'frontend/partials/layout_1/_features.html.twig' %}#}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block footer %}
+        {% include 'frontend/partials/layout_1/_footer.html.twig' %}
+    {% endblock %}
+
+    {% block modal %}
+        {% include 'frontend/partials/layout_1/_modal.html.twig' %}
+    {% endblock %}
+
+
+    {% block javascripts %}
+        {% include 'frontend/partials/layout_1/_javascript.html.twig' %}
+    {% endblock %}
+
+{% endblock %}
