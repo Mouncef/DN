@@ -161,72 +161,83 @@
         </div>
         <div class="top-line">
             <div class="container">
-                <div class="pull-left">
-                    <!-- logo -->
-                    <div class="logo">
-                        <a href=""><img src="{{ asset('assets/frontend/images/logo.png') }}" alt=""/></a>
+                <div class="row">
+                    <div class="col-md-4">
+                        <!-- social-icon -->
+                        <div class="social-icon">
+                            <ul>
+                                <li><a class="icon fa fa-facebook" href="http://www.facebook.com/"></a></li>
+                                <li><a class="icon fa fa-twitter" href="http://www.twitter.com/"></a></li>
+                                <li><a class="icon fa fa-google-plus" href="http://www.google.com/"></a></li>
+                                <li><a class="icon fa fa-instagram" href="https://instagram.com/"></a></li>
+                            </ul>
+                        </div>
+                        <!-- /social-icon -->
                     </div>
-                    <!-- /logo -->
+                    <div class="col-md-4 text-center">
+                        <!-- logo -->
+                        <div class="logo">
+                            <a href="{{ path('homepage') }}"><img src="{{ asset('assets/frontend/images/logo.png') }}" alt=""/></a>
+                        </div>
+                        <!-- /logo -->
+                    </div>
+                    <div class="col-md-4 text-right">
+                        <!-- account -->
+                        <div class="account dropdown" style="padding: 3.5% 0 0 0;">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
+                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                    <span class="icon icon-person "></span>
+                                    <span class="dropdown-label hidden-sm hidden-xs" style="font-size: 18px; font-weight: 500;">My Account</span>
+                                {% else %}
+                                    <div style="margin-top: 4%">
+                                        <i class="fa fa-user-plus fa-lg" aria-hidden="true" style="color: #303644;"></i>
+                                        <span class="dropdown-label hidden-sm hidden-xs" style="font-size: 18px; font-weight: 500;">New Account</span>
+                                    </div>
 
-                </div>
-                <div class="pull-right" style="font-size: 1em ;">
-
-                    <!-- account -->
-                    <div class="account dropdown" style="padding: 3.5% 0 0 0;">
-                        <a class="dropdown-toggle" data-toggle="dropdown">
-                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                                <span class="icon icon-person "></span>
-                                <span class="dropdown-label hidden-sm hidden-xs" style="font-size: 18px; font-weight: 500;">My Account</span>
-                            {% else %}
-                                <div style="margin-top: 4%">
-                                    <i class="fa fa-user-plus fa-lg" aria-hidden="true" style="color: #000;"></i>
-                                    <span class="dropdown-label hidden-sm hidden-xs" style="font-size: 18px; font-weight: 500;">New Account</span>
-                                </div>
-
-                            {% endif %}
-
-                        </a>
-                        <ul class="dropdown-menu">
-                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                                <li><a href=""><span class="icon icon-person"></span>My Account</a></li>
-                                {#<li><a href=""><span class="icon icon-favorite_border"></span>My Wishlist</a></li>#}
-                                {#<li><a href=""><span class="fa fa-balance-scale"></span>Compare</a></li>#}
-                                <li><a href=""><span class="icon icon-check"></span>Checkout</a></li>
-                                {% if is_granted('ROLE_MANAGER') %}
-                                    <li><a href="{{ path('admin') }}" target="_blank"><span class="icon icon-settings"></span>Administration</a></li>
                                 {% endif %}
-                                <li><a href="{{ path('logout') }}" ><span class="icon icon-power_settings_new"></span>Log Out</a></li>
+
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                    <li><a href=""><span class="icon icon-person"></span>My Account</a></li>
+                                    <li><a href=""><span class="icon icon-favorite_border"></span>My Wishlist</a></li>
+                                    <li><a href=""><span class="fa fa-balance-scale"></span>Compare</a></li>
+                                    <li><a href=""><span class="icon icon-check"></span>Checkout</a></li>
+                                    {% if is_granted('ROLE_MANAGER') %}
+                                        <li><a href="{{ path('admin') }}" target="_blank"><span class="icon icon-settings"></span>Administration</a></li>
+                                    {% endif %}
+                                    <li><a href="{{ path('logout') }}" ><span class="icon icon-power_settings_new"></span>Log Out</a></li>
 
 
-                            {% else %}
-                                <li><a href="#" data-toggle="modal" data-target="#modalLoginForm"><span class="icon icon-lock_outline"></span>Log In</a></li>
-                                <li><a href="{{ path('register') }}"><span class="icon icon-person_add"></span>Create an account</a></li>
-                            {% endif %}
+                                {% else %}
+                                    <li><a href="#" data-toggle="modal" data-target="#modalLoginForm"><span class="icon icon-lock_outline"></span>Log In</a></li>
+                                    <li><a href="{{ path('register') }}"><span class="icon icon-person_add"></span>Create an account</a></li>
+                                {% endif %}
 
-                        </ul>
-                    </div>
-                    <!-- /account -->
-                    <!-- cart -->
-                    <div class="main-parent-cart">
-                        <div class="cart">
-                            <div class="dropdown">
-                                <a class="dropdown-toggle">
-                                    <span class="icon icon-shopping_basket"></span>
-                                    <span class="badge badge-cart">
+                            </ul>
+                        </div>
+                        <!-- /account -->
+                        <!-- cart -->
+                        <div class="main-parent-cart">
+                            <div class="cart">
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle">
+                                        <span class="icon icon-shopping_basket"></span>
+                                        <span class="badge badge-cart">
                                         {% set cart = getUserCart() %}
-                                        {% if cart %}
-                                            {{ cart.articles|length }}
-                                        {% else %}
-                                            0
-                                        {% endif %}
+                                            {% if cart %}
+                                                {{ cart.articles|length }}
+                                            {% else %}
+                                                0
+                                            {% endif %}
                                     </span>
-                                    <div class="dropdown-label hidden-sm hidden-xs">YOUR BAG</div>
-                                </a>
-                                <div class="dropdown-menu slide-from-top">
-                                    <div class="container">
-                                        {% set cart = getUserCart() %}
-                                        {% if cart %}
-                                            <div class="top-title">RECENTLY ADDED ITEM(S)</div>
+                                        <div class="dropdown-label hidden-sm hidden-xs">YOUR BAG</div>
+                                    </a>
+                                    <div class="dropdown-menu slide-from-top">
+                                        <div class="container">
+                                            {% set cart = getUserCart() %}
+                                            {% if cart %}
+                                                <div class="top-title">RECENTLY ADDED ITEM(S)</div>
                                                 <a href="#" class="icon icon-close cart-close"></a>
                                                 <ul>
                                                     {% set total = 0 %}
@@ -250,18 +261,18 @@
                                                                 <div class="price">
                                                                     ${{ article.price|number_format(2, '.', ',') }}
                                                                 </div>
-                                                                {#<div class="qty">
+                                                                <div class="qty">
                                                                     <div class="qty-label">Qty:</div>
                                                                     <div class="style-2 input-counter">
                                                                         <span class="minus-btn"></span>
                                                                         <input type="text" value="1" size="5"/>
                                                                         <span class="plus-btn"></span>
                                                                     </div>
-                                                                </div>#}
+                                                                </div>
                                                             </div>
                                                             <div class="item-control">
                                                                 <div class="delete"><a href="{{ path('remove_article_from_cart', {'id' : article.articleId}) }}" class="icon icon-delete" title="Delete"></a></div>
-                                                                {#<div class="edit"><a href="#" class="icon icon-edit" title="Edit"></a></div>#}
+                                                                <div class="edit"><a href="#" class="icon icon-edit" title="Edit"></a></div>
                                                             </div>
                                                         </li>
                                                     {% endfor %}
@@ -281,25 +292,168 @@
                                                     <div class="pull-left">
                                                         <a href="{{ path('cart_index') }}" class="btn icon-btn-left"><span class="icon icon-shopping_basket"></span>VIEW CART</a>
                                                     </div>
-                                            </div>
-                                        {% else %}
-                                            <div class="top-title">YOUR CART IS EMPTY</div>
-                                            <a href="#" class="icon icon-close cart-close"></a>
-                                            <h4 class="empty-cart-js hide">Your Cart is Empty</h4>
-                                            <div class="cart-bottom">
-                                                <div class="pull-right">
-                                                    <a href="" class="btn icon-btn-left"><span class="icon icon-check_circle"></span>SHOP</a>
                                                 </div>
-                                            </div>
-                                        {% endif %}
+                                            {% else %}
+                                                <div class="top-title">YOUR CART IS EMPTY</div>
+                                                <a href="#" class="icon icon-close cart-close"></a>
+                                                <h4 class="empty-cart-js hide">Your Cart is Empty</h4>
+                                                <div class="cart-bottom">
+                                                    <div class="pull-right">
+                                                        <a href="" class="btn icon-btn-left"><span class="icon icon-check_circle"></span>SHOP</a>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- /cart -->
                     </div>
-                    <!-- /cart -->
                 </div>
+                {#<div class="row">
+                    <div class="pull-left">
+                        <!-- logo -->
+                        <div class="logo">
+                            <a href=""><img src="{{ asset('assets/frontend/images/logo.png') }}" alt=""/></a>
+                        </div>
+                        <!-- /logo -->
+
+                    </div>
+                    <div class="pull-right" style="font-size: 1em ;">
+
+                        <!-- account -->
+                        <div class="account dropdown" style="padding: 3.5% 0 0 0;">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
+                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                    <span class="icon icon-person "></span>
+                                    <span class="dropdown-label hidden-sm hidden-xs" style="font-size: 18px; font-weight: 500;">My Account</span>
+                                {% else %}
+                                    <div style="margin-top: 4%">
+                                        <i class="fa fa-user-plus fa-lg" aria-hidden="true" style="color: #000;"></i>
+                                        <span class="dropdown-label hidden-sm hidden-xs" style="font-size: 18px; font-weight: 500;">New Account</span>
+                                    </div>
+
+                                {% endif %}
+
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                    <li><a href=""><span class="icon icon-person"></span>My Account</a></li>
+                                    <li><a href=""><span class="icon icon-favorite_border"></span>My Wishlist</a></li>
+                                    <li><a href=""><span class="fa fa-balance-scale"></span>Compare</a></li>
+                                    <li><a href=""><span class="icon icon-check"></span>Checkout</a></li>
+                                    {% if is_granted('ROLE_MANAGER') %}
+                                        <li><a href="{{ path('admin') }}" target="_blank"><span class="icon icon-settings"></span>Administration</a></li>
+                                    {% endif %}
+                                    <li><a href="{{ path('logout') }}" ><span class="icon icon-power_settings_new"></span>Log Out</a></li>
+
+
+                                {% else %}
+                                    <li><a href="#" data-toggle="modal" data-target="#modalLoginForm"><span class="icon icon-lock_outline"></span>Log In</a></li>
+                                    <li><a href="{{ path('register') }}"><span class="icon icon-person_add"></span>Create an account</a></li>
+                                {% endif %}
+
+                            </ul>
+                        </div>
+                        <!-- /account -->
+                        <!-- cart -->
+                        <div class="main-parent-cart">
+                            <div class="cart">
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle">
+                                        <span class="icon icon-shopping_basket"></span>
+                                        <span class="badge badge-cart">
+                                        {% set cart = getUserCart() %}
+                                            {% if cart %}
+                                                {{ cart.articles|length }}
+                                            {% else %}
+                                                0
+                                            {% endif %}
+                                    </span>
+                                        <div class="dropdown-label hidden-sm hidden-xs">YOUR BAG</div>
+                                    </a>
+                                    <div class="dropdown-menu slide-from-top">
+                                        <div class="container">
+                                            {% set cart = getUserCart() %}
+                                            {% if cart %}
+                                                <div class="top-title">RECENTLY ADDED ITEM(S)</div>
+                                                <a href="#" class="icon icon-close cart-close"></a>
+                                                <ul>
+                                                    {% set total = 0 %}
+                                                    {% set totalProducts = 0 %}
+                                                    {% for article in cart.articles %}
+                                                        {% set totalProducts = total + article.price  %}
+                                                        {% set total = totalProducts %}
+                                                        <li class="item">
+                                                            <div class="img">
+                                                                <a href="#"><img src="{{ asset('uploads/Articles/images/'~article.principalCover) }}" alt="{{ article.name }}"/></a>
+                                                            </div>
+                                                            <div class="info">
+                                                                <div class="title-col">
+                                                                    <h2 class="title">
+                                                                        <a href="#">{{ article.name }}</a>
+                                                                    </h2>
+                                                                    <div class="details">
+                                                                        {{ article.description }}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="price">
+                                                                    ${{ article.price|number_format(2, '.', ',') }}
+                                                                </div>
+                                                                <div class="qty">
+                                                                    <div class="qty-label">Qty:</div>
+                                                                    <div class="style-2 input-counter">
+                                                                        <span class="minus-btn"></span>
+                                                                        <input type="text" value="1" size="5"/>
+                                                                        <span class="plus-btn"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="item-control">
+                                                                <div class="delete"><a href="{{ path('remove_article_from_cart', {'id' : article.articleId}) }}" class="icon icon-delete" title="Delete"></a></div>
+                                                                <div class="edit"><a href="#" class="icon icon-edit" title="Edit"></a></div>
+                                                            </div>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                                <h4 class="empty-cart-js hide">Your Cart is Empty</h4>
+                                                <div class="cart-bottom">
+                                                    <div class="pull-right">
+                                                        <div class="pull-left">
+                                                            <div class="cart-total">TOTAL:
+                                                                <span>
+                                                                    ${{ totalProducts|number_format(2, '.', ',') }}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <a href="" class="btn icon-btn-left"><span class="icon icon-check_circle"></span>CHECKOUT</a>
+                                                    </div>
+                                                    <div class="pull-left">
+                                                        <a href="{{ path('cart_index') }}" class="btn icon-btn-left"><span class="icon icon-shopping_basket"></span>VIEW CART</a>
+                                                    </div>
+                                                </div>
+                                            {% else %}
+                                                <div class="top-title">YOUR CART IS EMPTY</div>
+                                                <a href="#" class="icon icon-close cart-close"></a>
+                                                <h4 class="empty-cart-js hide">Your Cart is Empty</h4>
+                                                <div class="cart-bottom">
+                                                    <div class="pull-right">
+                                                        <a href="" class="btn icon-btn-left"><span class="icon icon-check_circle"></span>SHOP</a>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /cart -->
+                    </div>
+                </div>#}
+
             </div>
         </div>
         <div class="top-line">
