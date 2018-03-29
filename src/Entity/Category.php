@@ -181,4 +181,8 @@ class Category
         $article->setCategory(null);
     }
 
+
+    public function getId(){
+        return $this->categoryId;
+    }
 }

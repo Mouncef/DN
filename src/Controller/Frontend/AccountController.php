@@ -13,6 +13,7 @@ use App\Entity\Order;
 use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 
 class AccountController extends Controller
@@ -24,8 +25,20 @@ class AccountController extends Controller
     public function index(){
 
         $em = $this->getDoctrine()->getManager();
-        $userId = $this->getUser()->getUserId();
+        $userId = $this->getUser();
+
+        if($userId){
+
+            $userId->getUserId();
+
+        } else {
+
+            throw new AccessDeniedException('You must create an account to access this service !');
+
+        }
+
         $user = $em->getRepository(User::class)->find($userId);
+
 
         return $this->render('frontend/account/index.html.twig', [
             'user'  =>  $user,

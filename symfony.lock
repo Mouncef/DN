@@ -71,6 +71,9 @@
     "ocramius/proxy-manager": {
         "version": "2.1.1"
     },
+    "pagerfanta/pagerfanta": {
+        "version": "v1.0.5"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -103,6 +106,15 @@
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.0.2"
+    },
+    "symfony/apache-pack": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "c82bead70f9a4f656354a193df7bf0ca2114efa0"
+        }
     },
     "symfony/asset": {
         "version": "v4.0.3"
@@ -298,6 +310,9 @@
     },
     "twig/twig": {
         "version": "v2.4.4"
+    },
+    "white-october/pagerfanta-bundle": {
+        "version": "v1.1.2"
     },
     "whiteoctober/tcpdf-bundle": {
         "version": "1.0.3"

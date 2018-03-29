@@ -38,10 +38,10 @@
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                         <div class="dropdown-label hidden-sm hidden-xs">My Account</div>
                         <ul class="dropdown-menu">
-                            <li><a href=""><span class="icon icon-person"></span>My Account</a></li>
+                            <li><a href="{{ path('account_index') }}"><span class="icon icon-person"></span>My Account</a></li>
                             {#<li><a href=""><span class="icon icon-favorite_border"></span>My Wishlist</a></li>#}
                             {#<li><a href=""><span class="fa fa-balance-scale"></span>Compare</a></li>#}
-                            <li><a href=""><span class="icon icon-check"></span>Checkout</a></li>
+                            {#<li><a href=""><span class="icon icon-check"></span>Checkout</a></li>#}
                             {% if is_granted('ROLE_MANAGER') %}
                                 <li><a href="{{ path('admin') }}" target="_blank"><span class="icon icon-settings"></span>Administration</a></li>
                             {% endif %}
@@ -152,7 +152,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="active" data-top-value="KDH"><a href="#">KDH - Kweit Currency</a></li>
+                            <li class="active" data-top-value="KWD"><a href="#">KWD - Kuwaiti dinar</a></li>
                         </ul>
                     </div>
                 </div>
@@ -199,10 +199,11 @@
                             </a>
                             <ul class="dropdown-menu">
                                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                                    <li><a href=""><span class="icon icon-person"></span>My Account</a></li>
-                                    <li><a href=""><span class="icon icon-favorite_border"></span>My Wishlist</a></li>
-                                    <li><a href=""><span class="fa fa-balance-scale"></span>Compare</a></li>
-                                    <li><a href=""><span class="icon icon-check"></span>Checkout</a></li>
+                                    <li><a href="{{ path('account_index') }}"><span class="icon icon-person"></span>My Account</a></li>
+                                    {#<li><a href=""><span class="icon icon-favorite_border"></span>My Wishlist</a></li>#}
+                                    {#<li><a href=""><span class="fa fa-balance-scale"></span>Compare</a></li>#}
+                                    {% set cart = getUserCart() %}
+                                    {#<li><a href="{{ path('checkout_index', {'cart': cart.cartId }) }}"><span class="icon icon-check"></span>Checkout</a></li>#}
                                     {% if is_granted('ROLE_MANAGER') %}
                                         <li><a href="{{ path('admin') }}" target="_blank"><span class="icon icon-settings"></span>Administration</a></li>
                                     {% endif %}
@@ -224,13 +225,13 @@
                                     <a class="dropdown-toggle">
                                         <span class="icon icon-shopping_basket"></span>
                                         <span class="badge badge-cart">
-                                        {% set cart = getUserCart() %}
+                                            {% set cart = getUserCart() %}
                                             {% if cart %}
                                                 {{ cart.articles|length }}
                                             {% else %}
                                                 0
                                             {% endif %}
-                                    </span>
+                                        </span>
                                         <div class="dropdown-label hidden-sm hidden-xs">YOUR BAG</div>
                                     </a>
                                     <div class="dropdown-menu slide-from-top">
@@ -287,7 +288,7 @@
                                                                 </span>
                                                             </div>
                                                         </div>
-                                                        <a href="" class="btn icon-btn-left"><span class="icon icon-check_circle"></span>CHECKOUT</a>
+                                                        <a href="{{ path('checkout_index', {'cart': cart.cartId}) }}" class="btn icon-btn-left"><span class="icon icon-check_circle"></span>CHECKOUT</a>
                                                     </div>
                                                     <div class="pull-left">
                                                         <a href="{{ path('cart_index') }}" class="btn icon-btn-left"><span class="icon icon-shopping_basket"></span>VIEW CART</a>
@@ -468,11 +469,14 @@
                                 {% set categories = getCategories() %}
                                 {% if categories %}
                                     {% for category in categories %}
-                                        <li class="dropdown"><a href="">{{ category.name }}</a></li>
+                                        <li class="dropdown"><a href="{{ path('category_index', {'category' : category.name }) }}">{{ category.name }}</a></li>
                                     {% endfor %}
                                 {% else %}
 
                                 {% endif %}
+                                <li class="dropdown"><a href="">Our Story</a></li>
+                                <li class="dropdown"><a href="">Contact</a></li>
+
                                 {#<li class="dropdown selected">
                                     <a href="">LAYOUT</a>
                                     <div class="dropdown-menu">

@@ -13,4 +13,6 @@ class Constant
     const PROFIL_ADMIN = 'ADMIN';
     const PROFIL_SUPER_ADMIN = 'SUPER_ADMIN';
 
+    const NUM_ARTICLES_PER_PAGE = 1;
+
 }

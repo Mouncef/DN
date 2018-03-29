@@ -3,7 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Category;
+use App\Utils\Constant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class CategoryRepository extends ServiceEntityRepository
@@ -24,16 +28,31 @@ class CategoryRepository extends ServiceEntityRepository
         return $query;
     }
 
-    /*
-    public function findBySomething($value)
+    public function getPaginatedArticles(int $page = 1, int $id, int $nbArticles) : Pagerfanta
     {
-        return $this->createQueryBuilder('c')
-            ->where('c.something = :value')->setParameter('value', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
+
+        $query = $this->_em
+            ->createQuery('
+                SELECT a 
+                FROM App\\Entity\\Article a  
+                INNER JOIN App\\Entity\\Category cat 
+                WITH a.category = cat.categoryId 
+                WHERE cat.categoryId = :id
+                ORDER BY a.createdAt DESC
+            ')
+            ->setParameter('id',$id)
         ;
+
+        return $this->createPaginator($query, $page, $nbArticles);
+
     }
-    */
+
+    private function createPaginator(Query $query, int $page, $nbArticles): Pagerfanta
+    {
+        $paginator = new Pagerfanta(new DoctrineORMAdapter($query));
+        $paginator->setMaxPerPage($nbArticles);
+        $paginator->setCurrentPage($page);
+
+        return $paginator;
+    }
 }
