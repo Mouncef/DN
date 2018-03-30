@@ -1,0 +1,99 @@
+{% extends 'frontend/index.html.twig' %}
+
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {% block loader %}
+        {% include 'frontend/partials/layout_1/_loader.html.twig' %}
+    {% endblock %}
+
+    {% block menu %}
+        {% include 'frontend/partials/layout_1/_menu.html.twig' %}
+    {% endblock %}
+
+    {% block header %}
+        {% include 'frontend/partials/layout_1/_header.html.twig' %}
+    {% endblock %}
+
+    {% block breadcrumb %}
+        <div class="breadcrumb">
+            <div class="container">
+                <ul>
+                    <li><a href="{{ path('homepage') }}">Home</a></li>
+                    <li>Our Story</li>
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block content %}
+        <!-- Content -->
+        <div id="pageContent">
+
+            {% block slider %}
+                <div class="container-fluid box-about offset-0">
+                    <div class="row">
+                        <div class="col-md-5 col-lg-6 img">
+                            <img src="{{ asset('assets/frontend/images/custom/img_13.jpg') }}" alt="">
+                        </div>
+                        <div class="col-md-7 col-lg-6 box-about-content">
+                            <h1 class="block-title large">Our Story</h1>
+                            <div class="description">
+                                12 + pre-made layouts. My Shop is more than a template, <br>It’s a powerful design tool.
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <p>
+                                        Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse.
+                                    </p>
+                                </div>
+                                <div class="col-lg-6">
+                                    <p>
+                                        Dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse.
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <ul class="list">
+                                <li>Address : 7563 St. Vicent Place, Glasgow</li>
+                                <li>Phone: +777 2345 7885</li>
+                                <li>Fax: +777 2345 7886</li>
+                                <li>Hours: 7 Days a week from 10:00 am to 6:00 pm</li>
+                                <li>E-mail: <a href="mailto:info@mydomain.com">info@mydomain.com</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
+
+            {% block promo %}
+                {#{% include 'frontend/partials/layout_1/_promo.html.twig' %}#}
+            {% endblock %}
+
+            {% block collections %}
+                {#{% include 'frontend/partials/layout_1/_collections.html.twig' %}#}
+            {% endblock %}
+
+            {% block features %}
+                {#{% include 'frontend/partials/layout_1/_features.html.twig' %}#}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block footer %}
+        {% include 'frontend/partials/layout_1/_footer.html.twig' %}
+    {% endblock %}
+
+    {% block modal %}
+        {% include 'frontend/partials/layout_1/_modal.html.twig' %}
+    {% endblock %}
+
+
+    {% block javascripts %}
+        {% include 'frontend/partials/layout_1/_javascript.html.twig' %}
+    {% endblock %}
+
+{% endblock %}

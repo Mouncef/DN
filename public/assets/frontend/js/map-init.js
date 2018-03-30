@@ -9,18 +9,152 @@
                 zoom: 11,
 
                 // The latitude and longitude to center the map (always required)
-                center: new google.maps.LatLng(40.6700, -73.9400), // New York
+                center: new google.maps.LatLng(29.3758, 47.9769), // Koweit
 
                 scrollwheel:  false,
 
                 // How you would like to style the map.
                 // This is where you would paste any style found on Snazzy Maps.
-                styles: [{
+                styles: [
+                    {
                         "featureType":"water",
-                        "elementType":"geometry.fill","stylers":[{"color":"#abd0fa"}]},
-                        {"featureType":"transit","stylers":[{"color":"#808080"},{"visibility":"off"}]},
-                        {"featureType":"road.highway","elementType":"geometry.stroke",
-                        "stylers":[{"visibility":"on"},{"color":"#e1d9c6"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#eee9da"}]},{"featureType":"road.local","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"000"},{"weight":1.8}]},{"featureType":"road.local","elementType":"geometry.stroke","stylers":[{"color":"#d7d7d7"}]},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#ebebeb"}]},{"featureType":"administrative","elementType":"geometry","stylers":[{"color":"#eee9da"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#fffbf8"}]},{"featureType":"road.arterial","elementType":"geometry.fill","stylers":[{"color":"#fffbf8"}]},{"featureType":"landscape","elementType":"geometry.fill","stylers":[{"visibility":"on"},{"color":"#fbf7ee"}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#d6d6d6"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"visibility":"on"},{"color":"#3c3424"}]},{"featureType":"poi","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"road.arterial","elementType":"geometry.stroke","stylers":[{"color":"#d6d6d6"}]},{"featureType":"road","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{},{"featureType":"poi","elementType":"geometry.fill","stylers":[{"color":"#aee9c6"}]}]
+                        "elementType":"geometry.fill",
+                        "stylers":[
+                            {"color":"#303644"}
+                        ]
+                    },
+                    {
+                        "featureType":"transit",
+                        "stylers":[
+                            {"color":"#808080"},
+                            {"visibility":"off"}
+                        ]
+                    },
+                    {
+                        "featureType":"road.highway",
+                        "elementType":"geometry.stroke",
+                        "stylers":[
+                            {"visibility":"on"},
+                            {"color":"#e1d9c6"}
+                        ]
+                    },
+                    {
+                        "featureType":"road.highway",
+                        "elementType":"geometry.fill",
+                        "stylers":[
+                            {"color":"#eee9da"}
+                        ]
+                    },
+                    {
+                        "featureType":"road.local",
+                        "elementType":"geometry.fill",
+                        "stylers":[
+                            {"visibility":"on"},
+                            {"color":"000"},
+                            {"weight":1.8}
+                        ]
+                    },
+                    {
+                        "featureType":"road.local",
+                        "elementType":"geometry.stroke",
+                        "stylers":[
+                            {"color":"#d7d7d7"}
+                        ]
+                    },
+                    {
+                        "featureType":"poi",
+                        "elementType":"geometry.fill",
+                        "stylers":[
+                            {"visibility":"on"},
+                            {"color":"#ebebeb"}
+                        ]
+                    },
+                    {
+                        "featureType":"administrative",
+                        "elementType":"geometry",
+                        "stylers":[
+                            {"color":"#eee9da"}
+                        ]
+                    },
+                    {
+                        "featureType":"road.arterial",
+                        "elementType":"geometry.fill",
+                        "stylers":[
+                            {"color":"#fffbf8"}
+                        ]
+                    },
+                    {
+                        "featureType":"road.arterial",
+                        "elementType":"geometry.fill",
+                        "stylers":[
+                            {"color":"#fffbf8"}
+                        ]
+                    },
+                    {
+                        "featureType":"landscape",
+                        "elementType":"geometry.fill",
+                        "stylers":[
+                            {"visibility":"on"},
+                            {"color":"#fbf7ee"}
+                        ]
+                    },
+                    {
+                        "featureType":"road",
+                        "elementType":"labels.text.fill",
+                        "stylers":[
+                            {"color":"#d6d6d6"}
+                        ]
+                    },
+                    {
+                        "featureType":"administrative",
+                        "elementType":"labels.text.fill",
+                        "stylers":[
+                            {"visibility":"on"},
+                            {"color":"#3c3424"}
+                        ]
+                    },
+                    {
+                        "featureType":"poi",
+                        "elementType":"labels.icon",
+                        "stylers":
+                        [
+                            {"visibility":"off"}
+                        ]
+                    },
+                    {
+                        "featureType":"poi",
+                        "elementType":"labels",
+                        "stylers":[
+                            {"visibility":"off"}
+                        ]
+                    },
+                    {
+                        "featureType":"road.arterial",
+                        "elementType":"geometry.stroke",
+                        "stylers":[
+                            {"color":"#d6d6d6"}
+                        ]
+                    },
+                    {
+                        "featureType":"road",
+                        "elementType":"labels.icon",
+                        "stylers":
+                        [
+                            {"visibility":"off"}
+                        ]
+                    },
+                    {
+
+                    },
+                    {
+                        "featureType":"poi",
+                        "elementType":"geometry.fill",
+                        "stylers":
+                        [
+                                {"color":"#999999"}
+                        ]
+                    }
+                    ]
             };
 
             // Get the HTML DOM element that will contain your map
@@ -30,13 +164,13 @@
             // Create the Google Map using our element and options defined above
             var map = new google.maps.Map(mapElement, mapOptions);
 
-            var image = 'images/custom/beachflag.png';
+            var image = 'http://localhost:10070/assets/frontend/images/custom/beachflag.png';
 
              var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(40.6700, -73.9400),
+                    position: new google.maps.LatLng(29.3758, 47.9769),
                     map: map,
                     icon : image,
-                    title: 'Snazzy!'
+                    title: 'Dar Nawal!'
                 });
         }
 

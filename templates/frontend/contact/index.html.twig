@@ -1,0 +1,140 @@
+{% extends 'frontend/index.html.twig' %}
+
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {% block loader %}
+        {% include 'frontend/partials/layout_1/_loader.html.twig' %}
+    {% endblock %}
+
+    {% block menu %}
+        {% include 'frontend/partials/layout_1/_menu.html.twig' %}
+    {% endblock %}
+
+    {% block header %}
+        {% include 'frontend/partials/layout_1/_header.html.twig' %}
+    {% endblock %}
+
+    {% block breadcrumb %}
+        <div class="breadcrumb">
+            <div class="container">
+                <ul>
+                    <li><a href="{{ path('homepage') }}">Home</a></li>
+                    <li>Contact</li>
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block content %}
+        <!-- Content -->
+        <div id="pageContent">
+
+            {% block slider %}
+                <div class="container offset-18">
+                    <h1 class="block-title large">Get in Touch</h1>
+                    <div class="information-block">
+                        Contact us for any further questions, possible projects and business partnerships.
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5 offset-98">
+                            <h2 class="block-title big text-left text-capitalize">Contacts</h2>
+                            <div class="contact-layout-02">
+                                <ul class="list-information">
+                                    <li>
+                                        <span class="icon icon-home"></span>
+                                        Address : 7563 St. Vicent Place, Glasgow
+                                    </li>
+                                    <li>
+                                        <span class="icon icon-call"></span>
+                                        Phone: +777 2345 7885; +777 2345 7886
+                                    </li>
+                                    <li>
+                                        <span class="icon icon-schedule"></span>
+                                        Hours: 7 Days a week from 10:00 am to 6:00 pm
+                                    </li>
+                                    <li>
+                                        <span class="icon icon-mail"></span>
+                                        E-mail: <a href="mailto:info@mydomain.com">info@mydomain.com</a>
+                                    </li>
+                                </ul>
+                                <div class="social-icon-round">
+                                    <ul>
+                                        <li><a class="icon fa fa-facebook" href="http://www.facebook.com/"></a></li>
+                                        <li><a class="icon fa fa-twitter" href="http://www.twitter.com/"></a></li>
+                                        <li><a class="icon fa fa-google-plus" href="http://www.google.com/"></a></li>
+                                        <li><a class="icon fa fa-instagram" href="https://instagram.com/"></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-7 offset-98">
+                            <h2 class="block-title big text-left text-capitalize">Contact Form</h2>
+                            <form action="#" class="contact-form">
+                                <div class="form-group">
+                                    <label for="inputName">Name</label>
+                                    <input type="text" class="form-control" id="inputName" placeholder="Your name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail">E-mail</label>
+                                    <input type="text" class="form-control" id="inputEmail" placeholder="Your e-mail">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputName">Message</label>
+                                    <textarea  class="form-control" rows="8" placeholder="Write your message here"  id="textareaMessage"></textarea>
+                                </div>
+                                <button class="btn" type="submit">SUBMIT</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="row contact-map">
+                        <div id="map"></div>
+                    </div>
+                </div>
+            {% endblock %}
+
+            {% block promo %}
+                {#{% include 'frontend/partials/layout_1/_promo.html.twig' %}#}
+            {% endblock %}
+
+            {% block collections %}
+                {#{% include 'frontend/partials/layout_1/_collections.html.twig' %}#}
+            {% endblock %}
+
+            {% block features %}
+                {#{% include 'frontend/partials/layout_1/_features.html.twig' %}#}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block footer %}
+        {% include 'frontend/partials/layout_1/_footer.html.twig' %}
+    {% endblock %}
+
+    {% block modal %}
+        {% include 'frontend/partials/layout_1/_modal.html.twig' %}
+    {% endblock %}
+
+
+    {% block javascripts %}
+        {#{% include 'frontend/partials/layout_1/_javascript.html.twig' %}#}
+        <script src="{{ asset('assets/frontend/external/jquery/jquery-2.1.4.min.js') }}"></script>
+        <script src="{{ asset('assets/frontend/external/bootstrap/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('assets/frontend/external/countdown/jquery.plugin.min.js') }}"></script>
+        <script src="{{ asset('assets/frontend/external/countdown/jquery.countdown.min.js') }}"></script>
+        <script src="{{ asset('assets/frontend/external/isotope/isotope.pkgd.min.js') }}"></script>
+        <script src="{{ asset('assets/frontend/external/slick/slick.min.js') }}"></script>
+        <script src="{{ asset('assets/frontend/external/instafeed/instafeed.min.js') }}"></script>
+        <script src="{{ asset('assets/frontend/external/elevatezoom/jquery.elevatezoom.js') }}"></script>
+        <script src="{{ asset('assets/frontend/external/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
+        <script src="{{ asset('assets/frontend/external/panelmenu/panelmenu.js') }}"></script>
+        <script src="{{ asset('assets/frontend/js/main.js') }}"></script>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmz2Lijd1YDwlwX7TA8_dioQVS21C0ZSg"></script>
+        <script src="{{ asset('assets/frontend/js/map-init.js') }}"></script>
+    {% endblock %}
+
+{% endblock %}

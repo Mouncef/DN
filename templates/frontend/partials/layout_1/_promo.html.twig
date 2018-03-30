@@ -4,8 +4,8 @@
             {% for category in categories %}
                 {% if category.categoryStyle == 'CoverWithCaption' %}
                     <div class="col-xs-6 col-sm-6 col-md-4">
-                        <a href="" class="promo-box zoom-in design-default">
-                            <img src="{{ asset('uploads/Categories/images/'~category.cover) }}" alt="">
+                        <a href="{{ path('category_index', {'category': category.name}) }}" class="promo-box zoom-in design-default">
+                            <img src="{{ asset('uploads/Categories/images/'~category.cover) }}" alt="{{ category.name }}">
                             <div class="description">
                                 <div class="block-table">
                                     <div class="block-table-cell">
@@ -21,8 +21,8 @@
                     </div>
                 {% else %}
                     <div class="col-xs-6 col-sm-6 col-md-4">
-                        <a href="" class="promo-box zoom-in design-default">
-                            <img src="{{ asset('uploads/Categories/images/'~category.cover) }}" alt="">
+                        <a href="{{ path('category_index', {'category': category.name}) }}" class="promo-box zoom-in design-default">
+                            <img src="{{ asset('uploads/Categories/images/'~category.cover) }}" alt="{{ category.name }}">
                             <div class="description">
                                 <div class="block-table">
                                     <div class="block-table-cell"></div>
