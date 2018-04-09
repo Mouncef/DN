@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Article;
+use App\Utils\Variables;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -15,8 +16,12 @@ class ArticleRepository extends ServiceEntityRepository
 
     public function getEightNewArticles()
     {
+        $date = new Variables();
+
         $query = $this->createQueryBuilder('a')
+            ->where('a.createdAt >= :date ')
             ->orderBy('a.createdAt','DESC')
+            ->setParameter('date', $date->getDateMinus30Days())
             ->setMaxResults(8)
             ->getQuery()
             ->getResult()

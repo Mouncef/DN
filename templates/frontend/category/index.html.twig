@@ -371,7 +371,7 @@
                                                 <div class="product">
                                                     <div class="product_inside">
                                                         <div class="image-box">
-                                                            <a href="">
+                                                            <a href="{{ path('article_index', {'id': article.articleId }) }}">
                                                                 <img src="{{ asset('uploads/Articles/images/'~article.principalCover) }}"
                                                                      alt="{{ article.name }}">
                                                                 {#{{ article.createdAt|date('d/m/Y') }}#}

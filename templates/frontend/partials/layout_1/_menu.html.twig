@@ -1,13 +1,14 @@
 <nav class="panel-menu">
     <ul>
+        <li><a href="{{ path('homepage') }}">Home</a></li>
         {% set categories = getCategories() %}
         {% if categories %}
             {% for category in categories %}
                 <li><a href="">{{ category.name }}</a></li>
             {% endfor %}
-        {% else %}
-
         {% endif %}
+        <li><a href="{{ path('about_index') }}">Our Story</a></li>
+        <li><a href="{{ path('contact_index') }}">Contact</a></li>
         {#<li>
             <a href="">LAYOUT</a>
             <ul>
@@ -274,7 +275,7 @@
                 </li>
             </ul>
         </li>#}
-        <li><a href="#">MORE</a></li>
+        {#<li><a href="#">MORE</a></li>#}
     </ul>
     <div class="mm-navbtn-names" style="display:none">
         <div class="mm-closebtn">CLOSE</div>

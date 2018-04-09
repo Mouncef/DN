@@ -1,0 +1,855 @@
+{% extends 'frontend/index.html.twig' %}
+
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('assets/frontend/external/magnific-popup/magnific-popup.css') }}"/>
+{% endblock %}
+
+{% block body %}
+    {% block loader %}
+        {% include 'frontend/partials/layout_1/_loader.html.twig' %}
+    {% endblock %}
+
+    {% block menu %}
+        {% include 'frontend/partials/layout_1/_menu.html.twig' %}
+    {% endblock %}
+
+    {% block header %}
+        {% include 'frontend/partials/layout_1/_header.html.twig' %}
+    {% endblock %}
+
+    {% block breadcrumb %}
+        <div class="breadcrumb">
+            <div class="container">
+                <ul>
+                    <li><a href="{{ path('homepage') }}">Home</a></li>
+                    <li>Article : {{ article.name }}</li>
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block content %}
+        <!-- Content -->
+        <div id="pageContent">
+
+            {% block slider %}
+                {% if article %}
+                    {#<div class="productPrevNext hidden-xs hidden-sm">
+                        <a href="#" class="product-prev"><img src="{{ asset('uploads/Articles/images/Second/'~article.coverSecond) }}" alt="{{ article.name }}" /></a>
+                        <a href="#" class="product-next"><img src="{{ asset('uploads/Articles/images/Third/'~article.coverThird) }}" alt="{{ article.name }}" /></a>
+                    </div>#}
+                    <div class="container offset-0">
+                        <div class="row">
+                            <div class="col-md-7 hidden-xs">
+                                <div class="product-col-image">
+                                    <div class="product-main-image">
+                                        <div class="product-main-image-item">
+                                            <img class="zoom-product" src='{{ asset('uploads/Articles/images/'~article.principalCover) }}'
+                                                 data-zoom-image="{{ asset('uploads/Articles/images/'~article.principalCover) }}" alt="{{ article.name }}" />
+                                        </div>
+                                    </div>
+                                    <div class="product-images-carousel-vertical">
+                                        <ul id="smallGallery">
+                                            <li><a class="zoomGalleryActive" href="#"
+                                                   data-image="{{ asset('uploads/Articles/images/'~article.principalCover) }}"
+                                                   data-zoom-image="{{ asset('uploads/Articles/images/'~article.principalCover) }}">
+                                                    <img src="{{ asset('uploads/Articles/images/'~article.principalCover) }}" alt="{{ article.name }}" />
+                                                </a>
+                                            </li>
+                                            {% if article.coverSecond is not null %}
+                                                <li><a class="zoomGalleryActive" href="#"
+                                                       data-image="{{ asset('uploads/Articles/images/Second/'~article.coverSecond) }}"
+                                                       data-zoom-image="{{ asset('uploads/Articles/images/Second/'~article.coverSecond) }}">
+                                                        <img src="{{ asset('uploads/Articles/images/Second/'~article.coverSecond) }}" alt="{{ article.name }}" />
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                            {% if article.coverThird is not null %}
+                                                <li><a class="zoomGalleryActive" href="#"
+                                                       data-image="{{ asset('uploads/Articles/images/Third/'~article.coverThird) }}"
+                                                       data-zoom-image="{{ asset('uploads/Articles/images/Third/'~article.coverThird) }}">
+                                                        <img src="{{ asset('uploads/Articles/images/Third/'~article.coverThird) }}" alt="{{ article.name }}" />
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                            {% if article.coverFourth is not null %}
+                                                <li><a class="zoomGalleryActive" href="#"
+                                                       data-image="{{ asset('uploads/Articles/images/Fourth/'~article.coverFourth) }}"
+                                                       data-zoom-image="{{ asset('uploads/Articles/images/Fourth/'~article.coverFourth) }}">
+                                                        <img src="{{ asset('uploads/Articles/images/Fourth/'~article.coverFourth) }}" alt="{{ article.name }}" />
+                                                    </a>
+                                                </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="visible-xs">
+                                    <div class="clearfix"></div>
+                                    <ul class="mobileGallery-product">
+                                        <li><img src="{{ asset('uploads/Articles/images/'~article.principalCover) }}" alt="{{ article.name }}" /></li>
+                                        {% if article.coverSecond is not null %}
+                                            <li><img src="{{ asset('uploads/Articles/images/Second/'~article.coverSecond) }}" alt="{{ article.name }}" /></li>
+                                        {% endif %}
+                                        {% if article.coverThird is not null %}
+                                            <li><img src="{{ asset('uploads/Articles/images/Third/'~article.coverThird) }}" alt="{{ article.name }}" /></li>
+                                        {% endif %}
+                                        {% if article.coverFourth is not null %}
+                                            <li><img src="{{ asset('uploads/Articles/images/Fourth/'~article.coverFourth) }}" alt="{{ article.name }}" /></li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                                <div class="product-info product-info1">
+                                    <div class="add-info">
+                                        {#<div class="pull-left">
+                                            <div class="sku">
+                                                <span class="font-weight-medium color-defaulttext2">KWD:</span> mtk012c
+                                            </div>
+                                        </div>#}
+                                        <div class="pull-left">
+                                            <div class="availability">
+                                                <span class="font-weight-medium color-defaulttext2">
+                                                    Availability:
+                                                </span>
+                                                {% if article.isAvailable %}
+                                                    <span class="color-base">In stock</span>
+                                                {% else %}
+                                                    <span class="danger">Not Available</span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h1 class="title">{{ article.name }}</h1>
+                                    <div class="price">
+                                         {{ article.price|number_format(2, '.', ' ') }} KWD
+                                    </div>
+                                    {#<div class="wrapper">
+                                        <div class="title-options">TEXTURE<span class="color-required">*</span></div>
+                                        <ul class="options-swatch-texture">
+                                            <li><a href="#"><img src="{{ asset('assets/frontend/images/custom/texture-img-01.jpg') }}" alt=""></a></li>
+                                            <li><a href="#"><img src="{{ asset('assets/frontend/images/custom/texture-img-02.jpg') }}" alt=""></a></li>
+                                            <li><a href="#"><img src="{{ asset('assets/frontend/images/custom/texture-img-03.jpg') }}" alt=""></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="wrapper wrapper-offset45">
+                                        <div class="title-options">SIZE<span class="color-required">*</span></div>
+                                        <ul class="tags-list">
+                                            <li><a href="#">XS</a></li>
+                                            <li class="active"><a href="#">S</a></li>
+                                            <li><a href="#">M</a></li>
+                                            <li><a href="#">L</a></li>
+                                        </ul>
+                                    </div>#}
+                                    <div class="wrapper wrapper-offset45">
+                                        <div class="pull-left"><label class="qty-label">QTY</label></div>
+                                        <div class="pull-left">
+                                            <div class="style-2 input-counter">
+                                                <input type="text" value="1" size="5" disabled="disabled"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="wrapper">
+                                        <div class="pull-left">
+                                            <a class="btn btn-lg btn-addtocart" href="#" data-toggle="modal" data-target="#ModalAddToCartProductSOLO-{{ article.articleId }}">
+                                                <span class="icon icon-shopping_basket"></span>ADD TO CART
+                                            </a>
+                                        </div>
+                                        {#<div class="pull-left">
+                                            <ul class="product_inside_info_link">
+                                                <li class="text-right">
+                                                    <a href="#">
+                                                        <span class="fa fa-heart-o"></span>
+                                                        <span class="text">ADD TO WISHLIST</span>
+                                                    </a>
+                                                </li>
+                                                <li class="text-left">
+                                                    <a href="#" class="compare-link">
+                                                        <span class="fa fa-balance-scale"></span>
+                                                        <span class="text">ADD TO COMPARE</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>#}
+                                    </div>
+                                    <ul class="social-icon-square">
+                                        <li><a class="icon-01" href="#"></a></li>
+                                        <li><a class="icon-02" href="#"></a></li>
+                                        <li><a class="icon-03" href="#"></a></li>
+                                        <li><a class="icon-04" href="#"></a></li>
+                                        <li><a class="icon-05" href="#"></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container offset-80">
+                        <div class="tt-product-page__tabs tt-tabs">
+                            <div class="tt-tabs__head">
+                                <ul>
+                                    <li data-active="true"><span>DESCRIPTION</span></li>
+                                    <li><span>SERVICES</span></li>
+                                    {#<li><span>SIZING GUIDE</span></li>#}
+                                    {#<li><span>TAGS</span></li>#}
+                                    {#<li><span>REVIEWS</span></li>#}
+                                    {#<li><span>E</span></li>#}
+                                    {#<li><span>F</span></li>#}
+                                </ul>
+                                <div class="tt-tabs__border"></div>
+                            </div>
+                            <div class="tt-tabs__body">
+                                <div>
+                                    <span class="tt-tabs__title">DESCRIPTION</span>
+                                    <div class="tt-tabs__content">
+                                        <h5 class="tab-title">DESCRIPTION</h5>
+                                        <p>
+                                            {{ article.description }}
+                                        </p>
+                                        {#<ul class="list-simple-dot">
+                                            <li><a href="#">Lightweight soft-touch woven</a></li>
+                                            <li><a href="#">High-rise waist</a></li>
+                                            <li><a href="#">Zip fly with hook and button fastening</a></li>
+                                            <li><a href="#">Slip pockets</a></li>
+                                            <li><a href="#">Waist belt</a></li>
+                                            <li><a href="#">Relaxed fit</a></li>
+                                            <li><a href="#">Machine wash</a></li>
+                                            <li><a href="#">76% Polyester, 18% Viscose, 6% Elastane</a></li>
+                                            <li><a href="#">Our model wears a UK 8/ EU 36/ US 4 and is 174 cm/5'8.5” tall</a></li>
+                                        </ul>#}
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="tt-tabs__title">SERVICES</span>
+                                    <div class="tt-tabs__content">
+                                        <h5 class="tab-title">SERVICES</h5>
+                                        <h6><span class="color-base icon icon-local_shipping"></span> Shipping and Delivery</h6>
+                                        We're dedicated to delivering your purchase as quickly and affordably as possible. We offer a range of delivery and pickup options, so you can choose the shipping method that best meets your needs.
+                                        <div class="divider"></div>
+                                        <h6><span class="color-base icon icon-payment"></span> Payment Methods</h6>
+                                        Every country and shopper has their prefered method to pay online. Offering your buyers safe and convenient payment choices can help your sale go smoothly, earn you positive Feedback, and bring them back for more.
+                                    </div>
+                                </div>
+                                {#<div>
+                                    <span class="tt-tabs__title">SIZING GUIDE</span>
+                                    <div class="tt-tabs__content">
+                                        <h5 class="tab-title">CLOTHING - SINGLE SIZE CONVERSION (CONTINUED)</h5>
+                                        <div class="table-responsive">
+                                            <table class="table table-parameters">
+                                                <tbody>
+                                                <tr>
+                                                    <td>UK</td>
+                                                    <td>18</td>
+                                                    <td>20</td>
+                                                    <td>22</td>
+                                                    <td>24</td>
+                                                    <td>26</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>European</td>
+                                                    <td>46</td>
+                                                    <td>48</td>
+                                                    <td>50</td>
+                                                    <td>52</td>
+                                                    <td>54</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>US</td>
+                                                    <td>14</td>
+                                                    <td>16</td>
+                                                    <td>18</td>
+                                                    <td>20</td>
+                                                    <td>22</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Australia</td>
+                                                    <td>8</td>
+                                                    <td>10</td>
+                                                    <td>12</td>
+                                                    <td>14</td>
+                                                    <td>16</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="tt-tabs__title">TAGS</span>
+                                    <div class="tt-tabs__content">
+                                        <h5 class="tab-title">TAGS</h5>
+                                        <ul class="tags-list">
+                                            <li><a href="#">Vintage</a></li>
+                                            <li><a href="#">Style</a></li>
+                                            <li><a href="#">Street Style</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="tt-tabs__title">REVIEWS</span>
+                                    <div class="tt-tabs__content">
+                                        <h5 class="tab-title">CUSTOMER REVIEWS</h5>
+                                        <div class="review">
+                                            <div class="rating">
+                                                <span class="icon-star"></span>
+                                                <span class="icon-star"></span>
+                                                <span class="icon-star"></span>
+                                                <span class="icon-star"></span>
+                                                <span class="icon-star empty-star"></span>
+                                            </div>
+                                            <span>1 Review(s)</span>
+                                            <a href="#">Add Your Review</a>
+                                        </div>
+                                        <div class="divider"></div>
+                                        <h6>Write a review</h6>
+                                        <div class="divider"></div>
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label for="form-name" class="col-sm-2 control-label">Name</label>
+                                                <div class="col-sm-10">
+                                                    <input type="email" class="form-control" id="form-name" placeholder="Your name">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="form-email" class="col-sm-2 control-label">E-mail</label>
+                                                <div class="col-sm-10">
+                                                    <input type="email" class="form-control" id="form-email" placeholder="Your e-mail">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label  class="col-sm-2 control-label">Rating</label>
+                                                <div class="col-sm-10">
+                                                    <div class="rating">
+                                                        <span class="icon-star empty-star"></span>
+                                                        <span class="icon-star empty-star"></span>
+                                                        <span class="icon-star empty-star"></span>
+                                                        <span class="icon-star empty-star"></span>
+                                                        <span class="icon-star empty-star"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="form-review-title" class="col-sm-2 control-label">Review Title</label>
+                                                <div class="col-sm-10">
+                                                    <input type="email" class="form-control" id="form-review-title" placeholder="Give your review a title">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="form-review-title" class="col-sm-2 control-label">Body of Review (1500)</label>
+                                                <div class="col-sm-10">
+                                                    <textarea class="form-control" rows="7" placeholder="Write your comments here"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-2 col-sm-10">
+                                                    <button type="submit" class="btn btn-default">SUBMIT COMMENT</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="reviews-comments">
+                                            <div class="item">
+                                                <div class="rating">
+                                                    <span class="icon-star"></span>
+                                                    <span class="icon-star"></span>
+                                                    <span class="icon-star"></span>
+                                                    <span class="icon-star"></span>
+                                                    <span class="icon-star empty-star"></span>
+                                                </div>
+                                                <div class="title">Admin</div>
+                                                <div class="data">Prabhu on May 19, 2016</div>
+                                                <p>
+                                                    WOW! AWESOME job on this template :-)<br>
+                                                    Just wanted to say that as we have worked with the YourStore template more and more over the last week we are truly impressed. This has to be one of the best designed templates we have encountered on ThemeForest. There were only the few minor bugs which the EXCELLENT support here on this board took care of immediately. The code is clean and flexible and yet easy for even more novice designers to adapt to their needs. We are thrilled to finally have a professional design that is a pleasure to work with and that will allow us to complete our business expansion on time and under budget!
+                                                </p>
+                                            </div>
+                                            <div class="item">
+                                                <div class="rating">
+                                                    <span class="icon-star"></span>
+                                                    <span class="icon-star"></span>
+                                                    <span class="icon-star"></span>
+                                                    <span class="icon-star"></span>
+                                                    <span class="icon-star empty-star"></span>
+                                                </div>
+                                                <div class="title">Admin</div>
+                                                <div class="data">Prabhu on May 19, 2016</div>
+                                                <p>
+                                                    WOW! AWESOME job on this template :-)<br>
+                                                    Just wanted to say that as we have worked with the YourStore template more and more over the last week we are truly impressed. This has to be one of the best designed templates we have encountered on ThemeForest. There were only the few minor bugs which the EXCELLENT support here on this board took care of immediately. The code is clean and flexible and yet easy for even more novice designers to adapt to their needs. We are thrilled to finally have a professional design that is a pleasure to work with and that will allow us to complete our business expansion on time and under budget!
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="tt-tabs__title">E</span>
+                                    <div class="tt-tabs__content">
+                                        <h5 class="tab-title">E</h5>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="tt-tabs__title">F</span>
+                                    <div class="tt-tabs__content">
+                                        <h5 class="tab-title">F</h5>
+                                    </div>
+                                </div>#}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="container offset-60">
+                    <hr>
+                </div>
+                {% if newArticles %}
+                    <div class="container offset-60">
+                        <h3 class="block-title small">YOU MAY ALSO BE INTERESTED IN THE FOLLOWING PRODUCT(S)</h3>
+                        <div class="row">
+                            <div class="carousel-products-2 carouselTab slick-arrow-top slick-arrow-top2">
+                                {% for tendance in newArticles %}
+                                    <div>
+                                        <div class="product">
+                                        <div class="product_inside">
+                                            <div class="image-box">
+                                                <a href="{{ path('article_index', {'id': tendance.articleId}) }}">
+                                                    <img src="{{ asset('uploads/Articles/images/'~tendance.principalCover) }}" alt="{{ tendance.name }}">
+                                                </a>
+                                                <a href="#" data-toggle="modal" data-target="#ModalquickViewSOLO-{{ tendance.articleId }}" class="quick-view">
+                                                    <span>
+                                                        <span class="icon icon-visibility"></span>
+                                                        QUICK VIEW
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div class="title">
+                                                <a href="{{ path('article_index', {'id': tendance.articleId}) }}">{{ tendance.name }}</a>
+                                            </div>
+                                            <div class="price">
+                                                {{ tendance.price|number_format(2, '.', ' ') }} KWD
+                                            </div>
+                                            <div class="description">
+                                                {{ tendance.description }}
+                                            </div>
+                                            <div class="product_inside_hover">
+                                                <div class="product_inside_info">
+                                                    {#<ul class="options-swatch options-swatch-color">
+                                                        <li>
+                                                            <a href="#">
+                                                                <span class="swatch-label color-dark-grey"></span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="active">
+                                                            <a href="#">
+                                                                <span class="swatch-label color-pale-gold"></span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#">
+                                                                <span class="swatch-label color-white border-bg"></span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="rating">
+                                                        <span class="icon-star"></span>
+                                                        <span class="icon-star"></span>
+                                                        <span class="icon-star"></span>
+                                                        <span class="icon-star"></span>
+                                                        <span class="icon-star empty-star"></span>
+                                                    </div>#}
+                                                    <a class="btn btn-product_addtocart" href="#" data-toggle="modal" data-target="#ModalAddToCartProductSOLO-{{ tendance.articleId }}">
+                                                        <span class="icon icon-shopping_basket"></span>ADD TO CART
+                                                    </a>
+                                                    <a href="#"  class="quick-view btn" data-toggle="modal" data-target="#ModalquickViewSOLO-{{ tendance.articleId }}">
+                                                        <span>
+                                                            <span class="icon icon-visibility"></span>QUICK VIEW
+                                                        </span>
+                                                    </a>
+                                                    {#<ul class="product_inside_info_link">
+                                                        <li class="text-right">
+                                                            <a href="#" class="wishlist-link">
+                                                                <span class="fa fa-heart-o"></span>
+                                                                <span class="text">Add to wishlist</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="text-left">
+                                                            <a href="#" class="compare-link">
+                                                                <span class="fa fa-balance-scale"></span>
+                                                                <span class="text">Add to compare</span>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" data-toggle="modal" data-target="#ModalquickView" class="quick-view">
+                                                                <span class="icon icon-visibility"></span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>#}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+
+                    {% for tendance in newArticles %}
+                        <div class="modal fade"  id="ModalquickViewSOLO-{{ tendance.articleId }}" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content ">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="icon icon-clear"></span></button>
+                                    </div>
+                                    <form>
+                                        <div class="modal-body">
+                                            <!--modal-quick-view-->
+                                            <div class="modal-quick-view">
+                                                <div class="row">
+                                                    <div class="col-sm-5 col-lg-6">
+                                                        <div class="product-main-image">
+                                                            <img src='{{ asset('uploads/Articles/images/'~tendance.principalCover) }}' alt="{{ tendance.name }}" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-7 col-lg-6">
+                                                        <div class="product-info">
+                                                            <div class="add-info">
+                                                                <div class="sku pull-left">
+                                                                    {#<span class="font-weight-medium color-defaulttext2">SKU:</span> mtk012c#}
+                                                                </div>
+                                                                <div class="availability pull-left">
+                                                                    <span class="font-weight-medium color-defaulttext2">Availability:</span>
+                                                                    {% if tendance.isAvailable == '1' %}
+                                                                        <span class="text-success">In Stock</span>
+                                                                    {% else %}
+                                                                        <span class="color-base">Out stock</span>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                            <h1 class="title">{{ tendance.name }}</h1>
+                                                            <div class="price">
+                                                                {{ tendance.price|number_format(2, '.', ',') }} KWD
+                                                            </div>
+                                                            <div class="description hidden-xs">
+                                                                <div class="text">
+                                                                    {{ tendance.description }}
+                                                                </div>
+                                                            </div>
+                                                            {#<div class="wrapper">
+                                                                <div class="title-options">Texture <span class="color-required">*</span></div>
+                                                                <ul class="options-swatch-texture">
+                                                                    <li><a href="#"><img src="{{ asset('assets/frontend/images/custom/texture-img-01.jpg') }}" alt=""></a></li>
+                                                                    <li><a href="#"><img src="{{ asset('assets/frontend/images/custom/texture-img-02.jpg') }}" alt=""></a></li>
+                                                                    <li><a href="#"><img src="{{ asset('assets/frontend/images/custom/texture-img-03.jpg') }}" alt=""></a></li>
+                                                                </ul>
+                                                            </div>#}
+                                                            {#<div class="wrapper">
+                                                                <div class="title-options">Size <span class="color-required">*</span></div>
+                                                                <ul class="tags-list">
+                                                                    <li><a href="#">XS</a></li>
+                                                                    <li class="active"><a href="#">S</a></li>
+                                                                    <li><a href="#">M</a></li>
+                                                                    <li><a href="#">L</a></li>
+                                                                </ul>
+                                                            </div>#}
+                                                            <div class="wrapper">
+                                                                {#<div class="pull-left"><label class="qty-label">qty</label></div>
+                                                                <div class="pull-left">
+                                                                    <div class="style-2 input-counter">
+                                                                        <span class="minus-btn"></span>
+                                                                        <input type="text" value="1" size="5"/>
+                                                                        <span class="plus-btn"></span>
+                                                                    </div>
+                                                                </div>#}
+                                                                <div class="pull-left">
+                                                                    <a href="#" class="btn btn-addtocart"><span class="icon icon-shopping_basket"></span>SHOP NOW!</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="wrapper">
+                                                                <div class="pull-left">
+                                                                    {#<ul class="product_inside_info_link">
+                                                                        <li class="text-right">
+                                                                            <a href="#">
+                                                                                <span class="fa fa-heart-o"></span>
+                                                                                <span class="text">ADD TO WISHLIST</span>
+                                                                            </a>
+                                                                        </li>
+                                                                        <li class="text-left">
+                                                                            <a href="#" class="compare-link">
+                                                                                <span class="fa fa-balance-scale"></span>
+                                                                                <span class="text">ADD TO COMPARE</span>
+                                                                            </a>
+                                                                        </li>
+                                                                    </ul>#}
+                                                                </div>
+                                                            </div>
+                                                            <div class="wrapper">
+                                                                {#<ul class="social-icon-square">
+                                                                    <li><a class="icon-01" href="#"></a></li>
+                                                                    <li><a class="icon-02" href="#"></a></li>
+                                                                    <li><a class="icon-03" href="#"></a></li>
+                                                                    <li><a class="icon-04" href="#"></a></li>
+                                                                    <li><a class="icon-05" href="#"></a></li>
+                                                                </ul>#}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/modal-quick-view-->
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade"  id="ModalAddToCartProductSOLO-{{ tendance.articleId }}" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-md">
+                                <div class="modal-content ">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="icon icon-clear"></span></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!--  -->
+                                        <div class="modal-add-cart-product desctope visible-md visible-lg">
+                                            <div class="row">
+                                                <div class="col-sm-6" style="position: relative;text-align: center;">
+                                                    <div class="modal-messages" style="text-align: center">
+                                                        <span class="icon color-base icon-error" style="font-size: 34px;line-height: 34px;"></span>
+                                                        <p style="font-size: 20px;
+                                                                        line-height: 26px;
+                                                                        margin: 1px 8% 0;
+                                                                        font-weight: 500;
+                                                                        color: #333333;">
+                                                            Add {{ tendance.name }} to your shopping cart
+                                                        </p>
+                                                    </div>
+                                                    <div class="modal-product" style="margin-top: 34px;">
+                                                        <div class="image-box" style="width: 202px;margin: 0 auto;">
+                                                            <img src="{{ asset('uploads/Articles/images/'~tendance.principalCover) }}" alt="{{ tendance.name }}" style="width: 100%;height: auto;">
+                                                        </div>
+                                                        <div class="title" style="color: #333333;
+                                                                font-size: 14px;
+                                                                line-height: 21px;
+                                                                margin: 15px 8% 0;">
+                                                            {{ tendance.name }}
+                                                        </div>
+                                                        <div class="description" style="color: #777;
+                                                                    font-size: 12px;
+                                                                    line-height: 21px;
+                                                                    margin-top: 6px;">
+                                                            {{ tendance.description }}
+                                                        </div>
+                                                        <div class="qty" style="color: #333333;
+                                                            margin-top: 26px;
+                                                            font-size: 14px;
+                                                            font-weight: 500;">
+                                                            Qty: 1
+                                                        </div>
+                                                    </div>
+                                                    <div class="total" style="padding-bottom: 0;font-size: 20px;
+                                                            color: #333333;
+                                                            font-weight: bold;
+                                                            margin-top: 9px;
+                                                            letter-spacing: 0.02em;">
+                                                        TOTAL: <span style="font-size: 24px;
+                                                        color: #A58464;
+                                                        font-weight: 500;
+                                                        letter-spacing: inherit;">
+                                                                    {{ tendance.price|number_format(2, '.', ',') }} KWD</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6" style="position: relative;text-align: center;">
+
+                                                    {% set cart = getUserCart() %}
+                                                    {% if cart %}
+                                                        <div class="cart-item-total" style="color: #333333;font-size: 20px;text-align: center;">
+                                                            <a href="{{ path('cart_index') }}">
+                                                                <div class="cart-item-icon" style="display: flex;
+                                                                            justify-content: center;
+                                                                            align-items: center;
+                                                                            font-weight: 500;
+                                                                            color: #A58464;">
+                                            <span class="icon icon-shopping_basket" style=" font-size: 34px;
+                                                                                            line-height: 34px;
+                                                                                            margin: 0 7px;"></span>
+                                                                    View Cart
+                                                                </div>
+                                                            </a>
+                                                            <p style="  font-size: 20px;
+                                                line-height: 26px;
+                                                font-weight: 500;
+                                                margin-top: 2px;">
+                                                                There are {{ cart.articles|length }} items<br> in your cart
+                                                            </p>
+                                                        </div>
+                                                        <div class="total-product" style="  font-size: 14px;
+                                                                    font-weight: 500;
+                                                                    color: #333333;
+                                                                    margin-top: 24px;
+                                                                    text-align: center;">
+                                                            Total products:
+                                                            <span style="color: #A58464;">
+                                                                            {% set total = 0 %}
+                                                                {% set totalProducts = 0 %}
+                                                                {% for articleC  in cart.articles %}
+                                                                    {% set totalProducts = total + articleC.price  %}
+                                                                    {% set total = totalProducts %}
+                                                                {% endfor %}
+                                                                {{ totalProducts|number_format(2, '.', ' ') }} KWD
+                                        </span>
+                                                        </div>
+                                                        <div class="total" style="  font-size: 20px;
+                                                            color: #333333;
+                                                            font-weight: bold;
+                                                            margin-top: 9px;
+                                                            letter-spacing: 0.02em;
+                                                            padding-bottom: 23px;
+                                                            text-align: center;">
+                                                            TOTAL:
+                                                            <span style="font-size: 24px;
+                                                        color: #A58464;
+                                                        font-weight: 500;
+                                                        letter-spacing: inherit;">
+                                                                            {% set newTotal = totalProducts + tendance.price %}
+                                                                {{ newTotal|number_format(2, '.', ' ') }} KWD
+                                                                {#$135#}
+                                        </span>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="cart-item-total" style="color: #333333;font-size: 20px;text-align: center;">
+                                                            <a href="{{ path('cart_index') }}">
+                                                                <div class="cart-item-icon" style="display: flex;
+                                                                            justify-content: center;
+                                                                            align-items: center;
+                                                                            font-weight: 500;
+                                                                            color: #A58464;">
+                                            <span class="icon icon-shopping_basket" style=" font-size: 34px;
+                                                                                            line-height: 34px;
+                                                                                            margin: 0 7px;"></span>
+                                                                    View Cart
+                                                                </div>
+                                                            </a>
+                                                            <p style="  font-size: 20px;
+                                                line-height: 26px;
+                                                font-weight: 500;
+                                                margin-top: 2px;">
+                                                                There are no item<br> in your cart
+                                                            </p>
+                                                        </div>
+                                                        <div class="total-product" style="  font-size: 14px;
+                                                                    font-weight: 500;
+                                                                    color: #333333;
+                                                                    margin-top: 24px;
+                                                                    text-align: center;">
+                                                            Total products: <span style="color: #A58464;">{{ tendance.price|number_format(2, '.', ' ') }} KWD</span>
+                                                        </div>
+                                                        <div class="total" style="  font-size: 20px;
+                                                            color: #333333;
+                                                            font-weight: bold;
+                                                            margin-top: 9px;
+                                                            letter-spacing: 0.02em;
+                                                            padding-bottom: 23px;
+                                                            text-align: center;">
+                                                            TOTAL: <span style="font-size: 24px;
+                                                        color: #A58464;
+                                                        font-weight: 500;
+                                                        letter-spacing: inherit;">
+                                        {{ tendance.price|number_format(2, '.', ',') }} KWD</span>
+                                                        </div>
+                                                    {% endif %}
+
+                                                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                                        <a href="{{ path('add_article_to_cart', {'id': tendance.articleId}) }}" class="btn invert" style="margin-top: 10px;">ADD TO CART</a>
+                                                    {% else %}
+                                                        <a href="{{ path('login')}}" class="btn invert" style="margin-top: 10px;">
+                                                            Login to add to cart</a>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-add-cart-product mobile visible-sm visible-xs" style="text-align: center;">
+                                            <div class="modal-messages" style=" text-align: center;
+                                                            font-size: 14px;
+                                                            line-height: 17px;">
+                                                <span class="icon color-base icon-error" style="font-size: 34px;line-height: 34px;"></span>
+                                                <p style="font-size: 14px;
+                                    line-height: 17px;
+                                    font-weight: 500;
+                                    margin-top: 8px;
+                                    color: #777;">
+                                                    {{ tendance.name }}
+                                                </p>
+                                            </div>
+                                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                                <a href="{{ path('add_article_to_cart', {'id': tendance.articleId}) }}" class="btn btn-underline" style="margin-top: 20px;
+                                                                    color: #333333;
+                                                                    background: none;
+                                                                    text-decoration: none;
+                                                                    line-height: 15px;
+                                                                    padding: 5px 0 0 0;
+                                                                    height: inherit;
+                                                                    border-bottom: 2px solid #333333;">
+                                                    ADD TO CART!</a>
+                                            {% else %}
+                                                <a href="{{ path('login')}}" class="btn btn-underline" style="margin-top: 20px;
+                                                                    color: #333333;
+                                                                    background: none;
+                                                                    text-decoration: none;
+                                                                    line-height: 15px;
+                                                                    padding: 5px 0 0 0;
+                                                                    height: inherit;
+                                                                    border-bottom: 2px solid #333333;">
+                                                    Login to add to cart</a>
+                                            {% endif %}
+                                        </div>
+                                        <!-- / -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+                {% endif %}
+
+            {% endblock %}
+
+            {% block promo %}
+                {#{% include 'frontend/partials/layout_1/_promo.html.twig' %}#}
+            {% endblock %}
+
+            {% block collections %}
+                {#{% include 'frontend/partials/layout_1/_collections.html.twig' %}#}
+            {% endblock %}
+
+            {% block features %}
+                {#{% include 'frontend/partials/layout_1/_features.html.twig' %}#}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block footer %}
+        {% include 'frontend/partials/layout_1/_footer.html.twig' %}
+    {% endblock %}
+
+    {% block modal %}
+        {% include 'frontend/partials/layout_1/_modal.html.twig' %}
+    {% endblock %}
+
+
+    {% block javascripts %}
+        <script src="{{ asset('assets/frontend/external/jquery/jquery-2.1.4.min.js') }}"></script>
+        <script src="{{ asset('assets/frontend/external/bootstrap/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('assets/frontend/external/countdown/jquery.plugin.min.js') }}"></script>
+        <script src="{{ asset('assets/frontend/external/countdown/jquery.countdown.min.js') }}"></script>
+        <script src="{{ asset('assets/frontend/external/isotope/isotope.pkgd.min.js') }}"></script>
+        <script src="{{ asset('assets/frontend/external/slick/slick.min.js') }}"></script>
+        <script src="{{ asset('assets/frontend/external/instafeed/instafeed.min.js') }}"></script>
+        <script src="{{ asset('assets/frontend/external/elevatezoom/jquery.elevatezoom.js') }}"></script>
+        <script src="{{ asset('assets/frontend/external/panelmenu/panelmenu.js') }}"></script>
+        <div class="mm-fullscreen-bg"></div>
+        <script src="{{ asset('assets/frontend/js/quick-view.js') }}"></script>
+        <script src="{{ asset('assets/frontend/js/main.js') }}"></script>
+    {% endblock %}
+
+{% endblock %}

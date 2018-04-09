@@ -463,8 +463,8 @@
         <!--------------------------------------------------------------------------------------->
     </div>
 </div>
-<!-- Modal (quickViewModal) -->
 {% for newArticle in newArticles %}
+    <!-- Modal (quickViewModal) -->
     <div class="modal  fade"  id="ModalquickView-{{ newArticle.articleId }}" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content ">
@@ -572,6 +572,7 @@
             </div>
         </div>
     </div>
+    <!-- / Modal (quickViewModal) -->
 
     <!-- modalAddToCartProduct -->
     <div class="modal  fade"  id="ModalAddToCartProduct-{{ newArticle.articleId }}" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
@@ -624,7 +625,7 @@
                                                             margin-top: 9px;
                                                             letter-spacing: 0.02em;">
                                     TOTAL: <span style="font-size: 24px;
-                                                        color: #5fd179;
+                                                        color: #A58464;
                                                         font-weight: 500;
                                                         letter-spacing: inherit;">
                                         ${{ newArticle.price|number_format(2, '.', ',') }}</span>
@@ -640,7 +641,7 @@
                                                                             justify-content: center;
                                                                             align-items: center;
                                                                             font-weight: 500;
-                                                                            color: #5fd179;">
+                                                                            color: #A58464;">
                                             <span class="icon icon-shopping_basket" style=" font-size: 34px;
                                                                                             line-height: 34px;
                                                                                             margin: 0 7px;"></span>
@@ -660,7 +661,7 @@
                                                                     margin-top: 24px;
                                                                     text-align: center;">
                                         Total products:
-                                        <span style="color: #5fd179;">
+                                        <span style="color: #A58464;">
                                             {% set total = 0 %}
                                             {% set totalProducts = 0 %}
                                             {% for article  in cart.articles %}
@@ -679,7 +680,7 @@
                                                             text-align: center;">
                                         TOTAL:
                                         <span style="font-size: 24px;
-                                                        color: #5fd179;
+                                                        color: #A58464;
                                                         font-weight: 500;
                                                         letter-spacing: inherit;">
                                             {% set newTotal = totalProducts + newArticle.price %}
@@ -694,7 +695,7 @@
                                                                             justify-content: center;
                                                                             align-items: center;
                                                                             font-weight: 500;
-                                                                            color: #5fd179;">
+                                                                            color: #A58464;">
                                             <span class="icon icon-shopping_basket" style=" font-size: 34px;
                                                                                             line-height: 34px;
                                                                                             margin: 0 7px;"></span>
@@ -713,7 +714,7 @@
                                                                     color: #333333;
                                                                     margin-top: 24px;
                                                                     text-align: center;">
-                                        Total products: <span style="color: #5fd179;">${{ newArticle.price|number_format(2, '.', ',') }}</span>
+                                        Total products: <span style="color: #A58464;">${{ newArticle.price|number_format(2, '.', ',') }}</span>
                                     </div>
                                     <div class="total" style="  font-size: 20px;
                                                             color: #333333;
@@ -723,7 +724,7 @@
                                                             padding-bottom: 23px;
                                                             text-align: center;">
                                         TOTAL: <span style="font-size: 24px;
-                                                        color: #5fd179;
+                                                        color: #A58464;
                                                         font-weight: 500;
                                                         letter-spacing: inherit;">
                                         ${{ newArticle.price|number_format(2, '.', ',') }}</span>
@@ -781,4 +782,3 @@
     </div>
     <!-- /modalAddToCartProduct -->
 {% endfor %}
-<!-- / Modal (quickViewModal) -->

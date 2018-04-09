@@ -9,6 +9,7 @@
 namespace App\Controller\Frontend;
 
 
+use App\Entity\Article;
 use App\Entity\Category;
 use App\Entity\Order;
 use App\Entity\User;
@@ -46,5 +47,27 @@ class CategoryController extends Controller
             'category'  =>  $selectedCategory,
             'articles' => $articles,
         ]);
+    }
+
+    /**
+     * @Route("/article/{id}", name="article_index")
+     */
+    public function articleItem($id) {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $article = $em->getRepository(Article::class)->find($id);
+
+        if(!$article) {
+            throw new NotFoundHttpException('Article with id : '.$id.' not found');
+        }
+
+        $newArticles = $em->getRepository(Article::class)->getEightNewArticles();
+
+        return $this->render('frontend/article/index.html.twig', [
+            'article'   =>  $article,
+            'newArticles'   => $newArticles
+        ]);
+
     }
 }
