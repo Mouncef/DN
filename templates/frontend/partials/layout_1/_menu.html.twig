@@ -9,273 +9,44 @@
         {% endif %}
         <li><a href="{{ path('about_index') }}">Our Story</a></li>
         <li><a href="{{ path('contact_index') }}">Contact</a></li>
-        {#<li>
-            <a href="">LAYOUT</a>
-            <ul>
-                <li><a href="">Home page 1</a></li>
-                <li><a href="">Home page 2</a></li>
-                <li><a href="">Home page 3</a></li>
-                <li><a href="">Home page 4</a></li>
-                <li><a href="">Home page 5</a></li>
-                <li><a href="">Home page 6</a></li>
-                <li><a href="">Home page 7</a></li>
-                <li><a href="">Home page 8</a></li>
-                <li><a href="">Home page 9</a></li>
-                <li><a href="">Home page 10</a></li>
-                <li><a href="">Home page 11</a></li>
-                <li><a href="">Home page 12</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="">LISTING</a>
-            <ul>
-                <li><a href="">Left Column</a></li>
-                <li><a href="">Left and Right Column</a></li>
-                <li><a href="">Right Column</a></li>
-                <li><a href="">Left Column Without Block</a></li>
-                <li><a href="">Without Columns</a></li>
-                <li><a href="">Without Column and 6 items in line</a></li>
-                <li><a href="">Without Column and 4 items in line</a></li>
-                <li><a href="">Without Column and 3 items in line</a></li>
-                <li><a href="">Without Column and 2 items in line</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="">PRODUCT</a>
-            <ul>
-                <li><a href="">Image Size - Small</a></li>
-                <li><a href="">Image Size - Medium</a></li>
-                <li><a href="">Image Size - Big</a></li>
-                <li><a href="">Image Size - Medium</a></li>
-                <li><a href="">Image Size - Long</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="">BLOG</a>
-            <ul>
-                <li><a href="">Listing</a></li>
-                <li><a href="">Grid Layout 2 cols</a></li>
-                <li><a href="">Grid Layout 3 cols</a></li>
-                <li><a href="">Masonry Layout 2 cols</a></li>
-                <li><a href="">Masonry Layout 3 cols</a></li>
-                <li><a href="">Blog single post 1</a></li>
-                <li><a href="">Blog single post 2</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="">GALLERY</a>
-            <ul>
-                <li><a href="">Grid col 2</a></li>
-                <li><a href="">Grid col 3</a></li>
-                <li><a href="">Masonry col 2</a></li>
-                <li><a href="">Masonry col 3</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="">PAGES</a>
-            <ul>
-                <li><a href="">About</a></li>
-                <li><a href="">About 2</a></li>
-                <li><a href="">Contacts</a></li>
-                <li><a href="">Contacts 2</a></li>
-                <li><a href="">Under Construction</a></li>
-                <li><a href="">Lookbook</a></li>
-                <li><a href="">Collections</a></li>
-                <li><a href="">Typography</a></li>
-                <li><a href="">Infographic</a></li>
-                <li><a href="">Delivery Page</a></li>
-                <li><a href="">Payment page</a></li>
-                <li><a href="">Checkout</a></li>
-                <li><a href="">Compare</a></li>
-                <li><a href="">Wishlist</a></li>
-                <li><a href="">Shopping cart 01</a></li>
-                <li><a href="">Shopping cart 02</a></li>
-                <li><a href="">Page Account</a></li>
-                <li><a href="">Page Account address</a></li>
-                <li><a href="">Page Account order</a></li>
-                <li><a href="">Login form</a></li>
-                <li><a href="">Support page</a></li>
-                <li><a href="">FAQs</a></li>
-                <li><a href="">Page 404</a></li>
-                <li><a href="">Page Empty Category</a></li>
-                <li><a href="">Page Empty Search</a></li>
-                <li><a href="">Page Empty shopping Cart</a></li>
-            </ul>
-        </li>
-        <li>
-            <a href="">WOMEN'S</a>
-            <ul>
+
+        {% set collections = getCollections() %}
+        {% if collections %}
+            {% for collection in collections %}
                 <li>
-                    <a href="">TOPS</a>
+                    <a href="{{ path('collection_index', {'collectionId': collection.collectionId}) }}" class="bg-brown">{{ collection.name }} </a>
                     <ul>
-                        <li><a href="">Blouses & Shirts</a></li>
-                        <li><a href="">Dresses</a></li>
-                        <li>
-                            <a href="">Tops & T-shirts</a>
-                            <ul>
-                                <li><a href="">Link level 1</a></li>
-                                <li>
-                                    <a href="">Link level 1</a>
-                                    <ul>
-                                        <li><a href="">Link level 2</a></li>
+                        {% set handledCategory = [] %}
+                        {% for article in collection.articles if article not in handledCategory %}
+                            {% for a in collection.articles if a.category.name == article.category.name and a not in handledCategory %}
+                                {% set handledCategory = handledCategory|merge([a]) %}
+                            {% endfor %}
+                        {% endfor %}
+
+                        {% set cc = [] %}
+                        {% if collection.articles %}
+                            {% for category in categories %}
+                                {% for c in  handledCategory %}
+                                    {% if category == c.category and category not in cc %}
                                         <li>
-                                            <a href="">Link level 2</a>
+                                            <a href="{{ path('category_index', {'category': category.name}) }}" class="bg-grey-dark">{{ category.name }}</a>
                                             <ul>
-                                                <li><a href="">Link level 3</a></li>
-                                                <li><a href="">Link level 3</a></li>
-                                                <li><a href="">Link level 3</a></li>
-                                                <li>
-                                                    <a href="">Link level 3</a>
-                                                    <ul>
-                                                        <li>
-                                                            <a href="">Link level 4</a>
-                                                            <ul>
-                                                                <li><a href="">Link level 5</a></li>
-                                                                <li><a href="">Link level 5</a></li>
-                                                                <li><a href="">Link level 5</a></li>
-                                                                <li><a href="">Link level 5</a></li>
-                                                                <li><a href="">Link level 5</a></li>
-                                                            </ul>
-                                                        </li>
-                                                        <li><a href="">Link level 4</a></li>
-                                                        <li><a href="">Link level 4</a></li>
-                                                        <li><a href="">Link level 4</a></li>
-                                                        <li><a href="">Link level 4</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="">Link level 3</a></li>
+                                                {% for article in collection.articles if article.category.name == category.name %}
+                                                    <li><a href="{{ path('article_index', {'id': article.articleId}) }}">{{ article.name }}</a></li>
+                                                {% endfor %}
                                             </ul>
                                         </li>
-                                        <li><a href="">Link level 2</a></li>
-                                        <li><a href="">Link level 2</a></li>
-                                        <li><a href="">Link level 2</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="">Link level 1</a></li>
-                                <li><a href="">Link level 1</a></li>
-                                <li><a href="">Link level 1</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="">Sleeveless Tops</a></li>
-                        <li><a href="">Sweaters</a></li>
-                        <li><a href="">Jackets</a></li>
-                        <li><a href="">Outerwear</a></li>
+                                        {% set cc = cc|merge([category]) %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+
                     </ul>
                 </li>
-                <li>
-                    <a href="">BOTTOMS</a>
-                    <ul>
-                        <li><a href="">Trousers</a></li>
-                        <li><a href="">Jeans</a></li>
-                        <li><a href="">Leggings</a></li>
-                        <li><a href="">Jumpsuit & shorts</a></li>
-                        <li><a href="">Skirts</a></li>
-                        <li><a href="">Tights</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="">ACCESSORIES</a>
-                    <ul>
-                        <li><a href="">Jewellery</a></li>
-                        <li><a href="">Hats</a></li>
-                        <li><a href="">Scarves & snoods</a></li>
-                        <li><a href="">Belts</a></li>
-                        <li><a href="">Bags</a></li>
-                        <li><a href="">Shoes</a></li>
-                        <li><a href="">Sunglasses</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="">SPECIALS</a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a href="">MEN'S</a>
-            <ul>
-                <li>
-                    <a href="">TOPS</a>
-                    <ul>
-                        <li><a href="">Blouses & Shirts</a></li>
-                        <li><a href="">Dresses</a></li>
-                        <li>
-                            <a href="">Tops & T-shirts</a>
-                            <ul>
-                                <li><a href="">Link level 1</a></li>
-                                <li>
-                                    <a href="">Link level 1</a>
-                                    <ul>
-                                        <li><a href="">Link level 2</a></li>
-                                        <li>
-                                            <a href="">Link level 2</a>
-                                            <ul>
-                                                <li><a href="">Link level 3</a></li>
-                                                <li><a href="">Link level 3</a></li>
-                                                <li><a href="">Link level 3</a></li>
-                                                <li>
-                                                    <a href="">Link level 3</a>
-                                                    <ul>
-                                                        <li>
-                                                            <a href="">Link level 4</a>
-                                                            <ul>
-                                                                <li><a href="">Link level 5</a></li>
-                                                                <li><a href="">Link level 5</a></li>
-                                                                <li><a href="">Link level 5</a></li>
-                                                                <li><a href="">Link level 5</a></li>
-                                                                <li><a href="">Link level 5</a></li>
-                                                            </ul>
-                                                        </li>
-                                                        <li><a href="">Link level 4</a></li>
-                                                        <li><a href="">Link level 4</a></li>
-                                                        <li><a href="">Link level 4</a></li>
-                                                        <li><a href="">Link level 4</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="">Link level 3</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="">Link level 2</a></li>
-                                        <li><a href="">Link level 2</a></li>
-                                        <li><a href="">Link level 2</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="">Link level 1</a></li>
-                                <li><a href="">Link level 1</a></li>
-                                <li><a href="">Link level 1</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="">Sleeveless Tops</a></li>
-                        <li><a href="">Sweaters</a></li>
-                        <li><a href="">Jackets</a></li>
-                        <li><a href="">Outerwear</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="">BOTTOMS</a>
-                    <ul>
-                        <li><a href="">Trousers</a></li>
-                        <li><a href="">Jeans</a></li>
-                        <li><a href="">Leggings</a></li>
-                        <li><a href="">Jumpsuit & shorts</a></li>
-                        <li><a href="">Skirts</a></li>
-                        <li><a href="">Tights</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="">ACCESSORIES</a>
-                    <ul>
-                        <li><a href="">Jewellery</a></li>
-                        <li><a href="">Hats</a></li>
-                        <li><a href="">Scarves & snoods</a></li>
-                        <li><a href="">Belts</a></li>
-                        <li><a href="">Bags</a></li>
-                        <li><a href="">Shoes</a></li>
-                        <li><a href="">Sunglasses</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </li>#}
-        {#<li><a href="#">MORE</a></li>#}
+            {% endfor %}
+        {% endif %}
+
     </ul>
     <div class="mm-navbtn-names" style="display:none">
         <div class="mm-closebtn">CLOSE</div>
