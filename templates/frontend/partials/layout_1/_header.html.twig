@@ -16,8 +16,10 @@
                     <div class="dropdown-menu">
                         <div class="mini-menu">
                             <ul>
-                                <li {#class="active"#}><a href="">FAQ</a></li>
-                                <li><a href="">Delivery</a></li>
+                                <li {% if app.request.attributes.get('_route') == 'FAQ' %}class="active"{% endif %}>
+                                    <a href="{{ path('FAQ') }}">FAQs</a>
+                                </li>
+                                {#<li><a href="">Delivery</a></li>#}
                                 {#<li><a href="">Blog</a></li>#}
                                 {#<li><a href=""></a></li>#}
                             </ul>
@@ -109,8 +111,10 @@
                 <!-- mini-menu -->
                 <div class="mini-menu">
                     <ul>
-                        <li {#class="active"#}><a href="{{ path('homepage') }}">FAQ</a></li>
-                        <li><a href="">Delivery</a></li>
+                        <li {% if app.request.attributes.get('_route') == 'FAQ' %}class="active"{% endif %}>
+                            <a href="{{ path('FAQ') }}">FAQs</a>
+                        </li>
+                        {#<li><a href="">Delivery</a></li>#}
                         {#<li><a href="">Blog</a></li>#}
                         {#<li><a href="">Contacts</a></li>#}
                     </ul>
@@ -570,9 +574,9 @@
                     <div class="search">
                         <a href="#" class="search-open"><span class="icon icon-search"></span></a>
                         <div class="search-dropdown">
-                            <form action="#" method="get">
+                            <form action="{{ path('search_article') }}" method="get">
                                 <div class="input-outer">
-                                    <input type="search" name="search" value="" maxlength="128" placeholder="Enter keyword">
+                                    <input type="search" name="_search" value="" maxlength="128" placeholder="Enter keyword">
                                     <button type="submit" class="btn-search">SEARCH</button>
                                 </div>
                                 <a href="#" class="search-close"><span class="icon icon-close"></span></a>

@@ -119,4 +119,36 @@ class HomeController extends Controller
         return $this->redirectToRoute('homepage');
     }
 
+    /**
+     * @Route("/search", name="search_article", options={"expose"=true})
+     */
+    public function searchArticle(Request $request) {
+
+        $phrase = $request->get('_search');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $pLike = '%'.$phrase.'%';
+
+        $articles = $em->getRepository(Article::class)->createQueryBuilder('a')
+            ->where('a.name LIKE :phrase')
+            ->setParameter('phrase', $pLike)
+            ->getQuery()
+            ->getResult()
+        ;
+
+
+        if (empty($phrase) || empty($articles)){
+            $html = 'frontend/search/404.html.twig';
+        } else {
+            $html = 'frontend/search/result.html.twig';
+        }
+
+
+
+
+        return $this->render($html, [
+            'articles'  =>  $articles
+        ]);
+    }
 }

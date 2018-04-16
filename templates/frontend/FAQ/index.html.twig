@@ -1,0 +1,170 @@
+{% extends 'frontend/index.html.twig' %}
+
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {% block loader %}
+        {% include 'frontend/partials/layout_1/_loader.html.twig' %}
+    {% endblock %}
+
+    {% block menu %}
+        {% include 'frontend/partials/layout_1/_menu.html.twig' %}
+    {% endblock %}
+
+    {% block header %}
+        {% include 'frontend/partials/layout_1/_header.html.twig' %}
+    {% endblock %}
+
+    {% block breadcrumb %}
+        <div class="breadcrumb">
+            <div class="container">
+                <ul>
+                    <li><a href="{{ path('homepage') }}">Home</a></li>
+                    <li>FAQs</li>
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block content %}
+        <!-- Content -->
+        <div id="pageContent">
+
+            {% block slider %}
+                <div class="container  offset-18">
+                    <h1 class="block-title large">FAQs</h1>
+                    <div class="offset-36">
+                        <h2 class="small">Shopping Information</h2>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="box-faq">
+                                    <a class="title" href="#">What Shipping Methods Are Available?</a>
+                                    <p>
+                                        Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+                                    </p>
+                                    <ul class="list-simple-dot">
+                                        <li><a href="#">Lorem ipsum dolor sit amet conse ctetur</a></li>
+                                        <li><a href="#">Adipisicing elit, sed do eiusmod</a></li>
+                                        <li><a href="#">Tempor incididunt ut labore et dolore</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="box-faq">
+                                    <a class="title" href="#">What Shipping Methods Are Available?</a>
+                                    <p>
+                                        Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation. Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="box-faq">
+                                    <a class="title" href="#">What Shipping Methods Are Available?</a>
+                                    <p>
+                                        Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation. Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="box-faq">
+                                    <a class="title" href="#">How Long Will It Take To Get My Package?</a>
+                                    <p>
+                                        Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="hr-offset-6">
+                        <h2 class="small">Payment Information</h2>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="box-faq">
+                                    <a class="title" href="#">What Payment Methods Are Accepted?</a>
+                                    <p>
+                                        Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation. Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="box-faq">
+                                    <a class="title" href="#">Is Buying On-Line Safe?</a>
+                                    <p>
+                                        Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation. Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="hr-offset-6">
+                        <h2 class="small">Orders and Returns</h2>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="box-faq">
+                                    <a class="title" href="#">How do I place an Order?</a>
+                                    <p>
+                                        Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation. Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="box-faq">
+                                    <a class="title" href="#">How Can I Cancel Or Change My Order?</a>
+                                    <p>
+                                        Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="box-faq">
+                                    <a class="title" href="#">Do I need an account to place an order?</a>
+                                    <p>
+                                        Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation. Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="box-faq">
+                                    <a class="title" href="#">How Do I Track My Order?</a>
+                                    <p>
+                                        Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
+
+            {% block promo %}
+                {#{% include 'frontend/partials/layout_1/_promo.html.twig' %}#}
+            {% endblock %}
+
+            {% block collections %}
+                {#{% include 'frontend/partials/layout_1/_collections.html.twig' %}#}
+            {% endblock %}
+
+            {% block features %}
+                {#{% include 'frontend/partials/layout_1/_features.html.twig' %}#}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block footer %}
+        {% include 'frontend/partials/layout_1/_footer.html.twig' %}
+    {% endblock %}
+
+    {% block modal %}
+        {% include 'frontend/partials/layout_1/_modal.html.twig' %}
+    {% endblock %}
+
+
+    {% block javascripts %}
+        {% include 'frontend/partials/layout_1/_javascript.html.twig' %}
+    {% endblock %}
+
+{% endblock %}
