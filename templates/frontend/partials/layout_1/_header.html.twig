@@ -125,10 +125,10 @@
                 <!-- box-info -->
                 <div class="box-info">
                     <div class="telephone">
-                        <span class="icon icon-call"></span>+000-0000-0000
+                        <span class="icon icon-call"></span> 00965-9968-7577
                     </div>
                     <div class="time">
-                        7 Days a week from 0:00 am to 0:00 pm
+                        7 Days a week from 10:00 am to 6:00 pm
                     </div>
                 </div>
                 <!-- /box-info -->
@@ -493,7 +493,8 @@
                                 {% set collections = getCollections() %}
                                 {% if collections %}
                                     {% for collection in collections %}
-                                        <li class="dropdown megamenu">
+                                        <li class="dropdown
+                                            {% if app.request.attributes.get('_route') == 'collection_index' %}selected{% endif %} megamenu">
                                             <a href="{{ path('collection_index', {'collectionId': collection.collectionId}) }}">{{ collection.name }}</a>
                                             <div class="dropdown-menu">
                                                 <div class="row custom-layout-02">
@@ -515,7 +516,7 @@
                                                                         {% if category == c.category and category not in cc %}
 
                                                                             <div class="col-sm-4">
-                                                                                <a href="" class="title-underline">
+                                                                                <a href="{{ path('category_index',{'category': category.name}) }}" class="title-underline">
                                                                                     <span>{{ category.name }}</span>
                                                                                     <span class="megamenu_category-image hidden-xs">
                                                                                             <img class="img-responsive"
@@ -601,17 +602,20 @@
         </div>
     </div>
     <!-- /stuck nav -->
-    <div class="row">
-        <div class="col-md-12">
-            {% for label, messages in app.flashes(['warning', 'error', 'success', 'info', 'notice','primary']) %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ label }} alert-dismissable" id="messagesAlerte">
-                        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-                        {{ message }}
-                    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% for label, messages in app.flashes(['warning', 'error', 'success', 'info', 'notice','primary']) %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ label }}" id="messagesAlerte">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
+            </div>
         </div>
     </div>
+
 
 </header>
