@@ -23616,3 +23616,9 @@ bg color swatches
   background: #ffffff;
   color: #a58464;
 }
+
+@media (max-width: 420px) {
+  .pagination ul li {
+    margin: 4% 1% !important;
+  }
+}
