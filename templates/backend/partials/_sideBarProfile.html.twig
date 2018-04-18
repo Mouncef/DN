@@ -1,18 +1,18 @@
 <!-- This is only visible to small devices -->
 <div class="visible-xs hidden-sm hidden-md hidden-lg">
     <div class="media userlogged">
-        <img alt="" src="{{ asset('assets/backend/images/photos/loggeduser.png') }}" class="media-object">
+        <img alt="" src="{{ asset('assets/backend/images/photos/userprofile@2x.png') }}" class="media-object">
         <div class="media-body">
-            <h4>John Doe</h4>
-            <span>"Life is so..."</span>
+            <h4>{{ app.user.username }}</h4>
+            <span>"Back End "</span>
         </div>
     </div>
 
     <h5 class="sidebartitle actitle">Account</h5>
     <ul class="nav nav-pills nav-stacked nav-bracket mb30">
         <li><a href="#"><i class="fa fa-user"></i> <span>Profile</span></a></li>
-        <li><a href=""><i class="fa fa-cog"></i> <span>Account Settings</span></a></li>
-        <li><a href=""><i class="fa fa-question-circle"></i> <span>Help</span></a></li>
-        <li><a href="#"><i class="fa fa-sign-out"></i> <span>Sign Out</span></a></li>
+        {#<li><a href=""><i class="fa fa-cog"></i> <span>Account Settings</span></a></li>#}
+        {#<li><a href=""><i class="fa fa-question-circle"></i> <span>Help</span></a></li>#}
+        <li><a href="{{ path('logout') }}"><i class="fa fa-sign-out"></i> <span>Log Out</span></a></li>
     </ul>
 </div>

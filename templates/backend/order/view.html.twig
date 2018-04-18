@@ -89,8 +89,8 @@
 
                                 </td>
                                 <td style="vertical-align: middle">1</td>
-                                <td style="vertical-align: middle">${{ article.price|number_format(2, '.', ',') }}</td>
-                                <td style="vertical-align: middle">${{ article.price|number_format(2, '.', ',') }}</td>
+                                <td style="vertical-align: middle"> {{ article.price|number_format(2, '.', ' ') }} KWD</td>
+                                <td style="vertical-align: middle"> {{ article.price|number_format(2, '.', ' ') }} KWD</td>
                             </tr>
                             {% set totalProducts = total + article.price  %}
                             {% set total = totalProducts %}
@@ -103,15 +103,15 @@
                     <tbody>
                     <tr>
                         <td><strong>Sub Total :</strong></td>
-                        <td>${{ totalProducts|number_format(2, '.', ',') }}</td>
+                        <td> {{ totalProducts|number_format(2, '.', ' ') }} KWD</td>
                     </tr>
                     <tr>
                         <td><strong>TVA :</strong></td>
-                        <td>$00.00</td>
+                        <td> 00.00</td>
                     </tr>
                     <tr>
                         <td><strong>TOTAL :</strong></td>
-                        <td>${{ totalProducts|number_format(2, '.', ',') }}</td>
+                        <td> {{ totalProducts|number_format(2, '.', ' ') }} KWD</td>
                     </tr>
                     </tbody>
                 </table>

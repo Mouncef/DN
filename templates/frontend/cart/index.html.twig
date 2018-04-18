@@ -61,25 +61,13 @@
                                                             {{ article.description }}
                                                         </li>
                                                         <li class="visible-xs visible-sm">
-                                                            <div class="product-price subtotal">${{ article.price|number_format(2, '.', ',') }}</div>
+                                                            <div class="product-price subtotal"> {{ article.price|number_format(2, '.', ' ') }} KWD</div>
                                                         </li>
                                                     </ul>
                                                 </td>
-                                                {#<td>
-                                                    <div class="detach-quantity-desctope">
-                                                        <div class="input">
-                                                            <label>Qty:</label>
-                                                            <div class="style-2 input-counter">
-                                                                <span class="minus-btn"></span>
-                                                                <input type="text" value="1" size="5"/>
-                                                                <span class="plus-btn"></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>#}
                                                 <td>
                                                     <div class="product-price subtotal">
-                                                        ${{ article.price|number_format(2, '.', ',') }}
+                                                        {{ article.price|number_format(2, '.', ' ') }} KWD
                                                     </div>
                                                 </td>
                                                 <td>
@@ -112,70 +100,23 @@
                             </div>
                         </div>
                         <div class="col-lg-4 shopping-cart-box-aside">
-                            {#<div class="shopping-cart-box">
-                                <h4>ESTIMATE SHIPPING AND TAX</h4>
-                                <p>Enter your destination to get a shipping estimate.</p>
-                                <form>
-                                    <div class="form-group">
-                                        <label  for="selectCountry">Country<span class="color-base">*</span></label>
-                                        <select  id="selectCountry" class="form-control">
-                                            <option>Austria </option>
-                                            <option>Belgium</option>
-                                            <option>Cyprus </option>
-                                            <option>Croatia </option>
-                                            <option>Czech Republic </option>
-                                            <option>Denmark </option>
-                                            <option>Finland </option>
-                                            <option>France </option>
-                                            <option>Germany </option>
-                                            <option>Greece </option>
-                                            <option>Hungary </option>
-                                            <option>Ireland </option>
-                                            <option>France </option>
-                                            <option>Italy </option>
-                                            <option>Luxembourg </option>
-                                            <option>Netherlands </option>
-                                            <option>Poland </option>
-                                            <option>Portugal </option>
-                                            <option>Slovakia </option>
-                                            <option>Slovenia </option>
-                                            <option>Spain </option>
-                                            <option>United Kingdom </option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inputZip">Zip/Postal Code</label>
-                                        <input type="text" class="form-control" id="inputZip">
-                                    </div>
-                                    <a href="#" class="btn btn-top btn-border btn-full color-default">CALCULATE SHIPPING</a>
-                                </form>
-                            </div>
-                            <div class="shopping-cart-box">
-                                <h4>NOTE</h4>
-                                <p>
-                                    Add special instructions for your order...
-                                </p>
-                                <form>
-                                    <textarea class="form-control" rows="10"></textarea>
-                                </form>
-                            </div>#}
                             <div class="shopping-cart-box">
                                 <table class="table-total">
                                     <tbody>
                                     <tr>
                                         <th class="text-left">SUBTOTAL:</th>
-                                        <td class="text-right">${{ totalProducts|number_format(2, '.', ',') }}</td>
+                                        <td class="text-right"> {{ totalProducts|number_format(2, '.', ' ') }} KWD</td>
                                     </tr>
                                     <tr>
                                         <th class="text-left">SHIPPING &amp; HANDLING:</th>
-                                        <td class="text-right">$0 FREE</td>
+                                        <td class="text-right"> 0 KWD FREE</td>
                                     </tr>
                                     </tbody>
                                     <tfoot>
                                     <tr>
                                         <th>GRAND TOTAL:</th>
                                         <td>
-                                            ${{ totalProducts|number_format(2, '.', ',') }}
+                                             {{ totalProducts|number_format(2, '.', ' ') }} KWD
                                         </td>
                                     </tr>
                                     </tfoot>

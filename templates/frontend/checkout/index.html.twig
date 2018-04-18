@@ -136,9 +136,6 @@
                                                     <label for="inputCountry" class="col-sm-3 control-label">Country: <span>*</span></label>
                                                     <div class="col-sm-9">
                                                         {{ form_widget(form.country, {'id': 'inputCountry', 'attr': {'class': 'form-control'} }) }}
-                                                        {#<select id="inputCountry" class="form-control">
-                                                            <option>text</option>
-                                                        </select>#}
                                                     </div>
                                                 </div>
 
@@ -155,34 +152,6 @@
 
                                         </div>
                                         <hr>
-{#                                        <h2 class="title-checkout">SHIPPING METHODS</h2>
-                                        <table class="checkout-table-01">
-                                            <tbody>
-                                            <tr>
-                                                <td>Select Method:</td>
-                                                <td>
-                                                    <label class="radio">
-                                                        <input id="radio1" type="radio" name="radios">
-                                                        <span class="outer"><span class="inner"></span></span>
-                                                    </label>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Price:</td>
-                                                <td>
-                                                    <span class="color-base">$5.00</span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Method Title:</td>
-                                                <td>Fixed</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Carrier Title:</td>
-                                                <td>Flat Rate</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>#}
                                         <br/>
                                         <a class="btn icon-btn-right"
                                            href="#Review" data-toggle="tab"
@@ -219,8 +188,6 @@
                                         <a class="btn"
                                            href="#Shipping" data-toggle="tab"
                                            onclick="function changeLabelSecond() {
-//                                               span = `<span class='numeral'>1</span><span class='icon icon-check'>&nbsp;</span>`;
-//                                               $('#address .numeral-box').html(span);
                                                $('#payment').removeClass('active');
                                                $('#address').addClass('active');}
                                            changeLabelSecond()">
@@ -228,11 +195,7 @@
                                             <span class="icon icon-chevron_left"></span>
                                             Back
                                         </a>
-                                        <button class="btn" type="submit"
-                                           {#onclick="function submitAddress() {#}
-                                               {#$('#address_form').submit();}#}
-                                            {#submitAddress()"#}
-                                        >
+                                        <button class="btn" type="submit">
                                             ORDER
                                         </button>
                                     </div>
@@ -257,16 +220,16 @@
                                                         {% set totalProducts = total + article.price  %}
                                                         {% set total = totalProducts %}
                                                     {% endfor %}
-                                                    ${{ totalProducts|number_format(2, '.', ',') }}
+                                                    {{ totalProducts|number_format(2, '.', ' ') }} KWD
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>SHIPPING:</td>
-                                                <td>$0 FREE</td>
+                                                <td>0 KWD FREE</td>
                                             </tr>
                                             <tr>
                                                 <td>ORDER TOTAL:</td>
-                                                <td><strong class="color-base">${{ totalProducts|number_format(2, '.', ',') }}</strong></td>
+                                                <td><strong class="color-base">{{ totalProducts|number_format(2, '.', ' ') }} KWD</strong></td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -292,69 +255,15 @@
                                                     <p>
                                                         {{ article.description }}
                                                     </p>
-                                                    <div class="price">${{ article.price }}</div>
+                                                    <div class="price"> {{ article.price|number_format(2, '.', ' ') }} KWD</div>
                                                     {#<p>#}
                                                         {#QTY:1#}
                                                     {#</p>#}
                                                 </div>
                                             </div>
                                         {% endfor %}
-                                        {#<div class="item">#}
-                                            {#<div class="img">#}
-                                                {#<a href="#"><img src="images/product/product-80x100-1.jpg" alt=""></a>#}
-                                            {#</div>#}
-                                            {#<div class="description">#}
-                                                {#<a href="#" class="title">Daisy Street 3/4 Sleeve Pane</a>#}
-                                                {#<p>#}
-                                                    {#Black,  Xl#}
-                                                {#</p>#}
-                                                {#<div class="price">$45</div>#}
-                                                {#<p>#}
-                                                    {#QTY:1#}
-                                                {#</p>#}
-                                            {#</div>#}
-                                        {#</div>#}
-                                        {#<div class="item">#}
-                                            {#<div class="img">#}
-                                                {#<a href="#"><img src="images/product/product-80x100-2.jpg" alt=""></a>#}
-                                            {#</div>#}
-                                            {#<div class="description">#}
-                                                {#<a href="#" class="title">Daisy Street 3/4 Sleeve Pane</a>#}
-                                                {#<p>#}
-                                                    {#Black,  Xl#}
-                                                {#</p>#}
-                                                {#<div class="price">$45</div>#}
-                                                {#<p>#}
-                                                    {#QTY:1#}
-                                                {#</p>#}
-                                            {#</div>#}
-                                        {#</div>#}
                                     </div>
                                 </div>
-                                {#<div class="checkout-box">#}
-                                    {#<div class="button-edit">#}
-                                        {#<span class="icon icon-create"></span>#}
-                                    {#</div>#}
-                                    {#<h3>SHIP TO:</h3>#}
-                                    {#<div class="checkout-box-content">#}
-                                        {#<p>#}
-                                            {#My billing and shipping address are the same#}
-                                            {#Lorem ipsum dolor sit amet conse#}
-                                            {#Ctetur adipisicing elit, sed do#}
-                                            {#Wiusmod tempor incididunt ut labore#}
-                                            {#Et dolore magna aliqua.#}
-                                        {#</p>#}
-                                    {#</div>#}
-                                {#</div>#}
-                                {#<div class="checkout-box">#}
-                                    {#<div class="button-edit">#}
-                                        {#<span class="icon icon-create"></span>#}
-                                    {#</div>#}
-                                    {#<h3>SHIPPING METHOD:</h3>#}
-                                    {#<div class="checkout-box-content">#}
-                                        {#<p>m ipsum dolor sit amet conse</p>#}
-                                    {#</div>#}
-                                {#</div>#}
                             </div>
                         </div>
                     </div>

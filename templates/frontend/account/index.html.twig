@@ -104,7 +104,7 @@
                                                         {% set totalProducts = total + article.price  %}
                                                         {% set total = totalProducts %}
                                                     {% endfor %}
-                                                    ${{ totalProducts|number_format(2, '.', ',') }}
+                                                     {{ totalProducts|number_format(2, '.', ' ') }} KWD
                                                 </td>
                                                 <td>
                                                     <a href="{{ path('account_order_detail', {'id': order.orderId}) }}" class="btn btn-inversion">View Detail</a>

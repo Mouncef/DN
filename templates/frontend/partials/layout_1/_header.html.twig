@@ -104,6 +104,7 @@
         </div>
     </div>
     <!-- /mobile-header -->
+
     <!-- desktop-header -->
     <div class="desktop-header  header-06">
         <div class="container">
@@ -114,9 +115,6 @@
                         <li {% if app.request.attributes.get('_route') == 'FAQ' %}class="active"{% endif %}>
                             <a href="{{ path('FAQ') }}">FAQs</a>
                         </li>
-                        {#<li><a href="">Delivery</a></li>#}
-                        {#<li><a href="">Blog</a></li>#}
-                        {#<li><a href="">Contacts</a></li>#}
                     </ul>
                 </div>
                 <!-- /mini-menu -->
@@ -264,7 +262,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="price">
-                                                                    ${{ article.price|number_format(2, '.', ',') }}
+                                                                    {{ article.price|number_format(2, '.', ',') }} KWD
                                                                 </div>
                                                                 <div class="qty">
                                                                     <div class="qty-label">Qty:</div>
@@ -277,7 +275,7 @@
                                                             </div>
                                                             <div class="item-control">
                                                                 <div class="delete"><a href="{{ path('remove_article_from_cart', {'id' : article.articleId}) }}" class="icon icon-delete" title="Delete"></a></div>
-                                                                <div class="edit"><a href="#" class="icon icon-edit" title="Edit"></a></div>
+                                                                {#<div class="edit"><a href="#" class="icon icon-edit" title="Edit"></a></div>#}
                                                             </div>
                                                         </li>
                                                     {% endfor %}
@@ -288,7 +286,7 @@
                                                         <div class="pull-left">
                                                             <div class="cart-total">TOTAL:
                                                                 <span>
-                                                                    ${{ totalProducts|number_format(2, '.', ',') }}
+                                                                    {{ totalProducts|number_format(2, '.', ',') }} KWD
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -302,11 +300,6 @@
                                                 <div class="top-title">YOUR CART IS EMPTY</div>
                                                 <a href="#" class="icon icon-close cart-close"></a>
                                                 <h4 class="empty-cart-js hide">Your Cart is Empty</h4>
-                                                <div class="cart-bottom">
-                                                    <div class="pull-right">
-                                                        <a href="" class="btn icon-btn-left"><span class="icon icon-check_circle"></span>SHOP</a>
-                                                    </div>
-                                                </div>
                                             {% endif %}
 
                                         </div>
@@ -317,148 +310,6 @@
                         <!-- /cart -->
                     </div>
                 </div>
-                {#<div class="row">
-                    <div class="pull-left">
-                        <!-- logo -->
-                        <div class="logo">
-                            <a href=""><img src="{{ asset('assets/frontend/images/logo.png') }}" alt=""/></a>
-                        </div>
-                        <!-- /logo -->
-
-                    </div>
-                    <div class="pull-right" style="font-size: 1em ;">
-
-                        <!-- account -->
-                        <div class="account dropdown" style="padding: 3.5% 0 0 0;">
-                            <a class="dropdown-toggle" data-toggle="dropdown">
-                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                                    <span class="icon icon-person "></span>
-                                    <span class="dropdown-label hidden-sm hidden-xs" style="font-size: 18px; font-weight: 500;">My Account</span>
-                                {% else %}
-                                    <div style="margin-top: 4%">
-                                        <i class="fa fa-user-plus fa-lg" aria-hidden="true" style="color: #000;"></i>
-                                        <span class="dropdown-label hidden-sm hidden-xs" style="font-size: 18px; font-weight: 500;">New Account</span>
-                                    </div>
-
-                                {% endif %}
-
-                            </a>
-                            <ul class="dropdown-menu">
-                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                                    <li><a href=""><span class="icon icon-person"></span>My Account</a></li>
-                                    <li><a href=""><span class="icon icon-favorite_border"></span>My Wishlist</a></li>
-                                    <li><a href=""><span class="fa fa-balance-scale"></span>Compare</a></li>
-                                    <li><a href=""><span class="icon icon-check"></span>Checkout</a></li>
-                                    {% if is_granted('ROLE_MANAGER') %}
-                                        <li><a href="{{ path('admin') }}" target="_blank"><span class="icon icon-settings"></span>Administration</a></li>
-                                    {% endif %}
-                                    <li><a href="{{ path('logout') }}" ><span class="icon icon-power_settings_new"></span>Log Out</a></li>
-
-
-                                {% else %}
-                                    <li><a href="#" data-toggle="modal" data-target="#modalLoginForm"><span class="icon icon-lock_outline"></span>Log In</a></li>
-                                    <li><a href="{{ path('register') }}"><span class="icon icon-person_add"></span>Create an account</a></li>
-                                {% endif %}
-
-                            </ul>
-                        </div>
-                        <!-- /account -->
-                        <!-- cart -->
-                        <div class="main-parent-cart">
-                            <div class="cart">
-                                <div class="dropdown">
-                                    <a class="dropdown-toggle">
-                                        <span class="icon icon-shopping_basket"></span>
-                                        <span class="badge badge-cart">
-                                        {% set cart = getUserCart() %}
-                                            {% if cart %}
-                                                {{ cart.articles|length }}
-                                            {% else %}
-                                                0
-                                            {% endif %}
-                                    </span>
-                                        <div class="dropdown-label hidden-sm hidden-xs">YOUR BAG</div>
-                                    </a>
-                                    <div class="dropdown-menu slide-from-top">
-                                        <div class="container">
-                                            {% set cart = getUserCart() %}
-                                            {% if cart %}
-                                                <div class="top-title">RECENTLY ADDED ITEM(S)</div>
-                                                <a href="#" class="icon icon-close cart-close"></a>
-                                                <ul>
-                                                    {% set total = 0 %}
-                                                    {% set totalProducts = 0 %}
-                                                    {% for article in cart.articles %}
-                                                        {% set totalProducts = total + article.price  %}
-                                                        {% set total = totalProducts %}
-                                                        <li class="item">
-                                                            <div class="img">
-                                                                <a href="#"><img src="{{ asset('uploads/Articles/images/'~article.principalCover) }}" alt="{{ article.name }}"/></a>
-                                                            </div>
-                                                            <div class="info">
-                                                                <div class="title-col">
-                                                                    <h2 class="title">
-                                                                        <a href="#">{{ article.name }}</a>
-                                                                    </h2>
-                                                                    <div class="details">
-                                                                        {{ article.description }}
-                                                                    </div>
-                                                                </div>
-                                                                <div class="price">
-                                                                    ${{ article.price|number_format(2, '.', ',') }}
-                                                                </div>
-                                                                <div class="qty">
-                                                                    <div class="qty-label">Qty:</div>
-                                                                    <div class="style-2 input-counter">
-                                                                        <span class="minus-btn"></span>
-                                                                        <input type="text" value="1" size="5"/>
-                                                                        <span class="plus-btn"></span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="item-control">
-                                                                <div class="delete"><a href="{{ path('remove_article_from_cart', {'id' : article.articleId}) }}" class="icon icon-delete" title="Delete"></a></div>
-                                                                <div class="edit"><a href="#" class="icon icon-edit" title="Edit"></a></div>
-                                                            </div>
-                                                        </li>
-                                                    {% endfor %}
-                                                </ul>
-                                                <h4 class="empty-cart-js hide">Your Cart is Empty</h4>
-                                                <div class="cart-bottom">
-                                                    <div class="pull-right">
-                                                        <div class="pull-left">
-                                                            <div class="cart-total">TOTAL:
-                                                                <span>
-                                                                    ${{ totalProducts|number_format(2, '.', ',') }}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <a href="" class="btn icon-btn-left"><span class="icon icon-check_circle"></span>CHECKOUT</a>
-                                                    </div>
-                                                    <div class="pull-left">
-                                                        <a href="{{ path('cart_index') }}" class="btn icon-btn-left"><span class="icon icon-shopping_basket"></span>VIEW CART</a>
-                                                    </div>
-                                                </div>
-                                            {% else %}
-                                                <div class="top-title">YOUR CART IS EMPTY</div>
-                                                <a href="#" class="icon icon-close cart-close"></a>
-                                                <h4 class="empty-cart-js hide">Your Cart is Empty</h4>
-                                                <div class="cart-bottom">
-                                                    <div class="pull-right">
-                                                        <a href="" class="btn icon-btn-left"><span class="icon icon-check_circle"></span>SHOP</a>
-                                                    </div>
-                                                </div>
-                                            {% endif %}
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /cart -->
-                    </div>
-                </div>#}
-
             </div>
         </div>
         <div class="top-line">
@@ -538,7 +389,7 @@
                                                         {% endif %}
                                                     </div>
                                                     <div class="col-sm-5">
-                                                        <a href="" class="promo-box zoom-in design-13">
+                                                        <a href="{{ path('collection_index',{'collectionId': collection.collectionId}) }}" class="promo-box zoom-in design-13">
                                                             <img src="{{ asset('uploads/Collections/images/'~ collection.cover) }}" alt="{{ collection.name }}">
                                                             <div class="description">
                                                                 <div class="block-table">
@@ -590,6 +441,7 @@
         </div>
     </div>
     <!-- /desktop-header -->
+
     <!-- stuck nav -->
     <div class="stuck-nav">
         <div class="container">

@@ -5,7 +5,7 @@
             <div class="carousel-products-mobile subcategory-listing">
                 {% for collection in collections %}
                     <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                    <a href="" class="subcategory-item zoom-in">
+                    <a href="{{ path('collection_index', {'collectionId': collection.collectionId }) }}" class="subcategory-item zoom-in">
                                         <span>
                                         <img src="{{ asset('uploads/Collections/images/'~collection.cover) }}" alt="{{ collection.name }}">
                                         </span>

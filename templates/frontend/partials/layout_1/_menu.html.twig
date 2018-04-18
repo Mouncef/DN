@@ -4,7 +4,7 @@
         {% set categories = getCategories() %}
         {% if categories %}
             {% for category in categories %}
-                <li><a href="">{{ category.name }}</a></li>
+                <li><a href="{{ path('category_index',{'category': category.name}) }}">{{ category.name }}</a></li>
             {% endfor %}
         {% endif %}
         <li><a href="{{ path('about_index') }}">Our Story</a></li>

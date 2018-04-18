@@ -80,7 +80,7 @@
                                                                         <img src="{{ asset('uploads/Articles/images/'~article.principalCover) }}" class="img-responsive"/>
                                                                         <div class="caption" style="text-align: center">
                                                                             <span class="label label-info">{{ article.name }}</span>
-                                                                            <span class="label label-info">{{ article.price }} $</span>
+                                                                            <span class="label label-info">{{ article.price|number_format(2, '.', ' ') }} KWD</span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -104,7 +104,7 @@
                                                 </a>
                                             </td>
                                             <td class="center">{{ order.createdAt|date("jS F Y \\a\\t g:ia") }}</td> {#date('d F Y  H:i')#}
-                                            <td class="center">{{ totalProducts|number_format(2, '.', ',') }} $</td>
+                                            <td class="center">{{ totalProducts|number_format(2, '.', ' ') }} KWD</td>
                                             <td class="center">{{ order.cart.user.name }} {{ order.cart.user.lastName }}</td>
                                             <td class="center">
                                                 <a class="label label-success" data-toggle="modal" data-target="#articlesModal-{{ order.orderId }}">

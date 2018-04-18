@@ -13,13 +13,7 @@
 {% block pageHeader %}
     <div class="pageheader">
         <h2><i class="fa fa-home"></i> Clients <span>management & list...</span></h2>
-        <div class="breadcrumb-wrapper">
-            {#<span class="label">Add a new article here : </span>
-            <ol class="breadcrumb">
-                <li><a href="{{ path('article_new') }}"><i class="fa fa-plus-square"></i></a></li>
-                <li class="active">List Articles</li>
-            </ol>#}
-        </div>
+        <div class="breadcrumb-wrapper"></div>
     </div>
 {% endblock %}
 
@@ -96,33 +90,15 @@
                                                                                     Number of articles :
                                                                                 </li>
                                                                                 <li class="list-group-item">
-                                                                                    <span class="badge badge-success">${{ totalProducts|number_format(2, '.', ',') }}</span>
+                                                                                    <span class="badge badge-success"> {{ totalProducts|number_format(2, '.', ' ') }} KWD</span>
                                                                                     Total :
                                                                                 </li>
                                                                             </ul>
-                                                                            {#<table class="table table-striped table-condensed">
-                                                                                <thead>
-                                                                                <tr>
-                                                                                    <td>#</td>
-                                                                                    <td>Checked at</td>
-                                                                                    <td>Total</td>
-                                                                                </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                    <tr>
-                                                                                        <td>{{ cart.cartId }}</td>
-                                                                                        <td>{{ cart.checkedAt|date("jS F Y \\a\\t g:ia") }}</td>
-                                                                                        <td>${{ totalProducts|number_format(2, '.', ',') }}</td>
-                                                                                    </tr>
-                                                                                </tbody>
-                                                                            </table>#}
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             {% endfor %}
-
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>

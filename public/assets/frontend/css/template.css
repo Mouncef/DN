@@ -8660,7 +8660,7 @@ body {
   .product-listing:not(.row-view-one):not(.row-view) .col-lg-one-fourth,
   .product-listing:not(.row-view-one):not(.row-view) .col-lg-one-six {
     width: 100%;
-    max-width: 250px;
+    /*max-width: 250px;*/
     display: block;
     margin-left: auto;
     margin-right: auto;
