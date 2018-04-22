@@ -5335,7 +5335,8 @@ Content
 
 .promo-box > img {
   width: 100%;
-  height: auto;
+  height: 300px;
+  object-fit: cover;
 }
 
 .promo-box .description.right-offset {

@@ -166,7 +166,7 @@
                                                                         </div>
                                                                         <h1 class="title">{{ article.name }}</h1>
                                                                         <div class="price">
-                                                                            ${{ article.price|number_format(2, '.', ',') }}
+                                                                            {{ article.price|number_format(2, '.', ' ') }} KWD
                                                                         </div>
                                                                         <div class="description hidden-xs">
                                                                             <div class="text">
@@ -310,7 +310,7 @@
                                                         color: #5fd179;
                                                         font-weight: 500;
                                                         letter-spacing: inherit;">
-                                        ${{ article.price|number_format(2, '.', ',') }}</span>
+                                         {{ article.price|number_format(2, '.', ' ') }} KWD</span>
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-6"
@@ -353,7 +353,7 @@
                                                                                 {% set totalProducts = total + article.price %}
                                                                                 {% set total = totalProducts %}
                                                                             {% endfor %}
-                                                                            ${{ totalProducts|number_format(2, '.', ',') }}
+                                                                             {{ totalProducts|number_format(2, '.', ' ') }} KWD
                                         </span>
                                                                     </div>
                                                                     <div class="total" style="  font-size: 20px;
@@ -369,7 +369,7 @@
                                                         font-weight: 500;
                                                         letter-spacing: inherit;">
                                             {% set newTotal = totalProducts + article.price %}
-                                                                            ${{ newTotal|number_format(2, '.', ',') }}
+                                                                             {{ newTotal|number_format(2, '.', ',') }} KWD
                                                                             {#$135#}
                                         </span>
                                                                     </div>
@@ -401,7 +401,7 @@
                                                                     margin-top: 24px;
                                                                     text-align: center;">
                                                                         Total products: <span
-                                                                                style="color: #5fd179;">${{ article.price|number_format(2, '.', ',') }}</span>
+                                                                                style="color: #5fd179;"> {{ article.price|number_format(2, '.', ' ') }} KWD</span>
                                                                     </div>
                                                                     <div class="total" style="  font-size: 20px;
                                                             color: #333333;
@@ -414,7 +414,7 @@
                                                         color: #5fd179;
                                                         font-weight: 500;
                                                         letter-spacing: inherit;">
-                                        ${{ article.price|number_format(2, '.', ',') }}</span>
+                                         {{ article.price|number_format(2, '.', ' ') }} KWD</span>
                                                                     </div>
                                                                 {% endif %}
 

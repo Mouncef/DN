@@ -1,11 +1,11 @@
-<div class="container-fluid offset-0">
+<div class="container offset-0">
     <div class="row custom-layout indent-col-none">
         {% if categories %}
             {% for category in categories %}
                 {% if category.categoryStyle == 'CoverWithCaption' %}
-                    <div class="col-xs-6 col-sm-6 col-md-4">
+                    <div class="col-xs-6 col-sm-6 col-md-4" style="min-height: 250px; padding: 2%;">
                         <a href="{{ path('category_index', {'category': category.name}) }}" class="promo-box zoom-in design-default">
-                            <img src="{{ asset('uploads/Categories/images/'~category.cover) }}" alt="{{ category.name }}">
+                            <img src="{{ asset('uploads/Categories/images/'~category.cover) }}" alt="{{ category.name }}" class="img-responsive">
                             <div class="description">
                                 <div class="block-table">
                                     <div class="block-table-cell">
@@ -20,9 +20,9 @@
                         </a>
                     </div>
                 {% else %}
-                    <div class="col-xs-6 col-sm-6 col-md-4">
+                    <div class="col-xs-6 col-sm-6 col-md-4"  style="min-height: 250px; padding: 2%;">
                         <a href="{{ path('category_index', {'category': category.name}) }}" class="promo-box zoom-in design-default">
-                            <img src="{{ asset('uploads/Categories/images/'~category.cover) }}" alt="{{ category.name }}">
+                            <img src="{{ asset('uploads/Categories/images/'~category.cover) }}" alt="{{ category.name }}" class="img-responsive">
                             <div class="description">
                                 <div class="block-table">
                                     <div class="block-table-cell"></div>
