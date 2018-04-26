@@ -112,5 +112,21 @@ class Cart
         $this->checkedAt = $checkedAt;
     }
 
+    public function getTotal()
+    {
 
+        $total=0;$totalProducts = 0;
+
+        foreach ($this->articles as $article){
+            /** @var Article $article */
+            $totalProducts = $total + $article->getPrice();
+            $total = $totalProducts;
+        }
+
+        return number_format($totalProducts, '2','.','');
+    }
+
+    public function getTvaPrice($tva){
+        return round($this->getTotal() * $tva * 100)/100;
+    }
 }

@@ -1,0 +1,73 @@
+{% extends 'frontend/index.html.twig' %}
+
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {% block loader %}
+        {% include 'frontend/partials/layout_1/_loader.html.twig' %}
+    {% endblock %}
+
+    {% block menu %}
+        {% include 'frontend/partials/layout_1/_menu.html.twig' %}
+    {% endblock %}
+
+    {% block header %}
+        {% include 'frontend/partials/layout_1/_header.html.twig' %}
+    {% endblock %}
+
+    {% block breadcrumb %}
+        <div class="breadcrumb">
+            <div class="container">
+                <ul>
+                    <li><a href="{{ path('homepage') }}">Home</a></li>
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block content %}
+        <!-- Content -->
+        <div id="pageContent">
+
+            {% block slider %}
+                <div class="container offset-80">
+                    <div class="on-duty-box">
+                        {#<img src="{{ asset('assets/frontend/images/empty-search-icon.png') }}" alt="">#}
+                        <h1 class="block-title large">Congratulations<br>Your payement passed succesfully.</h1>
+                        <div class="description">
+                            Delivery is on<span class="color-base"> 48 Hours</span>
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
+
+            {% block promo %}
+                {#{% include 'frontend/partials/layout_1/_promo.html.twig' %}#}
+            {% endblock %}
+
+            {% block collections %}
+                {#{% include 'frontend/partials/layout_1/_collections.html.twig' %}#}
+            {% endblock %}
+
+            {% block features %}
+                {#{% include 'frontend/partials/layout_1/_features.html.twig' %}#}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block footer %}
+        {% include 'frontend/partials/layout_1/_footer.html.twig' %}
+    {% endblock %}
+
+    {% block modal %}
+        {% include 'frontend/partials/layout_1/_modal.html.twig' %}
+    {% endblock %}
+
+
+    {% block javascripts %}
+        {% include 'frontend/partials/layout_1/_javascript.html.twig' %}
+    {% endblock %}
+
+{% endblock %}

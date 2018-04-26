@@ -14,6 +14,8 @@
     {% endblock %}
 
     {% block breadcrumb %}
+        {#<script src="https://www.paypalobjects.com/api/checkout.js"></script>#}
+
         <div class="breadcrumb">
             <div class="container">
                 <ul>
@@ -165,6 +167,7 @@
                                         <h2 class="title-checkout">PAYMENT</h2>
                                         <div class="checkout-box-01">
                                             <h6>Payment Information</h6>
+                                            {#<div id="paypal-button"></div>#}
                                             {#Check / Money order
                                             <label class="radio">
                                                 <input id="radio2" type="radio" name="radios">
@@ -267,6 +270,106 @@
                             </div>
                         </div>
                     </div>
+                    {#<script>
+
+                        {% set totalUs = totalProducts * 3.332001 %}
+                        var total = '{{ totalUs|number_format(2,'.') }}';
+
+                        /*1 Kuwaiti dinar =
+                            3.332001 U.S. dollars*/
+
+                        paypal.Button.render({
+                            env: 'sandbox', // sandbox | production
+
+                            locale: 'en_US',
+
+                            client: {
+                                sandbox:    'ATgNGAD9Fgitd1sAwSCKx77kJ_ZJJkjYCIpSEMVOTEe8nhPnyh1fhd1wmc3qwlmyVPqaO4hfAgnahIET',
+                                production: 'AYTvNHk-N3R4PyCO4RicIQK4hvDEQv5X7Jtt1J0RpJVUtGD76Ahf8OxNI4o2oUBjoqzA_KKFSh5nQ1Ic'
+                            },
+
+                            commit: true, // Show a 'Pay Now' button
+
+                            style: {
+                                label: '',
+                                fundingicons: true, // optional
+                                branding: true, // optional
+                                size:  'responsive', // small | medium | large | responsive
+                                shape: 'pill',   // pill | rect
+                                color: 'gold'   // gold | blue | silve | black
+                            },
+
+                            payment: function(data, actions) {
+                                console.log('paiement');
+                                console.log(total);
+                                return actions.payment.create({
+                                    payment: {
+                                        transactions: [
+                                            {
+                                                amount: { total: total, currency: 'USD' }
+                                            }
+                                        ]
+                                    }
+                                });
+                            },
+
+                            onAuthorize: function(data, actions) {
+                                console.log('authorize');
+                                return actions.payment.get().then(function(data) {
+
+                                    // Display the payment details and a confirmation button
+
+                                    var shipping = data.payer.payer_info.shipping_address;
+
+                                    document.querySelector('#recipient').innerText = shipping.recipient_name;
+                                    document.querySelector('#line1').innerText     = shipping.line1;
+                                    document.querySelector('#city').innerText      = shipping.city;
+                                    document.querySelector('#state').innerText     = shipping.state;
+                                    document.querySelector('#zip').innerText       = shipping.postal_code;
+                                    document.querySelector('#country').innerText   = shipping.country_code;
+
+                                    document.querySelector('#paypal-button-container').style.display = 'none';
+                                    document.querySelector('#confirm').style.display = 'block';
+
+                                    // Listen for click on confirm button
+
+                                    document.querySelector('#confirmButton').addEventListener('click', function() {
+
+                                        // Disable the button and show a loading message
+
+                                        document.querySelector('#confirm').innerText = 'Loading...';
+                                        document.querySelector('#confirm').disabled = true;
+
+                                        // Execute the payment
+
+                                        return actions.payment.execute().then(function() {
+
+                                            // Show a thank-you note
+
+                                            document.querySelector('#thanksname').innerText = shipping.recipient_name;
+
+                                            document.querySelector('#confirm').style.display = 'none';
+                                            document.querySelector('#thanks').style.display = 'block';
+                                        });
+                                    });
+                                });
+                            },
+
+                            onCancel: function(data, actions) {
+                                console.log('cancel');
+                                /*
+                                 * Buyer cancelled the payment
+                                 */
+                            },
+
+                            onError: function(err) {
+                                console.log('error');
+                                /*
+                                 * An error occurred during the transaction
+                                 */
+                            }
+                        }, '#paypal-button');
+                    </script>#}
                 {% else %}
                     No cart exist !
                 {% endif %}

@@ -1,4 +1,7 @@
 {
+    "clue/stream-filter": {
+        "version": "v1.4.0"
+    },
     "composer/ca-bundle": {
         "version": "1.1.0"
     },
@@ -62,8 +65,38 @@
     "egulias/email-validator": {
         "version": "2.1.3"
     },
+    "guzzlehttp/guzzle": {
+        "version": "6.3.3"
+    },
+    "guzzlehttp/promises": {
+        "version": "v1.3.1"
+    },
+    "guzzlehttp/psr7": {
+        "version": "1.4.2"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
+    },
+    "league/uri": {
+        "version": "5.3.0"
+    },
+    "league/uri-components": {
+        "version": "1.8.0"
+    },
+    "league/uri-hostname-parser": {
+        "version": "1.1.1"
+    },
+    "league/uri-interfaces": {
+        "version": "1.0.0"
+    },
+    "league/uri-manipulations": {
+        "version": "1.5.0"
+    },
+    "league/uri-parser": {
+        "version": "1.4.0"
+    },
+    "league/uri-schemes": {
+        "version": "1.2.0"
     },
     "ocramius/package-versions": {
         "version": "1.2.0"
@@ -74,11 +107,38 @@
     "pagerfanta/pagerfanta": {
         "version": "v1.0.5"
     },
+    "paypal/rest-api-sdk-php": {
+        "version": "1.13.0"
+    },
+    "payum/iso4217": {
+        "version": "1.0.1"
+    },
+    "payum/offline": {
+        "version": "1.5.0"
+    },
+    "php-http/guzzle6-adapter": {
+        "version": "v1.1.1"
+    },
+    "php-http/httplug": {
+        "version": "v1.1.0"
+    },
+    "php-http/message": {
+        "version": "1.6.0"
+    },
+    "php-http/message-factory": {
+        "version": "v1.0.2"
+    },
+    "php-http/promise": {
+        "version": "v1.0.0"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
     "psr/container": {
         "version": "1.0.0"
+    },
+    "psr/http-message": {
+        "version": "1.0.1"
     },
     "psr/log": {
         "version": "1.0.2"
@@ -103,6 +163,9 @@
             "version": "4.0",
             "ref": "e65a105bf4cd5b1b79012ba029954927f05922e8"
         }
+    },
+    "stripe/stripe-php": {
+        "version": "v3.23.0"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.0.2"
@@ -244,6 +307,9 @@
             "version": "3.3",
             "ref": "34eb245ce4194e7ae713558084180e2c532e7afd"
         }
+    },
+    "symfony/security-csrf": {
+        "version": "v4.0.8"
     },
     "symfony/stopwatch": {
         "version": "v4.0.3"

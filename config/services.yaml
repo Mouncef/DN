@@ -11,6 +11,8 @@ parameters:
     article_cover_fourth_directory: '%kernel.project_dir%/public/uploads/Articles/images/Fourth'
     collection_cover_directory: '%kernel.project_dir%/public/uploads/Collections/images'
 
+
+
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -49,6 +51,8 @@ services:
       arguments:
         $pdf:  '@white_october.tcpdf'
         $templating: '@Twig_Environment'
+
+    App\Service\PaypalService:
 
     App\Twig\:
       resource: '../src/Twig'

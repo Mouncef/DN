@@ -23,7 +23,7 @@
                                 <a href="">{{ newArticle.name }}</a>
                             </h2>
                             <div class="price view">
-                                {{ newArticle.price|number_format(2, '.', ',') }}
+                                {{ newArticle.price|number_format(2, '.', ' ') }} KWD
                             </div>
                             <div class="description">
                                 {{ newArticle.description }}
@@ -53,7 +53,7 @@
                                     </a>
                                     <ul class="product_inside_info_link">
                                         <li>
-                                            <a href="#" data-toggle="modal" data-target="#ModalquickView" class="quick-view">
+                                            <a href="#" data-toggle="modal" data-target="#ModalquickView-{{ newArticle.articleId }}" class="quick-view">
                                                 <span class="icon icon-visibility"></span>
                                             </a>
                                         </li>
