@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Address;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -18,18 +19,24 @@ class AddressType extends AbstractType
                 'label' =>  'Address',
                 'required'  =>  true
             ])
-            ->add('city', TextType::class, [
-                'label' =>  'City',
-                'required'  =>  true
-            ])
+//            ->add('city', ChoiceType::class, [
+//                'label' =>  'City',
+//                'choices'   =>  array(),
+//                'required'  =>  true,
+//                'multiple'  => false,
+//                'choice_value'  =>  'value'
+//            ])
             ->add('zipCode', TextType::class,[
                 'label' =>  'Zip Code',
                 'required'  =>  true
             ])
-            ->add('country', TextType::class, [
-                'label' =>  'Country',
-                'required'  =>  true
-            ])
+//            ->add('country', ChoiceType::class, [
+//                'label' =>  'Country',
+//                'choices'   =>  array(),
+//                'required'  =>  true,
+//                'multiple'  => false,
+//                'choice_value'  =>  'value'
+//            ])
             ->add('phone', TextType::class, [
                 'label' =>  'Phone Number',
                 'required'  =>  true

@@ -129,4 +129,12 @@ class Cart
     public function getTvaPrice($tva){
         return round($this->getTotal() * $tva * 100)/100;
     }
+
+    public function getUsTotal(){
+
+        $total = $this->getTotal();
+        $usTotal = $total * 3.32215;
+
+        return number_format($usTotal, '2', '.', '');
+    }
 }

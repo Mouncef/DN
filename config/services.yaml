@@ -52,8 +52,6 @@ services:
         $pdf:  '@white_october.tcpdf'
         $templating: '@Twig_Environment'
 
-    App\Service\PaypalService:
-
     App\Twig\:
       resource: '../src/Twig'
       tags: ['twig.extension']

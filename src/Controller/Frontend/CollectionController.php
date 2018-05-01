@@ -28,6 +28,7 @@ class CollectionController extends Controller
             ->getPaginatedArticles($page, $selectedCollection->getCollectionId(), $nbArticles)
         ;
 
+
         return $this->render('frontend/collection/index.html.twig', [
             'collection'  =>  $selectedCollection,
             'articles' => $articles,

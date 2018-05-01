@@ -27,8 +27,7 @@ class Address
     private $adressText;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="city", type="string", length=150)
+     * @ORM\Column(name="city", type="string", length=150, nullable=true)
      */
     private $city;
 
@@ -39,8 +38,7 @@ class Address
     private $zipCode;
 
     /**
-     * @Assert\NotBlank()
-     * @ORM\Column(name="country", type="string", length=150)
+     * @ORM\Column(name="country", type="string", length=150, nullable=true)
      */
     private $country;
 

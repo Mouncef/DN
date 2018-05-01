@@ -147,6 +147,11 @@ class Article
         return $this->price;
     }
 
+    public function getUsPrice()
+    {
+        return number_format($this->price* 3.32215,'2','.','');
+    }
+
 
     public function setPrice($price)
     {

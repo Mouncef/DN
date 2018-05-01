@@ -16,6 +16,25 @@
     {% block breadcrumb %}
         {#<script src="https://www.paypalobjects.com/api/checkout.js"></script>#}
 
+        <style>
+            .icons-set span {
+                font-size: 73px;
+                line-height: 100px;
+            }
+
+            .icons-set span:hover {
+                color: #2c2c2c;
+            }
+
+            .payment-list ul li a {
+                background: transparent;
+                display: inline; /* table-cell */
+            }
+            .payment-list ul li .paypal:hover, .payment-list ul li .braintree:hover{
+                cursor: pointer;
+            }
+        </style>
+        <script src="{{ asset('assets/frontend/js/money.js') }}"></script>
         <div class="breadcrumb">
             <div class="container">
                 <ul>
@@ -63,19 +82,19 @@
                                     </li>
                                 </ul>
                                 <!-- Tab panes -->
-                                {{ form_start(form) }}
+                                {{ form_start(form, {'attr': {'id': 'address_form'}}) }}
                                     {% if form_errors(form.adressText) is not empty %}
                                         <div class="alert alert-danger alert-dismissible" role="alert">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                             Address : {{ form_errors(form.adressText) }}
                                         </div>
                                     {% endif %}
-                                    {% if form_errors(form.city) is not empty %}
+                                    {#{% if form_errors(form.city) is not empty %}
                                         <div class="alert alert-danger alert-dismissible" role="alert">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                             City : {{ form_errors(form.city) }}
                                         </div>
-                                    {% endif %}
+                                    {% endif %}#}
                                     {% if form_errors(form.zipCode) is not empty %}
                                         <div class="alert alert-danger alert-dismissible" role="alert">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -88,12 +107,15 @@
                                             Phone Number : {{ form_errors(form.phone) }}
                                         </div>
                                     {% endif %}
-                                    {% if form_errors(form.country) is not empty %}
+                                    {#{% if form_errors(form.country) is not empty %}
                                         <div class="alert alert-danger alert-dismissible" role="alert">
                                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                             Country : {{ form_errors(form.country) }}
                                         </div>
-                                    {% endif %}
+                                    {% endif %}#}
+
+                                    <script type= "text/javascript" src = "{{ asset('assets/frontend/js/countries.js') }}"></script>
+
                                     <div class="tab-content checkout-tab-content">
                                     <div class="tab-pane active" id="Shipping">
                                         <h2 class="title-checkout">SHIPPING ADDRESS</h2>
@@ -121,13 +143,6 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="inputCity" class="col-sm-3 control-label">City: <span>*</span></label>
-                                                    <div class="col-sm-9">
-                                                        {{ form_widget(form.city, {'id': 'inputCity', 'attr': {'class': 'form-control'} }) }}
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
                                                     <label for="inputZip" class="col-sm-3 control-label">Zip/Postal Code: <span>*</span></label>
                                                     <div class="col-sm-9">
                                                         {{ form_widget(form.zipCode, {'id': 'inputZip', 'attr': {'class': 'form-control'} }) }}
@@ -135,9 +150,18 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="inputCountry" class="col-sm-3 control-label">Country: <span>*</span></label>
+                                                    <label for="address[country]" class="col-sm-3 control-label">Country: <span>*</span></label>
                                                     <div class="col-sm-9">
-                                                        {{ form_widget(form.country, {'id': 'inputCountry', 'attr': {'class': 'form-control'} }) }}
+                                                        <select id="address[country]" name="country" class="form-control"></select>
+                                                        {#{{ form_widget(form.country, {'id': 'address[country]', 'attr': {'class': 'form-control'} }) }}#}
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="address[city]" class="col-sm-3 control-label">City: <span>*</span></label>
+                                                    <div class="col-sm-9">
+                                                        <select id="address[city]" name="city" class="form-control"></select>
+                                                        {#{{ form_widget(form.city, {'id': 'address[city]', 'attr': {'class': 'form-control'} }) }}#}
                                                     </div>
                                                 </div>
 
@@ -157,7 +181,13 @@
                                         <br/>
                                         <a class="btn icon-btn-right"
                                            href="#Review" data-toggle="tab"
-                                           onclick="function changeLabel() {span = `<span class='numeral'>1</span><span class='icon icon-check'>&nbsp;</span>`;$('#address .numeral-box').html(span); $('#address').removeClass('active'); $('#payment').addClass('active');}
+                                           onclick="
+                                           function changeLabel() {
+                                               span = `<span class='numeral'>1</span><span class='icon icon-check'>&nbsp;</span>`;
+                                               $('#address .numeral-box').html(span);
+                                               $('#address').removeClass('active');
+                                               $('#payment').addClass('active');
+                                               $('html, body').animate({scrollTop : 250},1000);}
                                         changeLabel()">
                                             NEXT
                                             <span class="icon icon-chevron_right"></span>
@@ -167,38 +197,134 @@
                                         <h2 class="title-checkout">PAYMENT</h2>
                                         <div class="checkout-box-01">
                                             <h6>Payment Information</h6>
-                                            {#<div id="paypal-button"></div>#}
-                                            {#Check / Money order
-                                            <label class="radio">
-                                                <input id="radio2" type="radio" name="radios">
-                                                <span class="outer"><span class="inner"></span></span>
-                                                My billing and shipping address are the same
-                                            </label>
-                                            Lorem ipsum dolor sit amet conse <br>
-                                            Ctetur adipisicing elit, sed do <br>
-                                            Wiusmod tempor incididunt ut labore <br>
-                                            Et dolore magna aliqua.#}
+
+                                            <div class="payment-list">
+                                                <ul style="text-align: center;" id="payements-list">
+                                                    <li>
+                                                        <label class="radio">
+                                                            <input id="radio1" type="radio" name="radios" value="paypal">
+                                                            <span class="outer"><span class="inner"></span></span>
+                                                            <span class="fa fa-cc-paypal fa-4x"></span>
+
+                                                        </label>
+                                                    </li>
+                                                    <li>
+                                                        <label class="radio">
+                                                            <input id="radio2" type="radio" name="radios" value="discover">
+                                                            <span class="outer"><span class="inner"></span></span>
+                                                            <span class="fa fa-cc-discover fa-4x"></span>
+
+                                                        </label>
+                                                    </li>
+                                                    <li>
+
+                                                        <label class="radio">
+                                                            <input id="radio3" type="radio" name="radios" value="jcb">
+                                                            <span class="outer"><span class="inner"></span></span>
+                                                            <span class="fa fa-cc-jcb  fa-4x"></span>
+
+                                                        </label>
+                                                    </li>
+                                                    <li>
+                                                        <label class="radio">
+                                                            <input id="radio4" type="radio" name="radios" value="amex">
+                                                            <span class="outer"><span class="inner"></span></span>
+                                                            <span class="fa fa-cc-amex  fa-4x"></span>
+
+                                                        </label>
+                                                    </li>
+                                                    <li>
+                                                        <label class="radio">
+                                                            <input id="radio5" type="radio" name="radios" value="mastercard">
+                                                            <span class="outer"><span class="inner"></span></span>
+                                                            <span class="fa fa-cc-mastercard  fa-4x"></span>
+
+                                                        </label>
+
+                                                    </li>
+                                                    <li>
+                                                        <label class="radio">
+                                                            <input id="radio6" type="radio" name="radios" value="visa">
+                                                            <span class="outer"><span class="inner"></span></span>
+                                                            <span class="fa fa-cc-visa  fa-4x"></span>
+
+                                                        </label>
+                                                    </li>
+                                                </ul>
+
+
+                                                {#<hr>
+                                                <br>
+                                                <div id="paypal-button"></div>
+                                                <script>
+                                                    var CREATE_PAYMENT_URL  = '{{ path('checkout_index',{'cart': cart.cartId}) }}';
+                                                    var EXECUTE_PAYMENT_URL = 'https://my-store.com/paypal/execute-payment';
+
+                                                    paypal.Button.render({
+                                                        env: 'production', // Or 'sandbox',
+
+                                                        commit: true, // Show a 'Pay Now' button
+
+                                                        style: {
+                                                            color: 'gold',
+                                                            size: 'small'
+                                                        },
+
+                                                        payment: function(data, actions) {
+                                                            return paypal.request.post(CREATE_PAYMENT_URL).then(function(data) {
+                                                                return data.id;
+                                                            });
+                                                        },
+
+                                                        onAuthorize: function(data, actions) {
+                                                            /*
+                                                             * Execute the payment here
+                                                             */
+                                                        },
+
+                                                        onCancel: function(data, actions) {
+                                                            /*
+                                                             * Buyer cancelled the payment
+                                                             */
+                                                        },
+
+                                                        onError: function(err) {
+                                                            /*
+                                                             * An error occurred during the transaction
+                                                             */
+                                                        }
+                                                    }, '#paypal-button');
+                                                </script>#}
+
+                                            </div>
+
+                                            {#<div class="bt-drop-in-wrapper">#}
+                                                {#<div id="bt-dropin" style="display: none">#}
+
+                                                {#</div>#}
+                                            {#</div>#}
+                                            <div id="dropin" style="display: none;"></div>
+
+
+                                            <input id="nonce" name="payment_method_nonce" type="hidden" />
+                                            <input type="hidden" name="payement_type" id="payment_type" />
+                                            <input type="hidden" name="us_total_order" id="us_total_order" />
+                                            <input type="hidden" name="shippment_order" id="shippment_order" />
                                         </div>
                                         <hr>
-                                        {#<h2 class="title-checkout">APPLY DISCOUNT CODE </h2>
-                                        <div class="checkout-box-02">
-                                            <form class="form-inline">
-                                                <input type="text" class="form-control">
-                                                <a class="btn btn-border color-default" href="#">APPLY DISCOUNT</a>
-                                            </form>
-                                        </div>#}
-
                                         <a class="btn"
                                            href="#Shipping" data-toggle="tab"
                                            onclick="function changeLabelSecond() {
                                                $('#payment').removeClass('active');
-                                               $('#address').addClass('active');}
+                                               $('#address').addClass('active');
+                                               $('html, body').animate({scrollTop : 500},1000);
+                                           }
                                            changeLabelSecond()">
 
                                             <span class="icon icon-chevron_left"></span>
                                             Back
                                         </a>
-                                        <button class="btn" type="submit">
+                                        <button type="button" class="btn" id="submit-button">
                                             ORDER
                                         </button>
                                     </div>
@@ -223,16 +349,29 @@
                                                         {% set totalProducts = total + article.price  %}
                                                         {% set total = totalProducts %}
                                                     {% endfor %}
+
                                                     {{ totalProducts|number_format(2, '.', ' ') }} KWD
+                                                    <br>
+
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>SHIPPING:</td>
-                                                <td>0 KWD FREE</td>
+                                                <td>
+                                                    <div id="Shippment">
+                                                        0.00 KWD
+                                                    </div>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>ORDER TOTAL:</td>
-                                                <td><strong class="color-base">{{ totalProducts|number_format(2, '.', ' ') }} KWD</strong></td>
+                                                <td>
+                                                    <strong class="color-base">
+                                                        <div id="total">
+                                                            {{ totalProducts|number_format(2, '.', ' ') }} KWD
+                                                        </div>
+                                                    </strong>
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -270,106 +409,8 @@
                             </div>
                         </div>
                     </div>
-                    {#<script>
 
-                        {% set totalUs = totalProducts * 3.332001 %}
-                        var total = '{{ totalUs|number_format(2,'.') }}';
 
-                        /*1 Kuwaiti dinar =
-                            3.332001 U.S. dollars*/
-
-                        paypal.Button.render({
-                            env: 'sandbox', // sandbox | production
-
-                            locale: 'en_US',
-
-                            client: {
-                                sandbox:    'ATgNGAD9Fgitd1sAwSCKx77kJ_ZJJkjYCIpSEMVOTEe8nhPnyh1fhd1wmc3qwlmyVPqaO4hfAgnahIET',
-                                production: 'AYTvNHk-N3R4PyCO4RicIQK4hvDEQv5X7Jtt1J0RpJVUtGD76Ahf8OxNI4o2oUBjoqzA_KKFSh5nQ1Ic'
-                            },
-
-                            commit: true, // Show a 'Pay Now' button
-
-                            style: {
-                                label: '',
-                                fundingicons: true, // optional
-                                branding: true, // optional
-                                size:  'responsive', // small | medium | large | responsive
-                                shape: 'pill',   // pill | rect
-                                color: 'gold'   // gold | blue | silve | black
-                            },
-
-                            payment: function(data, actions) {
-                                console.log('paiement');
-                                console.log(total);
-                                return actions.payment.create({
-                                    payment: {
-                                        transactions: [
-                                            {
-                                                amount: { total: total, currency: 'USD' }
-                                            }
-                                        ]
-                                    }
-                                });
-                            },
-
-                            onAuthorize: function(data, actions) {
-                                console.log('authorize');
-                                return actions.payment.get().then(function(data) {
-
-                                    // Display the payment details and a confirmation button
-
-                                    var shipping = data.payer.payer_info.shipping_address;
-
-                                    document.querySelector('#recipient').innerText = shipping.recipient_name;
-                                    document.querySelector('#line1').innerText     = shipping.line1;
-                                    document.querySelector('#city').innerText      = shipping.city;
-                                    document.querySelector('#state').innerText     = shipping.state;
-                                    document.querySelector('#zip').innerText       = shipping.postal_code;
-                                    document.querySelector('#country').innerText   = shipping.country_code;
-
-                                    document.querySelector('#paypal-button-container').style.display = 'none';
-                                    document.querySelector('#confirm').style.display = 'block';
-
-                                    // Listen for click on confirm button
-
-                                    document.querySelector('#confirmButton').addEventListener('click', function() {
-
-                                        // Disable the button and show a loading message
-
-                                        document.querySelector('#confirm').innerText = 'Loading...';
-                                        document.querySelector('#confirm').disabled = true;
-
-                                        // Execute the payment
-
-                                        return actions.payment.execute().then(function() {
-
-                                            // Show a thank-you note
-
-                                            document.querySelector('#thanksname').innerText = shipping.recipient_name;
-
-                                            document.querySelector('#confirm').style.display = 'none';
-                                            document.querySelector('#thanks').style.display = 'block';
-                                        });
-                                    });
-                                });
-                            },
-
-                            onCancel: function(data, actions) {
-                                console.log('cancel');
-                                /*
-                                 * Buyer cancelled the payment
-                                 */
-                            },
-
-                            onError: function(err) {
-                                console.log('error');
-                                /*
-                                 * An error occurred during the transaction
-                                 */
-                            }
-                        }, '#paypal-button');
-                    </script>#}
                 {% else %}
                     No cart exist !
                 {% endif %}
@@ -401,6 +442,113 @@
 
     {% block javascripts %}
         {% include 'frontend/partials/layout_1/_javascript.html.twig' %}
+        <script src="https://js.braintreegateway.com/web/dropin/1.10.0/js/dropin.min.js"></script>
+        {#<script>
+            var form = $('#address-form');
+            console.log('form : '+ form);
+            var client_token = "{{ gateway.clientToken.generate }}";
+            braintree.dropin.create({
+                authorization: client_token,
+                selector: '#bt-dropin',
+            }, function (createErr, instance) {
+                if (createErr) {
+                    console.log('Create Error', createErr);
+                    return;
+                }
+                form.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    instance.requestPaymentMethod(function (err, payload) {
+                        if (err) {
+                            console.log('Request Payment Method Error', err);
+                            return;
+                        }
+                        // Add the nonce to the form and submit
+                        document.getElementById('nonce').value = payload.nonce;
+                        form.submit();
+                    });
+                });
+            });
+        </script>#}
+        <script>
+            var button = document.querySelector('#submit-button');
+
+            braintree.dropin.create({
+                authorization: "{{ gateway.clientToken.generate }}",
+                container: '#dropin'
+            }, function (createErr, instance) {
+                button.addEventListener('click', function () {
+                    if(_choosedPayment === "paypal")
+                    {
+                        $('#address_form').submit();
+                    }else
+                    {
+                        instance.requestPaymentMethod(function (err, payload) {
+                            console.info('payload' + JSON.stringify(payload));
+                            console.info('err' + JSON.stringify(err));
+                            if (err) {
+                                console.log('Request Payment Method Error', err);
+                                return;
+                            }
+                            console.info(payload);
+                            // Add the nonce to the form and submit
+                            document.querySelector('#nonce').value = payload.nonce;
+                            $('#address_form').submit();
+                        });
+                    }
+                });
+            });
+        </script>
+        <script>
+            $('input[type=radio][name=radios]').change(function() {
+                _choosedPayment = $(this).val();
+                if (_choosedPayment === "jcb"
+                    || _choosedPayment === "visa"
+                    || _choosedPayment ==="mastercard"
+                    || _choosedPayment === "amex"
+                    || _choosedPayment === "discover"
+                ){
+                    $('#dropin').show();
+                } else {
+                    $('#dropin').hide();
+                }
+                $('#payment_type').attr('value', _choosedPayment);
+            });
+        </script>
+
+        <script language="javascript">
+            var _golfCountries = [
+                "Saudi Arabia",
+                "Kuwait",
+                "Bahrain",
+                "Qatar",
+                "United Arab Emirates",
+                "Oman"
+            ];
+            var _shippment = 0;
+            var _total = {{ cart.total|number_format(2, '.','') }};
+            var _usTotal ;
+            populateCountries("address[country]", "address[city]"); // first parameter is id of country drop-down and second parameter is id of state drop-down
+        </script>
+        <script type="text/javascript">
+            function convert(float) {
+                subtotal  = 0;
+                fx.base = "KWD";
+                fx.settings = {
+                    from : "KWD",
+                    to : "USD"
+                };
+                fx.rates = {
+                    "USD" : 3.32215, // eg. 1 USD === 0.745101 EUR
+                    "KWD" : 1,        // always include the base rate (1:1)
+                    /* etc */
+                };
+                x = fx.convert(float);
+                subtotal = x.toFixed(2);
+
+                return subtotal;
+            }
+
+        </script>
     {% endblock %}
 
 {% endblock %}

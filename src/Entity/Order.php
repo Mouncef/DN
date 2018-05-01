@@ -35,6 +35,12 @@ class Order
     private $cart;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Payment", inversedBy="orders")
+     * @ORM\JoinColumn(name="payment", referencedColumnName="payement_id")
+     */
+    private $payment;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Address", inversedBy="orders")
      * @ORM\JoinColumn(name="address", referencedColumnName="address_id")
      */
@@ -54,6 +60,16 @@ class Order
      * @ORM\Column(name="notified", type="boolean")
      */
     private $notified;
+
+    /**
+     * @ORM\Column(name="order_total", type="float", nullable=true)
+     */
+    private $orderTotal;
+
+    /**
+     * @ORM\Column(name="order_shipping", type="float", nullable=true)
+     */
+    private $orderShipping;
 
 
     public function __construct()
@@ -89,7 +105,7 @@ class Order
         $this->createdAt = $createdAt;
     }
 
-    public function getCart()
+    public function getCart() : Cart
     {
         return $this->cart;
     }
@@ -99,7 +115,17 @@ class Order
         $this->cart = $cart;
     }
 
-    public function getAddress()
+    public function getPayment() : Payment
+    {
+        return $this->payment;
+    }
+
+    public function setPayment(Payment $payment)
+    {
+        $this->payment = $payment;
+    }
+
+    public function getAddress() : Address
     {
         return $this->address;
     }
@@ -109,17 +135,11 @@ class Order
         $this->address = $address;
     }
 
-    /**
-     * @return mixed
-     */
     public function getIsPaid()
     {
         return $this->isPaid;
     }
 
-    /**
-     * @param mixed $isPaid
-     */
     public function setIsPaid($isPaid)
     {
         $this->isPaid = $isPaid;
@@ -145,6 +165,27 @@ class Order
     public function setNotified($notified)
     {
         $this->notified = $notified;
+    }
+
+    public function getOrderTotal() : float
+    {
+//        var_dump( number_format($this->orderTotal, '2','.','')); die;
+        return (float) number_format($this->orderTotal, '2','.','');
+    }
+
+    public function setOrderTotal($orderTotal)
+    {
+        $this->orderTotal = $orderTotal;
+    }
+
+    public function getOrderShipping()
+    {
+        return $this->orderShipping;
+    }
+
+    public function setOrderShipping($orderShipping)
+    {
+        $this->orderShipping = $orderShipping;
     }
 
 

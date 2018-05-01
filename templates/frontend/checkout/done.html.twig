@@ -32,12 +32,46 @@
         <div id="pageContent">
 
             {% block slider %}
-                <div class="container offset-80">
+                <div class="container" style="margin: 1%">
                     <div class="on-duty-box">
                         {#<img src="{{ asset('assets/frontend/images/empty-search-icon.png') }}" alt="">#}
                         <h1 class="block-title large">Congratulations<br>Your payement passed succesfully.</h1>
+                        {% if order %}
+                            <div class="infos">
+                                <div class="responsive-table-order-history-02">
+                                    <table class="table-order-history-02">
+                                        <thead>
+                                        <tr>
+                                            <th>Order Reference</th>
+                                            <th>Payment Type</th>
+                                            <th>Shipping</th>
+                                            <th>SubTotal</th>
+                                            <th>Total</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>{{ order.orderCode }}</td>
+                                            <td>
+                                                {% if order.payment.paypalDetail %}
+                                                    Paypal
+                                                {% else %}
+                                                    Card : {{ order.payment.braintreeDetail.braintreeTransactionCardType }}
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ order.orderShipping|number_format(2, '.') }} USD</td>
+                                            <td>{{ order.cart.getUsTotal|number_format(1, '.') }} USD</td>
+                                            <td>{{ order.orderTotal|number_format(1, '.') }} USD</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        {% endif %}
                         <div class="description">
-                            Delivery is on<span class="color-base"> 48 Hours</span>
+                            Delivery is on<span class="color-base"> 48 Hours</span> after receiving the payment.
+                            <br>
+                            You will also get notified when the product(s) will be delivered.
                         </div>
                     </div>
                 </div>

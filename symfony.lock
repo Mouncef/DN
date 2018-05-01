@@ -1,4 +1,7 @@
 {
+    "braintree/braintree_php": {
+        "version": "3.32.0"
+    },
     "clue/stream-filter": {
         "version": "v1.4.0"
     },
@@ -116,6 +119,9 @@
     "payum/offline": {
         "version": "1.5.0"
     },
+    "payum/payum": {
+        "version": "1.5.0"
+    },
     "php-http/guzzle6-adapter": {
         "version": "v1.1.1"
     },
@@ -163,9 +169,6 @@
             "version": "4.0",
             "ref": "e65a105bf4cd5b1b79012ba029954927f05922e8"
         }
-    },
-    "stripe/stripe-php": {
-        "version": "v3.23.0"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.0.2"

@@ -82,7 +82,7 @@
                                                                 </a>
                                                             </h2>
                                                             <div class="price">
-                                                                {{ article.price }}
+                                                                {{ article.price|number_format(2, '.', ' ') }} KWD
                                                             </div>
                                                             <div class="description">
                                                                 {{ article.description }}
