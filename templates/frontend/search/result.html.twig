@@ -47,12 +47,21 @@
                             </div>
                             <div class="product-listing row">
                                 {% for article in articles %}
-                                    <div class="col-xs-6 col-sm-4 col-md-4 col-lg-one-three" style="display: inline-block">
+                                    {% set cart = getUserCart() %}
+                                    {% set inCart = false %}
+                                    {% if cart %}
+                                        {% for articleC in cart.articles %}
+                                            {% if articleC == article %}
+                                                {% set inCart = true %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-one-three" style="display: inline-block">
                                         <div class="product">
                                             <div class="product_inside">
                                                 <div class="image-box">
                                                     <a href="{{ path('article_index',{'id': article.articleId}) }}">
-                                                        <img src="{{ asset('uploads/Articles/images/'~article.principalCover) }}" alt="{{ article.name }}">
+                                                        <img src="{{ asset('uploads/Articles/images/'~article.principalCover) }}" alt="{{ article.name }}" style="height: 550px;">
                                                     </a>
                                                     <a href="#" data-toggle="modal" data-target="#ModalquickView-{{ article.articleId }}" class="quick-view">
 											<span>
@@ -95,11 +104,13 @@
                                                             <span class="icon-star"></span>
                                                             <span class="icon-star empty-star"></span>
                                                         </div>#}
-                                                        <a class="btn btn-product_addtocart" href="#" data-toggle="modal" data-target="#ModalAddToCartProduct-{{ article.articleId }}">
-                                                            <span class="icon icon-shopping_basket"></span>ADD TO CART
-                                                        </a>
-                                                        <a href="#"  class="quick-view btn" data-toggle="modal" data-target="#ModalquickView-{{ article.articleId }}">
-												<span>
+                                                        {% if inCart == false %}
+                                                            <a class="btn btn-product_addtocart" href="#" data-toggle="modal" data-target="#ModalAddToCartProduct-{{ article.articleId }}">
+                                                                <span class="icon icon-shopping_basket"></span>ADD TO CART
+                                                            </a>
+                                                            <a href="#"  class="quick-view btn" data-toggle="modal" data-target="#ModalquickView-{{ article.articleId }}">
+												        {% endif %}
+                                                <span>
 												<span class="icon icon-visibility"></span>QUICK VIEW
 												</span>
                                                         </a>
@@ -199,12 +210,16 @@
                                                                                     <span class="plus-btn"></span>
                                                                                 </div>
                                                                             </div>#}
-                                                                            <div class="pull-left">
-                                                                                <a href="#"
-                                                                                   class="btn btn-addtocart"><span
-                                                                                            class="icon icon-shopping_basket"></span>SHOP
-                                                                                    NOW!</a>
-                                                                            </div>
+                                                                            {% if inCart == false %}
+                                                                                <div class="pull-left">
+                                                                                    <a href="{{ path('add_article_to_cart', {'id': article.articleId}) }}" class="btn btn-addtocart">
+                                                                                        <span class="icon icon-shopping_basket"></span>
+                                                                                        SHOPNOW!
+                                                                                    </a>
+                                                                                </div>
+                                                                            {% else %}
+                                                                                <i>This article is already in your cart !</i>
+                                                                            {% endif %}
                                                                         </div>
                                                                         <div class="wrapper">
                                                                             <div class="pull-left">
@@ -307,7 +322,7 @@
                                                             margin-top: 9px;
                                                             letter-spacing: 0.02em;">
                                                                     TOTAL: <span style="font-size: 24px;
-                                                        color: #5fd179;
+                                                        color: #a58464;
                                                         font-weight: 500;
                                                         letter-spacing: inherit;">
                                          {{ article.price|number_format(2, '.', ' ') }} KWD</span>
@@ -325,7 +340,7 @@
                                                                             justify-content: center;
                                                                             align-items: center;
                                                                             font-weight: 500;
-                                                                            color: #5fd179;">
+                                                                            color: #a58464;">
                                             <span class="icon icon-shopping_basket" style=" font-size: 34px;
                                                                                             line-height: 34px;
                                                                                             margin: 0 7px;"></span>
@@ -346,7 +361,7 @@
                                                                     margin-top: 24px;
                                                                     text-align: center;">
                                                                         Total products:
-                                                                        <span style="color: #5fd179;">
+                                                                        <span style="color: #a58464;">
                                             {% set total = 0 %}
                                                                             {% set totalProducts = 0 %}
                                                                             {% for article  in cart.articles %}
@@ -365,7 +380,7 @@
                                                             text-align: center;">
                                                                         TOTAL:
                                                                         <span style="font-size: 24px;
-                                                        color: #5fd179;
+                                                        color: #a58464;
                                                         font-weight: 500;
                                                         letter-spacing: inherit;">
                                             {% set newTotal = totalProducts + article.price %}
@@ -381,7 +396,7 @@
                                                                             justify-content: center;
                                                                             align-items: center;
                                                                             font-weight: 500;
-                                                                            color: #5fd179;">
+                                                                            color: #a58464;">
                                             <span class="icon icon-shopping_basket" style=" font-size: 34px;
                                                                                             line-height: 34px;
                                                                                             margin: 0 7px;"></span>
@@ -401,7 +416,7 @@
                                                                     margin-top: 24px;
                                                                     text-align: center;">
                                                                         Total products: <span
-                                                                                style="color: #5fd179;"> {{ article.price|number_format(2, '.', ' ') }} KWD</span>
+                                                                                style="color: #a58464;"> {{ article.price|number_format(2, '.', ' ') }} KWD</span>
                                                                     </div>
                                                                     <div class="total" style="  font-size: 20px;
                                                             color: #333333;
@@ -411,7 +426,7 @@
                                                             padding-bottom: 23px;
                                                             text-align: center;">
                                                                         TOTAL: <span style="font-size: 24px;
-                                                        color: #5fd179;
+                                                        color: #a58464;
                                                         font-weight: 500;
                                                         letter-spacing: inherit;">
                                          {{ article.price|number_format(2, '.', ' ') }} KWD</span>
@@ -447,8 +462,9 @@
                                                             </p>
                                                         </div>
                                                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                                                            <a href="{{ path('add_article_to_cart', {'id': article.articleId}) }}"
-                                                               class="btn btn-underline" style="margin-top: 20px;
+                                                            {% if inCart == false %}
+                                                                <a href="{{ path('add_article_to_cart', {'id': article.articleId}) }}"
+                                                                class="btn btn-underline" style="margin-top: 20px;
                                                                     color: #333333;
                                                                     background: none;
                                                                     text-decoration: none;
@@ -456,7 +472,8 @@
                                                                     padding: 5px 0 0 0;
                                                                     height: inherit;
                                                                     border-bottom: 2px solid #333333;">
-                                                                ADD TO CART!</a>
+                                                                    ADD TO CART!</a>
+                                                            {% endif %}
                                                         {% else %}
                                                             <a href="{{ path('login') }}"
                                                                class="btn btn-underline" style="margin-top: 20px;

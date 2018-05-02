@@ -9,7 +9,9 @@ use App\Entity\Collection;
 use App\Entity\Slider;
 use App\Entity\Subscribers;
 use App\Repository\CollectionRepository;
+use Http\Client\Exception\HttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -79,19 +81,32 @@ class HomeController extends Controller
         $article = $em->getRepository(Article::class)->find($id);
         $user = $this->getUser();
         $cart = $em->getRepository(Cart::class)->getUserCart($user);
-
+        $x = true;
         if ($cart) {
-            $cart->addArticle($article);
+            /** @var Cart $cart*/
+            foreach ($cart->getArticles() as $a)
+            {
+                if ($a === $article){
+                    $x = false;
+                }
+            }
+            if ($x){
+                $cart->addArticle($article);
+                $this->addFlash('success','Article added to cart');
+
+            }else {
+                throw new NotFoundHttpException('This article already exists in your cart');
+            }
         }else {
             $cart = new Cart();
             $cart->setUser($user);
             $cart->addArticle($article);
+            $this->addFlash('success','Article added to cart');
         }
 
         $em->persist($cart);
         $em->flush();
 
-        $this->addFlash('success','Article added to cart');
 
         return $this->redirectToRoute('homepage');
     }

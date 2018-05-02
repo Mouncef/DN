@@ -9,7 +9,7 @@
                             <div class="image-box">
                             {#{{ newArticle.createdAt|date('d-m-Y') }}{{ date('-7days')|date('d-m-Y') }}#}
                             <a href="{{ path('article_index', {'id': newArticle.articleId}) }}">
-                                <img src="{{ asset('uploads/Articles/images/'~newArticle.principalCover) }}" alt="{{ newArticle.name }}">
+                                <img src="{{ asset('uploads/Articles/images/'~newArticle.principalCover) }}" alt="{{ newArticle.name }}" style="min-height: 400px;">
 
                                 {% if newArticle.createdAt|date('d-m-Y') > date('-7days')|date('d-m-Y')  %}<div class="label-new">New</div>{% endif %}
                             </a>
@@ -68,6 +68,15 @@
 </div>
 {% for newArticle in newArticles %}
     <!-- Modal (quickViewModal) -->
+    {% set cart = getUserCart() %}
+    {% set inCart = false %}
+    {% if cart %}
+        {% for articleC in cart.articles %}
+            {% if articleC == newArticle %}
+                {% set inCart = true %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
     <div class="modal  fade"  id="ModalquickView-{{ newArticle.articleId }}" tabindex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content ">
@@ -135,7 +144,11 @@
                                                 </div>
                                             </div>#}
                                             <div class="pull-left">
-                                                <a href="#" class="btn btn-addtocart"><span class="icon icon-shopping_basket"></span>SHOP NOW!</a>
+                                                {% if inCart == false %}
+                                                    <a href="{{ path('add_article_to_cart', {'id': newArticle.articleId}) }}" class="btn btn-addtocart"><span class="icon icon-shopping_basket"></span>SHOP NOW!</a>
+                                                {% else %}
+                                                    <i>This article is already in your cart !</i>
+                                                {% endif %}
                                             </div>
                                         </div>
                                         <div class="wrapper">

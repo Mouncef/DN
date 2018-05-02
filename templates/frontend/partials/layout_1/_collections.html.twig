@@ -4,14 +4,18 @@
         <div class="row">
             <div class="carousel-products-mobile subcategory-listing">
                 {% for collection in collections %}
-                    <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                    <a href="{{ path('collection_index', {'collectionId': collection.collectionId }) }}" class="subcategory-item zoom-in">
-                                        <span>
-                                        <img src="{{ asset('uploads/Collections/images/'~collection.cover) }}" alt="{{ collection.name }}">
-                                        </span>
-                        <span class="title">{{ collection.name }}</span>
-                    </a>
-                </div>
+                    {% set nb = collections|length %}
+                    <div class="col-xs-6 col-sm-4 col-md-4 {% if nb == 1 %}col-lg-12{% elseif nb == 2 %}col-lg-6{% else %}col-lg-4{% endif %}">
+                        <a href="{{ path('collection_index', {'collectionId': collection.collectionId }) }}" class="subcategory-item zoom-in">
+                                            <span>
+                                            <img src="{{ asset('uploads/Collections/images/'~collection.cover) }}"
+                                                 alt="{{ collection.name }}"
+                                                 style="height: {% if nb == 1 %}100%{% elseif nb == 2 %}300px{% else %}400px{% endif %};"
+                                            >
+                                            </span>
+                            <span class="title">{{ collection.name }}</span>
+                        </a>
+                    </div>
                 {% endfor %}
             </div>
         </div>
