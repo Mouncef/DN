@@ -72,18 +72,26 @@
                         </div>
                         <div class="col-sm-7 offset-98">
                             <h2 class="block-title big text-left text-capitalize">Contact Form</h2>
-                            <form action="#" class="contact-form">
+                            <form action="{{ path('send_mail') }}" method="post" class="contact-form">
                                 <div class="form-group">
-                                    <label for="inputName">Name</label>
-                                    <input type="text" class="form-control" id="inputName" placeholder="Your name">
+                                    <label for="inputName">First Name</label>
+                                    <input type="text" class="form-control" name="_first_name" id="inputName" placeholder="Your First Name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputLastName">Last Name</label>
+                                    <input type="text" class="form-control" name="_last_name" id="inputLastName" placeholder="Your Last Name" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputEmail">E-mail</label>
-                                    <input type="text" class="form-control" id="inputEmail" placeholder="Your e-mail">
+                                    <input type="email" class="form-control" name="_email" id="inputEmail" placeholder="Your e-mail" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputSubject">Subject</label>
+                                    <input type="text" class="form-control" name="_subject" id="inputSubject" placeholder="Subject" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputName">Message</label>
-                                    <textarea  class="form-control" rows="8" placeholder="Write your message here"  id="textareaMessage"></textarea>
+                                    <textarea  class="form-control" rows="8" name="_message" placeholder="Write your message here"  id="textareaMessage" required></textarea>
                                 </div>
                                 <button class="btn" type="submit">SUBMIT</button>
                             </form>
