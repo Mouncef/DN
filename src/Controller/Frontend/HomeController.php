@@ -128,11 +128,12 @@ class HomeController extends Controller
                 $order = $em->getRepository(Order::class)->findOneBy([
                     'cart'  =>  $cart
                 ]);
-
-                if (is_null($order->getPayment()))
-                {
-                    $em->remove($order);
-                    $cart->removeArticle($article);
+                if ($order){
+                    if (is_null($order->getPayment()))
+                    {
+                        $em->remove($order);
+                        $cart->removeArticle($article);
+                    }
                 }
 
                 $em->remove($cart);
