@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\Cart;
 use App\Entity\Category;
 use App\Entity\Collection;
+use App\Entity\Order;
 use App\Entity\Slider;
 use App\Entity\Subscribers;
 use App\Repository\CollectionRepository;
@@ -122,10 +123,25 @@ class HomeController extends Controller
         $cart = $em->getRepository(Cart::class)->getUserCart($user);
 
         if ($cart) {
-            if (count($cart->getArticles()) == 1){
-            $em->remove($cart);
-            } elseif (count($cart->getArticles()) > 1 )
-            $cart->removeArticle($article);
+            if (count($cart->getArticles()) == 1)
+            {
+                $order = $em->getRepository(Order::class)->findOneBy([
+                    'cart'  =>  $cart
+                ]);
+
+                if (is_null($order->getPayment()))
+                {
+                    $em->remove($order);
+                    $cart->removeArticle($article);
+                }
+
+                $em->remove($cart);
+
+            } elseif (count($cart->getArticles()) > 1 ){
+
+                $cart->removeArticle($article);
+
+            }
         }
         $em->flush();
 

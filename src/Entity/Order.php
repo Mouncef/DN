@@ -105,7 +105,7 @@ class Order
         $this->createdAt = $createdAt;
     }
 
-    public function getCart() : Cart
+    public function getCart()
     {
         return $this->cart;
     }
@@ -115,7 +115,7 @@ class Order
         $this->cart = $cart;
     }
 
-    public function getPayment() : Payment
+    public function getPayment()
     {
         return $this->payment;
     }
@@ -125,7 +125,7 @@ class Order
         $this->payment = $payment;
     }
 
-    public function getAddress() : Address
+    public function getAddress()
     {
         return $this->address;
     }
