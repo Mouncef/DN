@@ -19,6 +19,15 @@
                                 <li {% if app.request.attributes.get('_route') == 'FAQ' %}class="active"{% endif %}>
                                     <a href="{{ path('FAQ') }}">FAQs</a>
                                 </li>
+                                <li {% if app.request.attributes.get('_route') == 'get_privacy_policy' %}class="active"{% endif %}>
+                                    <a href="{{ path('get_privacy_policy') }}">Privacy Policy</a>
+                                </li>
+                                <li {% if app.request.attributes.get('_route') == 'get_shipping_policy' %}class="active"{% endif %}>
+                                    <a href="{{ path('get_shipping_policy') }}">Shipping Policy</a>
+                                </li>
+                                <li {% if app.request.attributes.get('_route') == 'get_refund_policy' %}class="active"{% endif %}>
+                                    <a href="{{ path('get_refund_policy') }}">Refund & Return Policy</a>
+                                </li>
                                 {#<li><a href="">Delivery</a></li>#}
                                 {#<li><a href="">Blog</a></li>#}
                                 {#<li><a href=""></a></li>#}
@@ -114,6 +123,15 @@
                     <ul>
                         <li {% if app.request.attributes.get('_route') == 'FAQ' %}class="active"{% endif %}>
                             <a href="{{ path('FAQ') }}">FAQs</a>
+                        </li>
+                        <li {% if app.request.attributes.get('_route') == 'get_privacy_policy' %}class="active"{% endif %}>
+                            <a href="{{ path('get_privacy_policy') }}">Privacy Policy</a>
+                        </li>
+                        <li {% if app.request.attributes.get('_route') == 'get_shipping_policy' %}class="active"{% endif %}>
+                            <a href="{{ path('get_shipping_policy') }}">Shipping Policy</a>
+                        </li>
+                        <li {% if app.request.attributes.get('_route') == 'get_refund_policy' %}class="active"{% endif %}>
+                            <a href="{{ path('get_refund_policy') }}">Refund & Return Policy</a>
                         </li>
                     </ul>
                 </div>

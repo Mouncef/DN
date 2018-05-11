@@ -183,4 +183,25 @@ class HomeController extends Controller
             'articles'  =>  $articles
         ]);
     }
+
+    /**
+     * @Route("/privacy/policy", name="get_privacy_policy")
+     */
+    public function getPrivacyPolicy() {
+        return $this->render('frontend/privacy/index.html.twig');
+    }
+
+    /**
+     * @Route("/refund/policy", name="get_refund_policy")
+     */
+    public function getRefundPolicy() {
+        return $this->render('frontend/refund/index.html.twig');
+    }
+
+    /**
+     * @Route("/shipping/policy", name="get_shipping_policy")
+     */
+    public function getShippingPolicy() {
+        return $this->render('frontend/shipping/index.html.twig');
+    }
 }

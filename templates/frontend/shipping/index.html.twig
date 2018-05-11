@@ -1,0 +1,156 @@
+{% extends 'frontend/index.html.twig' %}
+
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    {% block loader %}
+        {% include 'frontend/partials/layout_1/_loader.html.twig' %}
+    {% endblock %}
+
+    {% block menu %}
+        {% include 'frontend/partials/layout_1/_menu.html.twig' %}
+    {% endblock %}
+
+    {% block header %}
+        {% include 'frontend/partials/layout_1/_header.html.twig' %}
+    {% endblock %}
+
+    {% block breadcrumb %}
+        <div class="breadcrumb">
+            <div class="container">
+                <ul>
+                    <li><a href="{{ path('homepage') }}">Home</a></li>
+                    <li>Shipping Policy</li>
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block content %}
+        <!-- Content -->
+        <div id="pageContent">
+
+        {% block slider %}
+            <div class="container  offset-18">
+                <h1 class="block-title large">Shipping Policy</h1>
+                <h6>
+                    Thank you for visiting and shopping at Dar Nawal. Following are the terms and conditions that constitute our Shipping Policy.
+                </h6>
+                <div class="offset-36">
+                    <h2 class="small">International & Domestic Shipping Policy</h2>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <div class="box-faq">
+                                <a class="title" href="#">Shipment processing time</a>
+                                <p>
+                                    All orders are processed within 2-3 business days. Orders are not shipped or delivered on weekends or holidays.
+                                    <br>
+                                    If we are experiencing a high volume of orders, shipments may be delayed by a few days. Please allow additional days in transit for delivery. If there will be a significant delay in shipment of your order, we will contact you via email or telephone.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <div class="box-faq">
+                                <a class="title" href="#">Shipping rates & delivery estimates</a>
+                                <p>
+                                    Shipping charges for your order will be calculated and displayed at checkout.
+                                </p>
+                                <div class="table-responsive">
+                                    <table class="table ">
+                                        <thead>
+                                        <tr>
+                                            <th>Shipment method</th>
+                                            <th>Estimated delivery time</th>
+                                            <th>Shipment cost</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>DHL Standard</td>
+                                            <td>3-5 business days</td>
+                                            <td>Free for gulf countries</td>
+                                        </tr>
+                                        <tr>
+                                            <td>DHL International</td>
+                                            <td>5-10 business days</td>
+                                            <td>70 $</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <div class="box-faq">
+                                <a class="title" href="#">Shipment confirmation & Order tracking</a>
+                                <p>
+                                    You will receive a Shipment Confirmation email once your order has shipped containing your tracking number(s). The tracking number will be active within 24 hours.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <div class="box-faq">
+                                <a class="title" href="#">Customs, Duties and Taxes</a>
+                                <p>
+                                    Dar Nawal is not responsible for any customs and taxes applied to your order. All fees imposed during or after shipping are the responsibility of the customer (tariffs, taxes, etc.).
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <div class="box-faq">
+                                <a class="title" href="#">Damages</a>
+                                <p>
+                                    Dar Nawal is not liable for any products damaged or lost during shipping. If you received your order damaged, please contact the shipment carrier to file a claim.
+                                    <br>
+                                    Please save all packaging materials and damaged goods before filing a claim.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <div class="box-faq">
+                                <a class="title" href="#">Returns Policy</a>
+                                <p>
+                                    Our
+                                    <a href="{{ path('get_refund_policy') }}">
+                                        Return & Refund Policy
+                                    </a>
+                                    provides detailed information about options and procedures for returning your order.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        {% endblock %}
+
+        {% block promo %}
+            {#{% include 'frontend/partials/layout_1/_promo.html.twig' %}#}
+        {% endblock %}
+
+        {% block collections %}
+            {#{% include 'frontend/partials/layout_1/_collections.html.twig' %}#}
+        {% endblock %}
+
+        {% block features %}
+            {#{% include 'frontend/partials/layout_1/_features.html.twig' %}#}
+        {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block footer %}
+        {% include 'frontend/partials/layout_1/_footer.html.twig' %}
+    {% endblock %}
+
+    {% block modal %}
+        {% include 'frontend/partials/layout_1/_modal.html.twig' %}
+    {% endblock %}
+
+
+    {% block javascripts %}
+        {% include 'frontend/partials/layout_1/_javascript.html.twig' %}
+    {% endblock %}
+
+{% endblock %}
