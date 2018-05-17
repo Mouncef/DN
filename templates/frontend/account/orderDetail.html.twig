@@ -1,5 +1,14 @@
 {% extends 'frontend/index.html.twig' %}
 
+{% block head %}
+    <title>{% block title %}{{ user.name }} Orders History{% endblock %} - Dar Nawal</title>
+    <meta name="keywords" content="Dar, Nawal, Caftan, Couture, Moroccan, Kaftan">
+    <meta name="description" content="Dar Nawal has the orders history page, you will find all information about your orders history.">
+    {% block stylesheets %}
+        {% include 'frontend/partials/layout_1/_stylesheets.html.twig' %}
+    {% endblock %}
+{% endblock %}
+
 {% block body %}
     {% block loader %}
         {% include 'frontend/partials/layout_1/_loader.html.twig' %}

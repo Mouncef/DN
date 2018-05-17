@@ -1,7 +1,16 @@
 {% extends 'frontend/index.html.twig' %}
 
 {% block head %}
-    {{ parent() }}
+    <title>{% block title %}Return & Refund Policy{% endblock %} - Dar Nawal</title>
+    <meta name="keywords" content="Dar, Nawal, Caftan, Couture, Moroccan, Kaftan">
+    <meta name="description"
+          content="Dar Nawal has the page of return and refund policy, you will find here our policy about Returns,
+                   Refunds and Shipping."
+    >
+
+    {% block stylesheets %}
+        {% include 'frontend/partials/layout_1/_stylesheets.html.twig' %}
+    {% endblock %}
 {% endblock %}
 
 {% block body %}

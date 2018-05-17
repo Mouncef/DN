@@ -1,7 +1,17 @@
 {% extends 'frontend/index.html.twig' %}
 
 {% block head %}
-    {{ parent() }}
+
+    <title>{% block title %}{{ article.name }}{% endblock %} - Dar Nawal</title>
+    <meta name="keywords" content="Dar, Nawal, Caftan, Couture, Moroccan, Kaftan">
+    <meta name="description"
+          content="Dar Nawal has the article page, you will find all information about this article {{ article.name }},
+      and also this article is {{ article.description }}"
+    >
+    {% block stylesheets %}
+        {% include 'frontend/partials/layout_1/_stylesheets.html.twig' %}
+    {% endblock %}
+
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/frontend/external/magnific-popup/magnific-popup.css') }}"/>
 
     <!-- Go to www.addthis.com/dashboard to customize your tools -->

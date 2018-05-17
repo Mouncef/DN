@@ -1,7 +1,15 @@
 {% extends 'frontend/index.html.twig' %}
 
 {% block head %}
-    {{ parent() }}
+    <title>{% block title %}Search Result, found : {{ articles|length }} article(s) - Dar Nawal{% endblock %}</title>
+    <meta name="keywords" content="Dar, Nawal, Caftan, Couture, Moroccan, Kaftan">
+    <meta name="description"
+          content="Dar Nawal has the search page, you will search here for your products by tapping the name of a product"
+    >
+
+    {% block stylesheets %}
+        {% include 'frontend/partials/layout_1/_stylesheets.html.twig' %}
+    {% endblock %}
 {% endblock %}
 
 {% block body %}
@@ -22,7 +30,7 @@
             <div class="container">
                 <ul>
                     <li><a href="{{ path('homepage') }}">Home</a></li>
-                    <li>FAQs</li>
+                    <li>Search Result</li>
                 </ul>
             </div>
         </div>

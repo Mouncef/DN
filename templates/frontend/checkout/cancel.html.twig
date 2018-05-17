@@ -1,7 +1,14 @@
 {% extends 'frontend/index.html.twig' %}
 
 {% block head %}
-    {{ parent() }}
+    <title>{% block title %}Checkout Cancel - Dar Nawal</title>
+    <meta name="keywords" content="Dar, Nawal, Caftan, Couture, Moroccan, Kaftan">
+    <meta name="description"
+          content="Dar Nawal has the checkout cancel page, you will see that your checkout didn't passed successfully"
+    >
+    {% block stylesheets %}
+        {% include 'frontend/partials/layout_1/_stylesheets.html.twig' %}
+    {% endblock %}
 {% endblock %}
 
 {% block body %}

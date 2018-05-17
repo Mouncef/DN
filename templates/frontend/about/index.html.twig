@@ -1,7 +1,12 @@
 {% extends 'frontend/index.html.twig' %}
 
 {% block head %}
-    {{ parent() }}
+    <title>{% block title %}Our Story{% endblock %}</title>
+    <meta name="keywords" content="Dar, Nawal, Caftan, Couture, Moroccan, Kaftan">
+    <meta name="description" content="Dar Nawal is a moroccan design of Kaftans, and other traditional clothes">
+    {% block stylesheets %}
+        {% include 'frontend/partials/layout_1/_stylesheets.html.twig' %}
+    {% endblock %}
 {% endblock %}
 
 {% block body %}
@@ -58,7 +63,7 @@
                             </div>
                             <hr>
                             <ul class="list">
-                                <li>Address : 9999 Xx. Xxxxx Xxxxx, Kuweit</li>
+                                <li>Address : Kuweit</li>
                                 <li>Phone: 00965-9968-7577</li>
                                 {#<li>Fax: +777 2345 7886</li>#}
                                 <li>Hours: 7 Days a week from 10:00 am to 6:00 pm</li>

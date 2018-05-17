@@ -1,7 +1,17 @@
 {% extends 'frontend/index.html.twig' %}
 
 {% block head %}
-    {{ parent() }}
+    <title>{% block title %}Shipping Policy - Dar Nawal{% endblock %}</title>
+    <meta name="keywords" content="Dar, Nawal, Caftan, Couture, Moroccan, Kaftan">
+    <meta name="description"
+          content="Dar Nawal has the page of shipping policy, you will find here our policy about Shipment processing time,
+                   Shipping rates & delivery estimates, Shipment confirmation & Order tracking, Customs, Duties and Taxes,
+                    Damages and Returns Policy."
+    >
+
+    {% block stylesheets %}
+        {% include 'frontend/partials/layout_1/_stylesheets.html.twig' %}
+    {% endblock %}
 {% endblock %}
 
 {% block body %}

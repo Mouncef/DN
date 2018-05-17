@@ -1,7 +1,16 @@
 {% extends 'frontend/index.html.twig' %}
 
 {% block head %}
-    {{ parent() }}
+    <title>{% block title %}Contact Page{% endblock %} - Dar Nawal</title>
+    <meta name="keywords" content="Dar, Nawal, Caftan, Couture, Moroccan, Kaftan">
+    <meta name="description"
+          content="Dar Nawal has the contact page, you will find all information relative to Dar Nawal contact like address,
+          phone number, email and you can contact us by sending an email on the page"
+    >
+
+    {% block stylesheets %}
+        {% include 'frontend/partials/layout_1/_stylesheets.html.twig' %}
+    {% endblock %}
 {% endblock %}
 
 {% block body %}
@@ -45,7 +54,7 @@
                                 <ul class="list-information">
                                     <li>
                                         <span class="icon icon-home"></span>
-                                        Address : 9999 Xx. Xxxxx Xxxxx, Kuweit
+                                        Address : Kuweit
                                     </li>
                                     <li>
                                         <span class="icon icon-call"></span>

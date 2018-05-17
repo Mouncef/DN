@@ -1,7 +1,15 @@
 {% extends 'frontend/index.html.twig' %}
 
 {% block head %}
-    {{ parent() }}
+    <title>{% block title %}{{ category.name }} Category has {{ category.getProducts|length }} article(s){% endblock %} - Dar Nawal</title>
+    <meta name="keywords" content="Dar, Nawal, Caftan, Couture, Moroccan, Kaftan">
+    <meta name="description"
+          content="Dar Nawal has the category page, you will find all information about {{ category.name }} category,
+          and also all the detail of articles of this category like : {{ category.name }} category has {{ category.getProducts|length }} article(s)"
+    >
+    {% block stylesheets %}
+        {% include 'frontend/partials/layout_1/_stylesheets.html.twig' %}
+    {% endblock %}
     <link rel="stylesheet" type="text/css"
           href="{{ asset('assets/frontend/external/magnific-popup/magnific-popup.css') }}"/>
 {% endblock %}
