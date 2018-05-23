@@ -83,13 +83,15 @@
                                     {{ form_widget(form.price, { 'attr': {'class': 'form-control', 'placeholder':'Price'} }) }}
                                 </div>
                                 <div class="col-lg-4">
+                                    {{ form_widget(form.tri, { 'attr': {'class': 'form-control', 'placeholder':'List Number'} }) }}
+                                </div>
+                                <div class="col-lg-2">
                                     <label>Publish : </label>
                                     {{ form_widget(form.isPublished, { 'attr': {} }) }}
-                                </div>
-                                <div class="col-lg-4">
                                     <label>Available : </label>
                                     {{ form_widget(form.isAvailable, { 'attr': {} }) }}
                                 </div>
+
                                 {#<textarea class="form-control" rows="5" placeholder="Message"></textarea>#}
                             </div>
                         </div><!-- panel-body -->

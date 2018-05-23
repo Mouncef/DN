@@ -19,9 +19,9 @@
                                 <li {% if app.request.attributes.get('_route') == 'FAQ' %}class="active"{% endif %}>
                                     <a href="{{ path('FAQ') }}">FAQs</a>
                                 </li>
-                                <li {% if app.request.attributes.get('_route') == 'get_privacy_policy' %}class="active"{% endif %}>
+                                {#<li {% if app.request.attributes.get('_route') == 'get_privacy_policy' %}class="active"{% endif %}>
                                     <a href="{{ path('get_privacy_policy') }}">Privacy Policy</a>
-                                </li>
+                                </li>#}
                                 <li {% if app.request.attributes.get('_route') == 'get_shipping_policy' %}class="active"{% endif %}>
                                     <a href="{{ path('get_shipping_policy') }}">Shipping Policy</a>
                                 </li>
@@ -124,9 +124,9 @@
                         <li {% if app.request.attributes.get('_route') == 'FAQ' %}class="active"{% endif %}>
                             <a href="{{ path('FAQ') }}">FAQs</a>
                         </li>
-                        <li {% if app.request.attributes.get('_route') == 'get_privacy_policy' %}class="active"{% endif %}>
+                        {#<li {% if app.request.attributes.get('_route') == 'get_privacy_policy' %}class="active"{% endif %}>
                             <a href="{{ path('get_privacy_policy') }}">Privacy Policy</a>
-                        </li>
+                        </li>#}
                         <li {% if app.request.attributes.get('_route') == 'get_shipping_policy' %}class="active"{% endif %}>
                             <a href="{{ path('get_shipping_policy') }}">Shipping Policy</a>
                         </li>
@@ -144,7 +144,7 @@
                         <span class="icon icon-call"></span> 00965-9755-5272
                     </div>
                     <div class="time">
-                        7 Days a week from 10:00 am to 6:00 pm
+                        5 Days a week from 10:00 am to 6:00 pm
                     </div>
                 </div>
                 <!-- /box-info -->
@@ -346,8 +346,14 @@
                                     {% for category in categories %}
                                         <li
                                                 class="dropdown
-                                                {% if app.request.attributes.get('_route') == 'category_index'
-                                                    and app.request.attributes.get('category') == category.name
+                                                {% if (app.request.attributes.get('_route') == 'category_index'
+                                                    and app.request.attributes.get('category') == category.name)
+
+                                                    or
+
+                                                (app.request.attributes.get('_route') == 'category_all_articles'
+                                                and app.request.attributes.get('category') == category.name)
+
                                                 %}
                                                 selected
                                                 {% endif %}"

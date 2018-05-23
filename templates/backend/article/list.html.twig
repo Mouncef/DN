@@ -51,6 +51,7 @@
                                         <th>Name</th>
                                         <th>Category</th>
                                         <th>Price</th>
+                                        <th>List Number</th>
                                         <th>Cover n°1</th>
                                         <th>Cover n°2</th>
                                         <th>Cover n°3</th>
@@ -65,6 +66,7 @@
                                             <td class="center">{{ article.name }}</td>
                                             <td class="center">{{ article.category.name }}</td>
                                             <td class="center">{{ article.price }}</td>
+                                            <td class="center" style="text-align: center">{{ article.tri }}</td>
                                             <td class="center">
                                                 {% if article.principalCover %}
                                                     <a href="#" data-toggle="modal" data-target="#fileModal-{{ article.articleId }}">

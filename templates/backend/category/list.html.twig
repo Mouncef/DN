@@ -51,6 +51,7 @@
                                         <th>Category Name</th>
                                         <th>Cover</th>
                                         <th>Caption</th>
+                                        <th>List Number</th>
                                         <th>Actions</th>
                                     </tr>
                                     </thead>
@@ -90,7 +91,9 @@
                                                     {{ category.caption }}
                                                 {% endif %}
                                             </td>
-
+                                            <td class="center" style="text-align: left">
+                                                {{ category.tri }}
+                                            </td>
                                             <td class="table-action-hide">
                                                 {% if category.isPublicated == '1' %}
                                                     <a href="{{ path('category_unpublish', {id: category.categoryId}) }}" style="opacity: 1;" class="warning" title="publish"><i class="fa fa-cloud-download" aria-hidden="true"></i></a>

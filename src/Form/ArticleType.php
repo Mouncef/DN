@@ -45,6 +45,7 @@ class ArticleType extends AbstractType
                 'data_class'    => null,
                 'required'  =>  null
             ])
+            ->add('tri')
         ;
     }
 

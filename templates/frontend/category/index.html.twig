@@ -50,7 +50,10 @@
                         {% if articles|length > 0 %}
                             <div class="col-md-12 col-lg-12 col-xl-12">
                             <div class="content offset-0">
-                                <div class="number-of-products pull-right">{{ category.getProducts()|length }}Item(s)
+                                <div class="number-of-products pull-right">
+                                    <a href="{{ path('category_all_articles', {'category': category.name }) }}" class="btn">
+                                        {{ category.getProducts()|length }} Item(s)
+                                    </a>
                                 </div>
                                 <h1 class="block-title text-left">{{ category.name }}</h1>
                                 <p>
@@ -85,7 +88,12 @@
                                                                 {#{{ article.createdAt|date('d/m/Y') }}#}
                                                                 {#{{ date('now')|date_modify('- 1 month')|date('d/m/Y') }}#}
 
-                                                                {% if article.createdAt|date('d/m/Y') <= date('now')|date_modify('- 1 month')|date('d/m/Y') %}
+                                                                {% if (article.createdAt|date('Y') == date('now')|date_modify('- 1 month')|date('Y')
+                                                                and article.createdAt|date('m') > date('now')|date_modify('- 1 month')|date('m'))
+                                                                or (article.createdAt|date('Y') == date('now')|date_modify('- 1 month')|date('Y')
+                                                                and article.createdAt|date('m') == date('now')|date_modify('- 1 month')|date('m')
+                                                                and article.createdAt|date('d') > date('now')|date_modify('- 1 month')|date('d'))
+                                                                %}
                                                                     <div class="label-new">New</div>
                                                                 {% endif %}
                                                             </a>
@@ -443,14 +451,14 @@
                                             </div>
                                             <!-- /modalAddToCartProduct -->
 
-                                        {% else %}
+                                        {#{% else %}
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="alert alert-warning">
                                                         There is no Article on this Category : {{ category.name }}
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>#}
                                         {% endif %}
                                     {% endfor %}
 

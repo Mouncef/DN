@@ -61,13 +61,18 @@ class Category
      */
     private $articles;
 
+    /**
+     * @ORM\Column(name="tri", type="integer", nullable=true)
+     */
+    private $tri;
+
 
     public function __construct()
     {
         $this->createdAt = new \DateTime('now');
         $this->isPublicated = false;
         $this->articles = new ArrayCollection();
-
+        $this->tri = 99;
     }
 
     /**
@@ -185,4 +190,16 @@ class Category
     public function getId(){
         return $this->categoryId;
     }
+
+    public function getTri()
+    {
+        return $this->tri;
+    }
+
+    public function setTri($tri)
+    {
+        $this->tri = $tri;
+    }
+
+
 }

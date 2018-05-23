@@ -30,6 +30,7 @@ class CategoryType extends AbstractType
                 'required' =>   null
             ])
             ->add('isPublicated')
+            ->add('tri')
         ;
     }
 

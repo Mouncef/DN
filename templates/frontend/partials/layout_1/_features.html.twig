@@ -11,7 +11,14 @@
                             <a href="{{ path('article_index', {'id': newArticle.articleId}) }}">
                                 <img src="{{ asset('uploads/Articles/images/'~newArticle.principalCover) }}" alt="{{ newArticle.name }}" style="min-height: 400px;">
 
-                                {% if newArticle.createdAt|date('d-m-Y') > date('-7days')|date('d-m-Y')  %}<div class="label-new">New</div>{% endif %}
+                                {% if (newArticle.createdAt|date('Y') == date('now')|date_modify('-7days')|date('Y')
+                                and newArticle.createdAt|date('m') > date('now')|date_modify('-7days')|date('m'))
+                                or (newArticle.createdAt|date('Y') == date('now')|date_modify('-7days')|date('Y')
+                                and newArticle.createdAt|date('m') == date('now')|date_modify('-7days')|date('m')
+                                and newArticle.createdAt|date('d') > date('now')|date_modify('-7days')|date('d'))
+                                %}
+                                    <div class="label-new">New</div>
+                                {% endif %}
                             </a>
                             <a href="#" data-toggle="modal" data-target="#ModalquickView-{{ newArticle.articleId }}" class="quick-view">
                                 <span>

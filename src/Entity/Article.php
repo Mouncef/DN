@@ -111,12 +111,18 @@ class Article
      */
     private $carts;
 
+    /**
+     * @ORM\Column(name="tri", type="integer", nullable=true)
+     */
+    private $tri;
+
     public function __construct()
     {
         $this->createdAt = new \Datetime('now');
         $this->isPublished = false;
         $this->collections = new ArrayCollection();
         $this->carts = new ArrayCollection();
+        $this->tri = 99;
     }
 
     public function __toString()
@@ -283,6 +289,16 @@ class Article
     public function getCarts()
     {
         return $this->carts;
+    }
+
+    public function getTri()
+    {
+        return $this->tri;
+    }
+
+    public function setTri($tri)
+    {
+        $this->tri = $tri;
     }
 
 

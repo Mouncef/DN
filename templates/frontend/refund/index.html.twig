@@ -42,19 +42,20 @@
         <div id="pageContent">
 
             {% block slider %}
-                <div class="container  offset-18">
+                <div class="container offset-18">
                     <h1 class="block-title large">Refund & Return Policy</h1>
-                    <h6>
-                        Thanks for shopping at Dar Nawal.
-                        <br>
-                        If you are not entirely satisfied with your purchase, we're here to help.
-                    </h6>
-                    <div class="offset-36">
+
+                    <div class="offset-36" style="padding: 0 15%;">
+                        <h6>
+                            Thanks for shopping at Dar Nawal.
+                            <br>
+                            If you are not entirely satisfied with your purchase, we're here to help.
+                        </h6>
                         <div class="row">
-                            <div class="col-md-6 col-sm-12">
+                            <div class="col-md-12 col-sm-12">
                                 <div class="box-faq">
                                     <a class="title" href="#">Returns</a>
-                                    <ul class="list-simple-dot">
+                                    {#<ul class="list-simple-dot">
                                     <li>
                                         <a href="#">
                                             You have 48 hour to declare that you wan to return an item from the date you received it.
@@ -75,23 +76,28 @@
                                             Your item needs to have the receipt or proof of purchase.
                                         </a>
                                     </li>
-                                    </ul>
+                                    </ul>#}
+                                    <p>
+                                        With Dar Nawal you have the right to return or exchange your purchased you just need to follow our conditions :
+                                    </p>
+                                    <ol>
+                                        <li>Returned items must be in their original packaging, new, unused and of course still with the price tag</li>
+                                        <li>Returns that are damaged, soiled or alerted will not gonna be accepted</li>
+                                        <li>Items for exchange like Kaftan, Dara3a or any ready to wear will replace for the same size</li>
+                                        <li>All shoes must be tried on carpet, with no mark and not damaged</li>
+                                        <li>Your refund will be within maximum 5 working days</li>
+                                    </ol>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-sm-12">
+                            <div class="col-md-12 col-sm-12">
                                 <div class="box-faq">
                                     <a class="title" href="#">Refunds</a>
                                     <p>
-                                        Once we receive your item, we will inspect it and notify you that we have received your returned
-                                        item. We will immediately notify you on the status of your refund after inspecting the item.
-                                        <br/>
-                                        If your return is approved, we will initiate a refund to your credit card (or original method of payment).
-                                        <br/>
-                                        You will receive the credit within a certain amount of days, depending on your card issuer's policies.
+                                        Your refund will be in maximum 5 working days.
                                     </p>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-sm-12">
+                            {#<div class="col-md-6 col-sm-12">
                                 <div class="box-faq">
                                     <a class="title" href="#">Shipping</a>
                                     <p>
@@ -100,14 +106,14 @@
                                         If you receive a refund, the cost of return shipping will be deducted from your refund.
                                     </p>
                                 </div>
-                            </div>
+                            </div>#}
                             <div class="col-md-6 col-sm-12">
                                 <div class="box-faq">
                                     <a class="title" href="#">Contact Us</a>
                                     <p>
-                                        If you have any questions on how to return your item to us,
+                                        If you have any questions or concerns on how to refund or return don't hesitate to,
                                         <a href="{{ path('contact_index') }}">
-                                            contact us
+                                            contacts us
                                         </a>
                                         .
                                     </p>

@@ -21,11 +21,29 @@ class CategoryRepository extends ServiceEntityRepository
     {
         $query = $this->_em->getRepository(Category::class)->createQueryBuilder('c')
             ->where('c.isPublicated = 1')
-            ->orderBy('c.createdAt','DESC')
+            ->orderBy('c.tri','ASC')
             ->getQuery()->getResult()
         ;
 
         return $query;
+    }
+
+    public function getCategoryArticles($id)
+    {
+        $query = $this->_em
+            ->createQuery('
+                SELECT a 
+                FROM App\\Entity\\Article a  
+                INNER JOIN App\\Entity\\Category cat 
+                WITH a.category = cat.categoryId 
+                WHERE cat.categoryId = :id
+                AND a.isPublished = 1
+                ORDER BY a.tri ASC
+            ')
+            ->setParameter('id',$id)
+        ;
+
+        return $query->getResult();
     }
 
     public function getPaginatedArticles(int $page = 1, int $id, int $nbArticles) : Pagerfanta
@@ -38,7 +56,8 @@ class CategoryRepository extends ServiceEntityRepository
                 INNER JOIN App\\Entity\\Category cat 
                 WITH a.category = cat.categoryId 
                 WHERE cat.categoryId = :id
-                ORDER BY a.createdAt DESC
+                AND a.isPublished = 1
+                ORDER BY a.tri ASC
             ')
             ->setParameter('id',$id)
         ;

@@ -50,6 +50,29 @@ class CategoryController extends Controller
     }
 
     /**
+     * @Route("/category/{category}/allArticles", name="category_all_articles")
+     */
+    public function all(Request $request, $category){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $selectedCategory = $em->getRepository(Category::class)->findOneBy([
+            'name'  =>  $category
+        ]);
+
+        if (!$selectedCategory){
+            throw new NotFoundHttpException('Category doesn\'t  exists');
+        }
+
+        $articles = $em->getRepository(Category::class)->getCategoryArticles($selectedCategory->getCategoryId());
+
+        return $this->render('frontend/category/all.html.twig',[
+            'category'  =>  $selectedCategory,
+            'articles'  =>  $articles
+        ]);
+    }
+
+    /**
      * @Route("/article/{id}", name="article_index")
      */
     public function articleItem($id) {
