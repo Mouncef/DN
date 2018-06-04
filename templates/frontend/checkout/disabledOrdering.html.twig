@@ -1,0 +1,84 @@
+{% extends 'frontend/index.html.twig' %}
+
+{% block head %}
+    <title>{% block title %}Ordering is stopped for a while - Dar Nawal{% endblock %}</title>
+    <meta name="keywords" content="Dar, Nawal, Caftan, Couture, Moroccan, Kaftan">
+    <meta name="description"
+          content="Dar Nawal has the not found result page, this indicates that you didn't found any article with the used keyword, you can try another name to search for une article"
+    >
+
+    {% block stylesheets %}
+        {% include 'frontend/partials/layout_1/_stylesheets.html.twig' %}
+    {% endblock %}
+{% endblock %}
+
+{% block body %}
+    {% block loader %}
+        {% include 'frontend/partials/layout_1/_loader.html.twig' %}
+    {% endblock %}
+
+    {% block menu %}
+        {% include 'frontend/partials/layout_1/_menu.html.twig' %}
+    {% endblock %}
+
+    {% block header %}
+        {% include 'frontend/partials/layout_1/_header.html.twig' %}
+    {% endblock %}
+
+    {% block breadcrumb %}
+        <div class="breadcrumb">
+            <div class="container">
+                <ul>
+                    <li><a href="{{ path('homepage') }}">Home</a></li>
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block content %}
+        <!-- Content -->
+        <div id="pageContent">
+
+            {% block slider %}
+                <div class="container offset-80">
+                    <div class="on-duty-box">
+                        {#<img src="{{ asset('assets/frontend/images/empty-search-icon.png') }}" alt="">#}
+                        <h1 class="block-title large">Ordering is temporarily disabled <br>it will be working very soon.</h1>
+                        <div class="description">
+                            {#Search results for <span class="color-base">'{{ app.request.get('_search') }}'</span>#}
+                            Due to some reasons ordering is temporarily unavailable.
+                            <br>
+                            <i>your cart will be saved until you clear it or you make an order.</i>
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
+
+            {% block promo %}
+                {#{% include 'frontend/partials/layout_1/_promo.html.twig' %}#}
+            {% endblock %}
+
+            {% block collections %}
+                {#{% include 'frontend/partials/layout_1/_collections.html.twig' %}#}
+            {% endblock %}
+
+            {% block features %}
+                {#{% include 'frontend/partials/layout_1/_features.html.twig' %}#}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {% block footer %}
+        {% include 'frontend/partials/layout_1/_footer.html.twig' %}
+    {% endblock %}
+
+    {% block modal %}
+        {% include 'frontend/partials/layout_1/_modal.html.twig' %}
+    {% endblock %}
+
+
+    {% block javascripts %}
+        {% include 'frontend/partials/layout_1/_javascript.html.twig' %}
+    {% endblock %}
+
+{% endblock %}

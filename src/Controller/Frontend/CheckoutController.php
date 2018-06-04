@@ -5,11 +5,13 @@ namespace App\Controller\Frontend;
 use App\Entity\Address;
 use App\Entity\Cart;
 use App\Entity\Order;
+use App\Entity\Param;
 use App\Entity\Payment;
 use App\Entity\PayPalDetail;
 use App\Form\AddressType;
 use App\Service\BrainTreeService;
 use App\Service\PaypalService;
+use App\Utils\Constant;
 use Http\Client\Exception;
 use KMJ\PayPalBridgeBundle\Service\BridgeService;
 use Payum\Core\Request\GetHumanStatus;
@@ -32,87 +34,95 @@ class CheckoutController extends Controller
     public function index(Request $request, $cart){
 
         $em = $this->getDoctrine()->getManager();
-        $cart = $em->getRepository(Cart::class)->find($cart);
-        $gateway = BrainTreeService::getGateway();
-        $address = new Address();
-        $form = $this->createForm(AddressType::class, $address);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        $ordering = $em->getRepository(Param::class)->find(Constant::ORDERING);
+        if ($ordering->getEnabled()) {
+            $cart = $em->getRepository(Cart::class)->find($cart);
+            $gateway = BrainTreeService::getGateway();
+            $address = new Address();
+            $form = $this->createForm(AddressType::class, $address);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()){
 
 
 //            var_dump($doneUrl); die;
 
 
-            $country = $request->request->get("country");
-            $city = $request->request->get("city");
-            $usTotal = $request->request->get("us_total_order");
-            $shippment = $request->request->get("shippment_order");
-            if ((float)$shippment > 0){
-                $shippment = 70;
-            } else {
-                $shippment = 0;
-            }
-            $address->setCountry($country);
-            $address->setCity($city);
-
-            $em->persist($address);
-
-            $order = new Order();
-            $order->setAddress($address);
-            $order->setCart($cart);
-            $orders = $em->getRepository(Order::class)->findAll();
-            $code = '#0000'.$cart->getCartId()."_#00".$cart->getUser()->getUserId();
-            foreach ($orders as $o){
-                if ($o->getOrderCode() === $code ){
-                    $code = '#0000'.$cart->getCartId()."_#00".$cart->getUser()->getUserId()."_00".uniqid();
+                $country = $request->request->get("country");
+                $city = $request->request->get("city");
+                $usTotal = $request->request->get("us_total_order");
+                $shippment = $request->request->get("shippment_order");
+                if ((float)$shippment > 0){
+                    $shippment = 70;
+                } else {
+                    $shippment = 0;
                 }
-            }
-            $order->setOrderCode($code);
-            $order->setOrderTotal($usTotal);
-            $order->setOrderShipping($shippment);
+                $address->setCountry($country);
+                $address->setCity($city);
 
-            $em->persist($order);
+                $em->persist($address);
+
+                $order = new Order();
+                $order->setAddress($address);
+                $order->setCart($cart);
+                $orders = $em->getRepository(Order::class)->findAll();
+                $code = '#0000'.$cart->getCartId()."_#00".$cart->getUser()->getUserId();
+                foreach ($orders as $o){
+                    if ($o->getOrderCode() === $code ){
+                        $code = '#0000'.$cart->getCartId()."_#00".$cart->getUser()->getUserId()."_00".uniqid();
+                    }
+                }
+                $order->setOrderCode($code);
+                $order->setOrderTotal($usTotal);
+                $order->setOrderShipping($shippment);
+
+                $em->persist($order);
 
 
-            $link = 'http://darnawal.com';
+                $link = 'http://darnawal.com';
 //            var_dump($request->request->get('payment_method_nonce')); die;
-            $paymentType = $request->request->get('payement_type');
-            $paymentInfos = $request->request;
-            $doneUrl = 'http://'.$request->getHttpHost().$this->get('router')->generate('checkout_done');
-            $cancelUrl = 'http://'.$request->getHttpHost().$this->get('router')->generate('checkout_cancel');
+                $paymentType = $request->request->get('payement_type');
+                $paymentInfos = $request->request;
+                $doneUrl = 'http://'.$request->getHttpHost().$this->get('router')->generate('checkout_done');
+                $cancelUrl = 'http://'.$request->getHttpHost().$this->get('router')->generate('checkout_cancel');
 
-            $em->flush();
-
-            if ($paymentType === "paypal") {
-                if (!is_null($cart)) {
-                    $paypalService = new PaypalService();
-                    $link = $paypalService->paypalPayment($order, $doneUrl, $cancelUrl);
-
-                }
-            } else {
-                $metodPay = $request->request->get('payment_method_nonce');
-                $braintree = new BrainTreeService();
-                $link = $braintree->getCredentiels($metodPay, $doneUrl, $cancelUrl, $order, $em);
-            }
-
-
-            if ($link === $doneUrl || $link === $doneUrl."?order=".$order->getOrderId()) {
-                $cart->setCheckedAt(new \DateTime('now'));
-                $this->addFlash('success','Your order has been passed successfully ');
                 $em->flush();
+
+                if ($paymentType === "paypal") {
+                    if (!is_null($cart)) {
+                        $paypalService = new PaypalService();
+                        $link = $paypalService->paypalPayment($order, $doneUrl, $cancelUrl);
+
+                    }
+                } else {
+                    $metodPay = $request->request->get('payment_method_nonce');
+                    $braintree = new BrainTreeService();
+                    $link = $braintree->getCredentiels($metodPay, $doneUrl, $cancelUrl, $order, $em);
+                }
+
+
+                if ($link === $doneUrl || $link === $doneUrl."?order=".$order->getOrderId()) {
+                    $cart->setCheckedAt(new \DateTime('now'));
+                    $this->addFlash('success','Your order has been passed successfully ');
+                    $em->flush();
+                }
+
+
+
+                return new RedirectResponse($link, 302);
             }
 
-
-
-            return new RedirectResponse($link, 302);
+            $result = 'frontend/checkout/index.html.twig';
+            return $this->render($result, ['cart'  =>  $cart,'form' => $form->createView(),'gateway'   =>  $gateway]);
+        } else {
+            $result = 'frontend/checkout/disabledOrdering.html.twig';
+            return $this->render($result);
         }
 
-        return $this->render('frontend/checkout/index.html.twig', [
-            'cart'  =>  $cart,
-            'form' => $form->createView(),
-            'gateway'   =>  $gateway
-        ]);
+
+
+
     }
 
     /**

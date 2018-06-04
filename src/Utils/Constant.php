@@ -15,4 +15,5 @@ class Constant
 
     const NUM_ARTICLES_PER_PAGE = 1;
 
+    const ORDERING = 1;
 }

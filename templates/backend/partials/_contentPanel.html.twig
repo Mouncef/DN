@@ -1,7 +1,14 @@
 <div class="contentpanel">
 
     <div class="row">
-
+        {% for label, messages in app.flashes(['warning', 'error', 'success', 'info', 'notice','primary','danger']) %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} alert-dismissable" id="messagesAlerte">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
         <div class="col-sm-6 col-md-3">
             <div class="panel panel-success panel-stat">
                 <div class="panel-heading">

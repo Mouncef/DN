@@ -1,5 +1,18 @@
 <div class="header-right">
     <ul class="headermenu">
+        <li>
+            {% if getOrdering() %}
+                <a href="{{ path('disable_ordering') }}" class="btn btn-danger tp-icon chat-icon" style="color: orange">
+                    <i class="fa fa-power-off"></i>
+                    <i style="font-size: 11px">Disable Ordering</i>
+                </a>
+            {% else %}
+                <a href="{{ path('enable_ordering') }}" class="btn btn-danger tp-icon chat-icon" style="color: green">
+                    <i class="fa fa-power-off"></i>
+                    <i style="font-size: 11px">Enable Ordering</i>
+                </a>
+            {% endif %}
+        </li>
         {#<li>
             <div class="btn-group">
                 <button class="btn btn-default dropdown-toggle tp-icon" data-toggle="dropdown">
@@ -166,7 +179,7 @@
             <div class="btn-group">
                 {% set orderNotifs = getOrdersNotification() %}
                 <button class="btn btn-default dropdown-toggle tp-icon" data-toggle="dropdown">
-                    <i class="glyphicon glyphicon-shopping-cart"></i>
+                    <i class="fa fa-shopping-cart"></i>
                     {% if orderNotifs|length > 0 %}
                         <span class="badge">
                             {{ orderNotifs|length }}
@@ -216,10 +229,6 @@
                 </ul>
             </div>
         </li>
-        {#<li>
-            <button id="chatview" class="btn btn-default tp-icon chat-icon">
-                <i class="glyphicon glyphicon-comment"></i>
-            </button>
-        </li>#}
+
     </ul>
 </div><!-- header-right -->
